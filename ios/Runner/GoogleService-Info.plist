@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>47635360640-ohb9lums7tn5854j058guaqg7f26skdp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.47635360640-ohb9lums7tn5854j058guaqg7f26skdp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCFowThpXaJflkciivo1DOUeahRNCXB9Hc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>47635360640</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pawlog.hk</string>
+	<key>PROJECT_ID</key>
+	<string>pawlog-9ffa1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pawlog-9ffa1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:47635360640:ios:73dc476cfb91782f0faf65</string>
+	<key>DATABASE_URL</key>
+	<string>https://pawlog-9ffa1.firebaseio.com</string>
+</dict>
+</plist>
