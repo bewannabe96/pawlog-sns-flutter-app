@@ -1,4 +1,4 @@
-package com.example.pawlog
+package com.pawlog.hk
 
 import android.os.Bundle
 
