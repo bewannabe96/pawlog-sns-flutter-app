@@ -1,6 +1,6 @@
 # pawlog
 
-A new Flutter project.
+Pawlog Mobile App
 
 ## Getting Started
 

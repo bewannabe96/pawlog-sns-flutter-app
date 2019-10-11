@@ -75,7 +75,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () => {},
                   child: const Text('Start Discover'),
                 ),
               )

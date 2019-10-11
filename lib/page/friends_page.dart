@@ -32,7 +32,7 @@ class _FriendsPageState extends State<FriendsPage> {
             itemCount: _friends.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, '/profile'),
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 20),
