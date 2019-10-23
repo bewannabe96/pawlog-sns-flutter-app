@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/page/profile_page.dart';
+import 'package:pawlog/ui/page/profile_page.dart';
 
 class ProfileScreen extends StatefulWidget {
+  static const routeName = '/profile';
+
   const ProfileScreen({Key key}) : super(key: key);
 
   @override
@@ -14,6 +16,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Jim',
+          style: Theme.of(context).textTheme.title,
+        ),
         backgroundColor: Colors.white,
         centerTitle: false,
         elevation: 0,
