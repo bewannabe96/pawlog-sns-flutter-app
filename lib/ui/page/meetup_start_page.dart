@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:pawlog/ui/component/pl_checkbox.dart';
+import 'package:pawlog/ui/component/pl_primary_action_button.dart';
+import 'package:pawlog/ui/screen/meetup/list_screen.dart';
+import 'package:pawlog/ui/widget/pet_item.dart';
 
 class MeetupStartPage extends StatefulWidget {
   const MeetupStartPage({Key key}) : super(key: key);
@@ -17,11 +20,14 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
   };
 
   void _startMeetup() {
-    _buildConfirmDialog().then((answer) {
-      if (answer) {
-        Navigator.of(context).pushNamed('/meetup-list');
-      }
-    });
+    _buildConfirmDialog().then(
+      (bool answer) {
+        if (answer) {
+          print(Navigator.of(context));
+          Navigator.of(context).pushNamed(MeetupListScreen.routeName);
+        }
+      },
+    );
   }
 
   @override
@@ -86,21 +92,9 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 5),
-            child: FlatButton(
+            child: PLPrimaryActionButton(
+              title: 'Start Meetup',
               onPressed: _startMeetup,
-              child: const Text(
-                'Start Meetup',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
-              color: Theme.of(context).colorScheme.primary,
-              splashColor: Colors.white24,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 13),
             ),
           ),
         ],
@@ -122,36 +116,14 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
         padding: const EdgeInsets.symmetric(vertical: 15),
         child: Row(
           children: <Widget>[
-            PLCheckbox(
-              value: checked,
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: const CircleAvatar(
-                radius: 27,
-                backgroundColor: Colors.black26,
+              padding: const EdgeInsets.only(right: 10),
+              child: PLCheckbox(
+                value: checked,
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      name,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Text(
-                    '$breed',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
-              ),
+              child: PetItem(name, breed),
             ),
           ],
         ),
@@ -176,7 +148,7 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
                 style: const TextStyle(color: Colors.grey),
               ),
               onPressed: () {
-                Navigator.pop(context, false);
+                Navigator.of(context).pop(false);
               },
             ),
             FlatButton(
@@ -185,7 +157,7 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               onPressed: () {
-                Navigator.pop(context, true);
+                Navigator.of(context).pop(true);
               },
             ),
           ],

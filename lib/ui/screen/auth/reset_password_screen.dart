@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pawlog/ui/component/auth.dart';
+import 'package:pawlog/ui/component/pl_primary_action_button.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   static const routeName = '/reset-password';
@@ -16,10 +17,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Theme.of(context).colorScheme.primary,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 80),
+            padding: const EdgeInsets.all(30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -39,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ],
                   ),
                 ),
-                AuthButton(title: 'Reset Password'),
+                PLPrimaryActionButton(title: 'Reset Password'),
               ],
             ),
           ),

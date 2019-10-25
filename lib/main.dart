@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pawlog/route_generator.dart';
+import 'package:provider/provider.dart';
+
+import 'package:pawlog/provider/auth.dart';
+
+import 'package:pawlog/route/generator.dart';
 
 void main() => runApp(PawlogApp());
 
@@ -10,33 +14,40 @@ class PawlogApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,
     ));
-    return MaterialApp(
-      title: 'PetMe',
-      theme: ThemeData(
-        // Colors
-        scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.amber,
-        colorScheme: ColorScheme.light(
-          primary: const Color(0xFFD8782E),
-          primaryVariant: const Color(0xFF37261E),
-          secondary: const Color(0xFFE1DCD9),
-          secondaryVariant: const Color(0xFFB4A7A1),
-          error: const Color(0xFFD85052),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          builder: (BuildContext context) => AuthProvider(),
         ),
-        // Fonts
-        fontFamily: 'Arial',
-        textTheme: TextTheme(
-          title: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+      ],
+      child: MaterialApp(
+        title: 'PetMe',
+        theme: ThemeData(
+          // Colors
+          scaffoldBackgroundColor: Colors.white,
+          primarySwatch: Colors.amber,
+          colorScheme: ColorScheme.light(
+            primary: const Color(0xFFD8782E),
+            primaryVariant: const Color(0xFF37261E),
+            secondary: const Color(0xFFE1DCD9),
+            secondaryVariant: const Color(0xFFB4A7A1),
+            error: const Color(0xFFD85052),
           ),
+          // Fonts
+          fontFamily: 'Arial',
+          textTheme: TextTheme(
+            title: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          // Widgets
+          splashColor: const Color(0x30B4A7A1),
+          highlightColor: Colors.transparent,
         ),
-        // Widgets
-        splashColor: const Color(0x30B4A7A1),
-        highlightColor: Colors.transparent,
+        initialRoute: RouteGenerator.initialRoute,
+        onGenerateRoute: RouteGenerator.generateMainRoute,
       ),
-      initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: RouteGenerator.generateMainRoute,
     );
   }
 }

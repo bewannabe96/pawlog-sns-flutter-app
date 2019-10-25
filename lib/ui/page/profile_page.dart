@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/model/pet.dart';
 import 'package:pawlog/model/story.dart';
+import 'package:pawlog/ui/widget/pet_item.dart';
 import 'package:pawlog/ui/widget/story_item.dart';
 
 enum ProfileTypes { Self, Other }
@@ -216,39 +217,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return InkWell(
       onTap: () {},
       child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            const Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: const CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.grey,
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      'name',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  Text(
-                    'breed',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).colorScheme.secondaryVariant,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+        padding: const EdgeInsets.all(10.0),
+        child: PetItem('test', 'test'),
       ),
     );
   }
