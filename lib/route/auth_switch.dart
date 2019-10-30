@@ -13,8 +13,8 @@ class AuthSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (Provider.of<AuthProvider>(context).tempIsSignedIn) {
-      case true:
+    switch (Provider.of<AuthProvider>(context).authState) {
+      case AuthStates.Authorized:
         return HomeScreen();
       default:
         return LoginScreen();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PLPrimaryActionButton extends StatelessWidget {
-  const PLPrimaryActionButton({
+class PLOutlinedButton extends StatelessWidget {
+  const PLOutlinedButton({
     @required this.title,
     this.onPressed,
     this.color,
@@ -15,19 +15,23 @@ class PLPrimaryActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var _color = color == null ? Theme.of(context).colorScheme.primary : color;
 
-    return RaisedButton(
+    return FlatButton(
       onPressed: onPressed,
       child: Text(
         title,
         style: TextStyle(
           fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          color: _color,
         ),
       ),
-      color: _color,
+      splashColor: _color.withOpacity(0.2),
       padding: const EdgeInsets.symmetric(vertical: 12),
       shape: RoundedRectangleBorder(
+        side: BorderSide(
+          width: 2,
+          color: _color,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
     );

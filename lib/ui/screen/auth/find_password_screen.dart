@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pawlog/ui/component/auth.dart';
-import 'package:pawlog/ui/component/pl_primary_action_button.dart';
+import 'package:pawlog/ui/component/pl_filled_button.dart';
 
 class FindPasswordScreen extends StatefulWidget {
   static const routeName = '/find-password';
@@ -28,13 +28,12 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                   'We will send you a temporary password. '
                       'Please reset the password after login.',
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: AuthTextFormField(title: 'Email'),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: AuthTextFormField(title: 'Email'),
                 ),
-                PLPrimaryActionButton(title: 'Send Password'),
+                Expanded(child: Container()),
+                PLFilledButton(title: 'Send Password'),
               ],
             ),
           ),

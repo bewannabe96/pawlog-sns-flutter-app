@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pawlog/ui/component/pl_checkbox.dart';
-import 'package:pawlog/ui/component/pl_primary_action_button.dart';
+import 'package:pawlog/ui/component/pl_filled_button.dart';
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
 import 'package:pawlog/ui/widget/pet_item.dart';
 
@@ -92,7 +92,7 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 5),
-            child: PLPrimaryActionButton(
+            child: PLFilledButton(
               title: 'Start Meetup',
               onPressed: _startMeetup,
             ),

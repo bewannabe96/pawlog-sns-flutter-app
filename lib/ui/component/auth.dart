@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 import 'package:pawlog/ui/component/pl_back_button.dart';
+import 'package:pawlog/ui/component/pl_outlined_button.dart';
 
 class AuthTitleText extends StatefulWidget {
   const AuthTitleText(
@@ -23,7 +24,6 @@ class _AuthTitleTextState extends State<AuthTitleText> {
   @override
   void initState() {
     super.initState();
-
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {
         setState(
@@ -73,11 +73,19 @@ class AuthTextFormField extends StatelessWidget {
   const AuthTextFormField({
     Key key,
     @required this.title,
+    this.controller,
     this.isPassword = false,
+    this.helperText,
+    this.errorText,
   }) : super(key: key);
 
   final String title;
+
+  final TextEditingController controller;
   final bool isPassword;
+
+  final String helperText;
+  final String errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +99,7 @@ class AuthTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        controller: controller,
         obscureText: isPassword,
         autocorrect: false,
         decoration: InputDecoration(
@@ -100,8 +109,30 @@ class AuthTextFormField extends StatelessWidget {
           ),
           enabledBorder: underlineBorder,
           focusedBorder: underlineBorder,
+          errorText: errorText,
+          helperText: helperText,
         ),
         cursorColor: Theme.of(context).colorScheme.secondary,
+      ),
+    );
+  }
+}
+
+class AuthTextFieldHelper extends StatelessWidget {
+  const AuthTextFieldHelper(
+    this.text, {
+    Key key,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 12,
+        color: Colors.grey,
       ),
     );
   }
@@ -148,37 +179,16 @@ class AuthNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final button = (String title, Function onPressed) => FlatButton(
-          onPressed: onPressed,
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 2,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        );
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Visibility(
           visible: showPrev,
-          child: button('Prev', onPrev),
+          child: PLOutlinedButton(title: 'Prev', onPressed: onPrev),
         ),
         Visibility(
           visible: showNext,
-          child: button('Next', onNext),
+          child: PLOutlinedButton(title: 'Next', onPressed: onNext),
         ),
       ],
     );

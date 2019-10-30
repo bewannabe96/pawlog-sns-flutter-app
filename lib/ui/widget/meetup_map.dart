@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:pawlog/ui/component/pl_primary_action_button.dart';
+
+import 'package:pawlog/ui/component/pl_filled_button.dart';
 
 class MeetupMap extends StatefulWidget {
   static const routeName = '/meetup-map';
@@ -90,7 +91,7 @@ class _MeetupMapState extends State<MeetupMap> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: PLPrimaryActionButton(
+              child: PLFilledButton(
                 title: 'End Meetup',
                 onPressed: () => Navigator.of(context).pop(),
               ),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import 'package:pawlog/route/auth_switch.dart';
 
+import 'package:pawlog/provider/register.dart';
+
 import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
 import 'package:pawlog/ui/screen/auth/register_screen.dart';
+import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
 
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
 import 'package:pawlog/ui/screen/meetup/map_screen.dart';
@@ -21,31 +25,41 @@ class RouteGenerator {
 
     switch (settings.name) {
       case AuthSwitch.routeName:
-        builder = (BuildContext _) => AuthSwitch();
+        builder = (_) => AuthSwitch();
         break;
 
       case FindPasswordScreen.routeName:
-        builder = (BuildContext _) => FindPasswordScreen();
+        builder = (_) => FindPasswordScreen();
         break;
       case RegisterScreen.routeName:
-        builder = (BuildContext _) => RegisterScreen();
+        builder = (_) => ChangeNotifierProvider(
+              builder: (_) => RegisterProvider(),
+              child: RegisterScreen(),
+            );
+        break;
+      case ConfirmationScreen.routeName:
+        final ConfirmationScreenArgs args = settings.arguments;
+        builder = (_) => ChangeNotifierProvider(
+              builder: (_) => RegisterProvider(),
+              child: ConfirmationScreen(email: args.email),
+            );
         break;
 
       case MeetupListScreen.routeName:
-        builder = (BuildContext _) => MeetupListScreen();
+        builder = (_) => MeetupListScreen();
         break;
       case MeetupMapScreen.routeName:
-        builder = (BuildContext _) => MeetupMapScreen();
+        builder = (_) => MeetupMapScreen();
         break;
 
       case ProfileScreen.routeName:
-        builder = (BuildContext _) => ProfileScreen();
+        builder = (_) => ProfileScreen();
         break;
       case ChatScreen.routeName:
-        builder = (BuildContext _) => ChatScreen();
+        builder = (_) => ChatScreen();
         break;
       case StoryDetailScreen.routeName:
-        builder = (BuildContext _) => StoryDetailScreen();
+        builder = (_) => StoryDetailScreen();
         break;
     }
 
