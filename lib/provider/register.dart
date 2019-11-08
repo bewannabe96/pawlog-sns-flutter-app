@@ -30,7 +30,7 @@ class VerificationException implements Exception {
 
 class RegisterProvider with ChangeNotifier {
   final _userPool =
-      CognitoUserPool('ap-southeast-1_eivBFmXDg', '4mtoug2h2ulrehc3juj7eesb25');
+      CognitoUserPool('ap-southeast-1_f22LGhMmS', '6qkav978aam69mugad34kt7d8u');
 
   bool _isProcessing = false;
   bool get isProcessing => _isProcessing;

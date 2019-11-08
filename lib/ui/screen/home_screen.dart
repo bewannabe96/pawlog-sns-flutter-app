@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pawlog/provider/profile.dart';
 
 import 'package:pawlog/ui/modal/user_search_modal.dart';
 import 'package:pawlog/ui/widget/home_bottom_nav_bar.dart';
@@ -8,6 +9,7 @@ import 'package:pawlog/ui/page/feed_page.dart';
 import 'package:pawlog/ui/page/friend_page.dart';
 import 'package:pawlog/ui/page/message_page.dart';
 import 'package:pawlog/ui/page/profile_page.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -49,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       'title': 'Kate Kim',
-      'pageWidget': const ProfilePage(profileType: ProfileTypes.Self),
+      'pageWidget': ChangeNotifierProvider(
+        builder: (_) => ProfileProvider(),
+        child: const ProfilePage(profileType: ProfileTypes.Self),
+      ),
       'actionWidgetBuilder': (BuildContext context) => <Widget>[
             IconButton(
               onPressed: () {},

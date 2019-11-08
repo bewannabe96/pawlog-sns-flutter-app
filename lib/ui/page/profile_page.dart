@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+import 'package:pawlog/provider/profile.dart';
 
 import 'package:pawlog/model/pet.dart';
 import 'package:pawlog/model/story.dart';
@@ -42,6 +45,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileProvider>(context).loadProfile(1);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
