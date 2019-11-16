@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:pawlog/model/message.dart';
+import 'package:pawlog/model/model.dart';
+
 import 'package:pawlog/ui/component/chat_input_form.dart';
 
 class ChatScreen extends StatefulWidget {

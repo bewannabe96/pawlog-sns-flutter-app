@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: const ProfilePage(profileType: ProfileTypes.Other),
+      body: ProfilePage(profileType: ProfileTypes.Other),
     );
   }
 }

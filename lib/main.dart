@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
-import 'package:pawlog/provider/auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pawlog/bloc/bloc.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:pawlog/route/generator.dart';
 
-void main() => runApp(PawlogApp());
+class SimpleBlocDelegate extends BlocDelegate {
+  @override
+  onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+}
+
+void main() {
+  BlocSupervisor.delegate = SimpleBlocDelegate();
+  runApp(PawlogApp());
+}
+
+// void main() => runApp(PawlogApp());
 
 class PawlogApp extends StatelessWidget {
   @override
@@ -14,12 +27,8 @@ class PawlogApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,
     ));
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          builder: (BuildContext context) => AuthProvider(),
-        ),
-      ],
+    return BlocProvider(
+      builder: (BuildContext context) => AuthBloc(),
       child: MaterialApp(
         title: 'PetMe',
         theme: ThemeData(

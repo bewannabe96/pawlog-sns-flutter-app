@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:provider/provider.dart';
 
-import 'package:pawlog/provider/auth.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
 import 'package:pawlog/ui/component/auth.dart';
@@ -63,48 +63,47 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _signIn() async {
-    try {
-      await Provider.of<AuthProvider>(context).signIn(
-        _emailController.text,
-        _passwordController.text,
-      );
-    } on AuthException catch (e) {
-      _passwordController.clear();
-      switch (e.type) {
-        case AuthErrorTypes.EmptyEmail:
+  void _signIn() {
+    BlocProvider.of<AuthBloc>(context).add(
+      SignInEvent(_emailController.text, _passwordController.text),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = BlocProvider.of<AuthBloc>(context).state;
+    if (state is SignInErrorState) {
+      switch (state.type) {
+        case SignInErrorTypes.EmptyEmail:
           setState(() {
             _errorMessage = 'Please type the email.';
           });
           break;
-        case AuthErrorTypes.EmptyPassword:
+        case SignInErrorTypes.EmptyPassword:
           setState(() {
             _passwordErrorMessage = 'Please type the password.';
           });
           break;
-        case AuthErrorTypes.UserNotExist:
+        case SignInErrorTypes.UserNotExist:
           setState(() {
             _errorMessage = 'User does not exist.';
           });
           break;
-        case AuthErrorTypes.NotAuthorized:
+        case SignInErrorTypes.NotAuthorized:
           setState(() {
             _errorMessage = 'Incorrect username or password.';
           });
           break;
-        case AuthErrorTypes.UserNotConfirmed:
+        case SignInErrorTypes.UserNotConfirmed:
           Navigator.of(context).pushNamed(
             ConfirmationScreen.routeName,
             arguments: ConfirmationScreenArgs(_emailController.text),
           );
           break;
-        default:
+        case SignInErrorTypes.Unknwon:
       }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: SafeArea(

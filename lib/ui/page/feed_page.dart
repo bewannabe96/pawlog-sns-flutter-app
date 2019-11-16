@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/model/story.dart';
+import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/widget/story_item.dart';
 

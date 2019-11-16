@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:pawlog/provider/register.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/ui/component/auth.dart';
 import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
@@ -78,53 +78,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void _createAccount() async {
-    try {
-      await Provider.of<RegisterProvider>(context).register(
+  void _createAccount() {
+    BlocProvider.of<RegisterBloc>(context).add(
+      NewRegisterEvent(
         _emailController.text,
         _nameController.text,
         _passwordController.text,
         _passwordConfirmController.text,
-      );
-      Navigator.of(context).pushReplacementNamed(
-        ConfirmationScreen.routeName,
-        arguments: ConfirmationScreenArgs(_emailController.text),
-      );
-    } on RegisterException catch (e) {
-      _passwordConfirmController.clear();
-      switch (e.type) {
+      ),
+    );
+    Navigator.of(context).pushReplacementNamed(
+      ConfirmationScreen.routeName,
+      arguments: ConfirmationScreenArgs(_emailController.text),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = BlocProvider.of<RegisterBloc>(context).state;
+    if (state is RegisterErrorState) {
+      switch (state.type) {
         case RegisterErrorTypes.EmailError:
           _animateToPage(0);
           setState(() {
-            _emailErrorMessage = e.message;
+            _emailErrorMessage = state.message;
           });
           break;
         case RegisterErrorTypes.NameError:
           _animateToPage(1);
           setState(() {
-            _nameErrorMessage = e.message;
+            _nameErrorMessage = state.message;
           });
           break;
         case RegisterErrorTypes.PasswordError:
           _animateToPage(2);
           setState(() {
-            _passwordErrorMessage = e.message;
+            _passwordErrorMessage = state.message;
           });
           break;
         case RegisterErrorTypes.PasswordConfirmError:
           _animateToPage(2);
           setState(() {
-            _passwordConfirmErrorMessage = e.message;
+            _passwordConfirmErrorMessage = state.message;
           });
           break;
-        default:
-          break;
+        case RegisterErrorTypes.Unknown:
       }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: SafeArea(

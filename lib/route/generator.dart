@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/route/auth_switch.dart';
-
-import 'package:pawlog/provider/register.dart';
 
 import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
 import 'package:pawlog/ui/screen/auth/register_screen.dart';
@@ -32,15 +32,15 @@ class RouteGenerator {
         builder = (_) => FindPasswordScreen();
         break;
       case RegisterScreen.routeName:
-        builder = (_) => ChangeNotifierProvider(
-              builder: (_) => RegisterProvider(),
+        builder = (_) => BlocProvider(
+              builder: (context) => RegisterBloc(),
               child: RegisterScreen(),
             );
         break;
       case ConfirmationScreen.routeName:
         final ConfirmationScreenArgs args = settings.arguments;
-        builder = (_) => ChangeNotifierProvider(
-              builder: (_) => RegisterProvider(),
+        builder = (_) => BlocProvider(
+              builder: (context) => RegisterBloc(),
               child: ConfirmationScreen(email: args.email),
             );
         break;

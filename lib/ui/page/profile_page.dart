@@ -1,67 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
-import 'package:pawlog/provider/profile.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
-import 'package:pawlog/model/pet.dart';
-import 'package:pawlog/model/story.dart';
+import 'package:pawlog/model/model.dart';
+
 import 'package:pawlog/ui/widget/pet_item.dart';
 import 'package:pawlog/ui/widget/story_item.dart';
 
 enum ProfileTypes { Self, Other }
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key key, @required this.profileType}) : super(key: key);
+  ProfilePage({
+    Key key,
+    @required this.profileType,
+  }) : super(key: key);
 
   final ProfileTypes profileType;
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<StatefulWidget> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String name = 'Kate Kim';
-  String info = 'Female | 20';
-  String intro = 'Hello!\nI’m a dog lover living in Kwun Tong.';
-  List<Pet> pets = const [
-    Pet(
-      'Dexter',
-      'Golden Retriever',
-      'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-    ),
-    Pet(
-      'Dexter',
-      'Golden Retriever',
-      'https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=678&h=381',
-    ),
-    Pet(
-      'Dexter',
-      'Golden Retriever',
-      'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
-    ),
-  ];
-  List<Story> stories = const [Story(), Story(), Story()];
-
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context).loadProfile(1);
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if (state is InitialProfileState) {
+          BlocProvider.of<ProfileBloc>(context).add(LoadProfileEvent(1));
+          return Container();
+        } else if (state is ProfileLoadedState) {
+          return _buildPage(state.profile);
+        } else if (state is ProfileLoadingState) {
+          return Container();
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          _buildProfile(),
-          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-          _buildFamily(),
-          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-          _buildStoryTimeline(),
-        ],
-      ),
+  Widget _buildPage(Profile profile) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        _buildProfile(profile),
+        Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+        profile.family == null ? _buildNoFamily() : _buildFamily(profile),
+        Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+        _buildStoryTimeline(profile),
+      ],
     );
   }
 
   Widget _buildButton(
+    BuildContext context,
     String text, {
     Color color,
     bool outlined = true,
@@ -86,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildProfile() {
+  Widget _buildProfile(Profile profile) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -94,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Expanded(flex: 1, child: _buildSummary()),
+              Expanded(flex: 1, child: _buildSummary(profile)),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: const CircleAvatar(
@@ -104,21 +99,23 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              intro,
-              style: const TextStyle(fontSize: 12),
-            ),
-          ),
+          profile.intro == null
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    profile.intro,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
           _buildProfileStatus(),
         ],
       ),
     );
   }
 
-  Widget _buildSummary() {
-    final col = (String text, int value) => Expanded(
+  Widget _buildSummary(Profile profile) {
+    final col = (BuildContext context, String text, int value) => Expanded(
           child: Column(
             children: <Widget>[
               Text(
@@ -142,9 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Row(
       children: <Widget>[
-        col('Story', 32),
-        col('Follower', 32),
-        col('Following', 32),
+        col(context, 'Story', profile.story),
+        col(context, 'Follower', profile.follower),
+        col(context, 'Following', profile.following),
       ],
     );
   }
@@ -163,6 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Expanded(
                   flex: 1,
                   child: _buildButton(
+                    context,
                     'Message',
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -172,6 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: SizedBox(
                     width: 90,
                     child: _buildButton(
+                      context,
                       'Friend',
                       color: Theme.of(context).colorScheme.primary,
                       outlined: false,
@@ -181,13 +180,18 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             )
           : _buildButton(
+              context,
               'Follow',
               color: Theme.of(context).colorScheme.primary,
             ),
     );
   }
 
-  Widget _buildFamily() {
+  Widget _buildNoFamily() {
+    return Container();
+  }
+
+  Widget _buildFamily(Profile profile) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -210,7 +214,9 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(top: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: (pets.map((Pet pet) => _buildFamilyItem()).toList()),
+              children: (profile.family
+                  .map((Pet pet) => _buildFamilyItem())
+                  .toList()),
             ),
           )
         ],
@@ -228,7 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildStoryTimeline() {
+  Widget _buildStoryTimeline(Profile profile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -250,10 +256,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(15),
               )
             : Container(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: (stories.map((Story story) => StoryItem(story)).toList()),
-        )
+        profile.stories.length == 0
+            ? Center(
+                child: Text('No story exists.'),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: (profile.stories
+                    .map((Story story) => StoryItem(story))
+                    .toList()),
+              )
       ],
     );
   }

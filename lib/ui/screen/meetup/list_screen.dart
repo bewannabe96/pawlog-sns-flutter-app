@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/model/pet.dart';
+import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/modal/ask_request_modal.dart';
 import 'package:pawlog/ui/screen/meetup/map_screen.dart';

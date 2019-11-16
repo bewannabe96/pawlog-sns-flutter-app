@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:pawlog/provider/auth.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/ui/screen/auth/login_screen.dart';
 import 'package:pawlog/ui/screen/home_screen.dart';
@@ -13,11 +13,14 @@ class AuthSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (Provider.of<AuthProvider>(context).authState) {
-      case AuthStates.Authorized:
-        return HomeScreen();
-      default:
-        return LoginScreen();
-    }
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthorizedState) {
+          return HomeScreen();
+        } else {
+          return LoginScreen();
+        }
+      },
+    );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
-import 'package:pawlog/provider/register.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/ui/component/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
@@ -49,15 +49,27 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     super.dispose();
   }
 
-  void _confirmRegistration() async {
-    try {
-      await Provider.of<RegisterProvider>(context).confirmRegistration(
+  void _confirmRegistration() {
+    BlocProvider.of<RegisterBloc>(context).add(
+      ConfirmRegistrationEvent(
         widget.email,
         _verificationCodeController.text,
-      );
-      Navigator.of(context).pop();
-    } on VerificationException catch (e) {
-      switch (e.type) {
+      ),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void _resendVerificationCode() {
+    BlocProvider.of<RegisterBloc>(context).add(
+      ResendConfirmCodeEvent(widget.email),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = BlocProvider.of<RegisterBloc>(context).state;
+    if (state is VerificationErrorState) {
+      switch (state.type) {
         case VerificationErrorTypes.EmptyCode:
           setState(() {
             _errorMessage = 'Please type the verification code.';
@@ -68,18 +80,10 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             _errorMessage = 'Verification code is not correct.';
           });
           break;
-        default:
+        case VerificationErrorTypes.Unknown:
       }
     }
-  }
 
-  void _resendVerificationCode() async {
-    await Provider.of<RegisterProvider>(context)
-        .resendConfirmationCode(widget.email);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(

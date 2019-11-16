@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/model/pet.dart';
+import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/component/pl_image_overlay.dart';
 import 'package:pawlog/ui/component/pl_page_indicator.dart';

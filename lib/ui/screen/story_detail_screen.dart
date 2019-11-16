@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/model/story.dart';
+import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/component/chat_input_form.dart';
 import 'package:pawlog/ui/component/like_comment_indicator.dart';

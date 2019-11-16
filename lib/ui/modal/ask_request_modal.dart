@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:pawlog/model/pet.dart';
+import 'package:pawlog/model/model.dart';
+
 import 'package:pawlog/ui/widget/pet_page_view.dart';
 import 'package:pawlog/ui/component/pl_spinner.dart';
 

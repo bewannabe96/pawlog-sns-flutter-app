@@ -1,134 +1,129 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:amazon_cognito_identity_dart/cognito.dart';
+import 'package:bloc/bloc.dart';
+import './bloc.dart';
 
-enum RegisterErrorTypes {
-  EmailError,
-  NameError,
-  PasswordError,
-  PasswordConfirmError,
-  Unknown,
-}
-
-class RegisterException implements Exception {
-  const RegisterException(this.type, this.message);
-
-  final RegisterErrorTypes type;
-  final String message;
-}
-
-enum VerificationErrorTypes {
-  EmptyCode,
-  MismatchCode,
-  Unknown,
-}
-
-class VerificationException implements Exception {
-  const VerificationException(this.type);
-
-  final VerificationErrorTypes type;
-}
-
-class RegisterProvider with ChangeNotifier {
+class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final _userPool =
       CognitoUserPool('ap-southeast-1_f22LGhMmS', '6qkav978aam69mugad34kt7d8u');
 
-  bool _isProcessing = false;
-  bool get isProcessing => _isProcessing;
+  @override
+  RegisterState get initialState => InitialRegisterState();
 
-  void _checkEntries(
-    String email,
-    String name,
-    String password,
-    String passwordConfirm,
-  ) {
-    if (email == '') {
-      throw RegisterException(
-        RegisterErrorTypes.EmailError,
-        'Email should not be empty.',
+  @override
+  Stream<RegisterState> mapEventToState(
+    RegisterEvent event,
+  ) async* {
+    if (event is NewRegisterEvent) {
+      yield* register(
+        event.email,
+        event.name,
+        event.password,
+        event.passwordConfirm,
       );
-    } else if (name == '') {
-      throw RegisterException(
-        RegisterErrorTypes.NameError,
-        'Name should not be empty.',
-      );
-    } else if (password == '') {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordError,
-        'Password cannot be empty.',
-      );
-    } else if (password.length < 8) {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordError,
-        'Password is too short.',
-      );
-    } else if (!RegExp(r"[a-z]").hasMatch(password)) {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordError,
-        'Password must contain lowercase characters.',
-      );
-    } else if (!RegExp(r"[A-Z]").hasMatch(password)) {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordError,
-        'Password must contain uppercase characters.',
-      );
-    } else if (!RegExp(r"[0-9]").hasMatch(password)) {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordError,
-        'Password must contain numeric character.',
-      );
-    } else if (password != passwordConfirm) {
-      throw RegisterException(
-        RegisterErrorTypes.PasswordConfirmError,
-        'Password does not match.',
-      );
+    } else if (event is ConfirmRegistrationEvent) {
+      yield* confirmRegistration(event.email, event.verificationCode);
+    } else if (event is ResendConfirmCodeEvent) {
+      yield* resendConfirmCode(event.email);
     }
   }
 
-  Future<void> register(
+  Stream<RegisterState> register(
     String email,
     String name,
     String password,
     String passwordConfirm,
-  ) async {
-    _checkEntries(email, name, password, passwordConfirm);
+  ) async* {
+    yield RegisterProcessingState();
+
+    if (email == '') {
+      yield RegisterErrorState(
+        RegisterErrorTypes.EmailError,
+        'Email should not be empty.',
+      );
+      return;
+    } else if (name == '') {
+      yield RegisterErrorState(
+        RegisterErrorTypes.NameError,
+        'Name should not be empty.',
+      );
+      return;
+    } else if (password == '') {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordError,
+        'Password cannot be empty.',
+      );
+      return;
+    } else if (password.length < 8) {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordError,
+        'Password is too short.',
+      );
+      return;
+    } else if (!RegExp(r"[a-z]").hasMatch(password)) {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordError,
+        'Password must contain lowercase characters.',
+      );
+      return;
+    } else if (!RegExp(r"[A-Z]").hasMatch(password)) {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordError,
+        'Password must contain uppercase characters.',
+      );
+      return;
+    } else if (!RegExp(r"[0-9]").hasMatch(password)) {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordError,
+        'Password must contain numeric character.',
+      );
+      return;
+    } else if (password != passwordConfirm) {
+      yield RegisterErrorState(
+        RegisterErrorTypes.PasswordConfirmError,
+        'Password does not match.',
+      );
+      return;
+    }
 
     final userAttributes = [
       new AttributeArg(name: 'email', value: email),
       new AttributeArg(name: 'name', value: name),
     ];
 
-    _isProcessing = true;
-    notifyListeners();
     try {
       await _userPool.signUp(email, password, userAttributes: userAttributes);
     } on CognitoClientException catch (e) {
-      switch (e.message) {
-        case 'Invalid email address format.':
-          throw RegisterException(
+      print(e);
+      switch (e.code) {
+        case 'UsernameExistsException':
+          yield RegisterErrorState(
+            RegisterErrorTypes.EmailError,
+            'An account with the given email already exists.',
+          );
+          break;
+        case 'InvalidParameterException':
+          yield RegisterErrorState(
             RegisterErrorTypes.EmailError,
             'Invalid email address format.',
           );
-        case 'User already exists':
-          throw RegisterException(
-            RegisterErrorTypes.EmailError,
-            'User already exists with this email.',
-          );
+          break;
         default:
-          throw RegisterException(
+          yield RegisterErrorState(
             RegisterErrorTypes.Unknown,
             e.message,
           );
       }
-    } finally {
-      _isProcessing = false;
-      notifyListeners();
     }
   }
 
-  Future<void> confirmRegistration(
-      String email, String verificationCode) async {
+  Stream<RegisterState> confirmRegistration(
+    String email,
+    String verificationCode,
+  ) async* {
     if (verificationCode == '') {
-      throw VerificationException(VerificationErrorTypes.EmptyCode);
+      yield VerificationErrorState(VerificationErrorTypes.EmptyCode);
+      return;
     }
 
     final cognitoUser = CognitoUser(email, _userPool);
@@ -138,21 +133,16 @@ class RegisterProvider with ChangeNotifier {
     } on CognitoClientException catch (e) {
       switch (e.code) {
         case 'CodeMismatchException':
-          throw VerificationException(VerificationErrorTypes.MismatchCode);
+          yield VerificationErrorState(VerificationErrorTypes.MismatchCode);
+          break;
         default:
-          throw VerificationException(VerificationErrorTypes.Unknown);
+          yield VerificationErrorState(VerificationErrorTypes.Unknown);
       }
     }
   }
 
-  Future<bool> resendConfirmationCode(String email) async {
+  Stream<RegisterState> resendConfirmCode(String email) async* {
     final cognitoUser = CognitoUser(email, _userPool);
-
-    try {
-      await cognitoUser.resendConfirmationCode();
-      return true;
-    } catch (error) {
-      return false;
-    }
+    await cognitoUser.resendConfirmationCode();
   }
 }
