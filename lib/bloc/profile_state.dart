@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import 'package:pawlog/model/profile.dart';
+import 'package:pawlog/model/model.dart';
 
 abstract class ProfileState extends Equatable {
   const ProfileState();
@@ -23,9 +23,21 @@ class ProfileLoadingState extends ProfileState {
 
 class ProfileLoadedState extends ProfileState {
   final Profile profile;
+  final List<Story> stories;
 
-  const ProfileLoadedState({@required this.profile}) : assert(profile != null);
+  const ProfileLoadedState({
+    @required this.profile,
+    @required this.stories,
+  })  : assert(profile != null),
+        assert(stories != null);
 
   @override
   List<Object> get props => [profile];
+}
+
+class ProfileErrorState extends ProfileState {
+  const ProfileErrorState();
+
+  @override
+  List<Object> get props => [];
 }

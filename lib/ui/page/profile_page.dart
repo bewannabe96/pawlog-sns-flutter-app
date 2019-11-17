@@ -3,21 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
-
 import 'package:pawlog/model/model.dart';
 
-import 'package:pawlog/ui/widget/pet_item.dart';
-import 'package:pawlog/ui/widget/story_item.dart';
+import 'package:pawlog/ui/component/pl_error.dart';
+import 'package:pawlog/ui/component/pl_loading.dart';
+
+import 'package:pawlog/ui/widget/family_list.dart';
+import 'package:pawlog/ui/widget/story_timeline.dart';
 
 enum ProfileTypes { Self, Other }
 
 class ProfilePage extends StatefulWidget {
+  final ProfileTypes profileType;
+  final int userID;
+
   ProfilePage({
     Key key,
     @required this.profileType,
+    @required this.userID,
   }) : super(key: key);
-
-  final ProfileTypes profileType;
 
   @override
   State<StatefulWidget> createState() => _ProfilePageState();
@@ -29,29 +33,34 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is InitialProfileState) {
-          BlocProvider.of<ProfileBloc>(context).add(LoadProfileEvent(1));
+          BlocProvider.of<ProfileBloc>(context).add(
+            LoadProfileEvent(widget.userID),
+          );
           return Container();
         } else if (state is ProfileLoadedState) {
-          return _buildPage(state.profile);
+          return _buildPage(state.profile, state.stories);
         } else if (state is ProfileLoadingState) {
-          return Container();
+          return PLLoading();
         } else {
-          return Container();
+          // ProfileErrorState and else
+          return PLError();
         }
       },
     );
   }
 
-  Widget _buildPage(Profile profile) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        _buildProfile(profile),
-        Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-        profile.family == null ? _buildNoFamily() : _buildFamily(profile),
-        Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-        _buildStoryTimeline(profile),
-      ],
+  Widget _buildPage(Profile profile, List<Story> stories) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildProfile(profile),
+          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+          FamilyList(profile.family),
+          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+          _buildStoryTimeline(stories),
+        ],
+      ),
     );
   }
 
@@ -187,54 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildNoFamily() {
-    return Container();
-  }
-
-  Widget _buildFamily(Profile profile) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Family',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Icon(FontAwesomeIcons.plus),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: (profile.family
-                  .map((Pet pet) => _buildFamilyItem())
-                  .toList()),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFamilyItem() {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: PetItem('test', 'test'),
-      ),
-    );
-  }
-
-  Widget _buildStoryTimeline(Profile profile) {
+  Widget _buildStoryTimeline(List<Story> stories) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -256,16 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(15),
               )
             : Container(),
-        profile.stories.length == 0
-            ? Center(
-                child: Text('No story exists.'),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: (profile.stories
-                    .map((Story story) => StoryItem(story))
-                    .toList()),
-              )
+        StoryTimeline(stories),
       ],
     );
   }

@@ -24,7 +24,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: ProfilePage(profileType: ProfileTypes.Other),
+      body: ProfilePage(
+        profileType: ProfileTypes.Other,
+        userID: 1,
+      ),
     );
   }
 }

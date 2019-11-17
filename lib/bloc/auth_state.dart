@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
+import 'package:pawlog/model/model.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -12,10 +15,12 @@ class UnauthorizedState extends AuthState {
 }
 
 class AuthorizedState extends AuthState {
-  const AuthorizedState();
+  final User user;
+
+  const AuthorizedState({@required this.user}) : assert(user != null);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [user.hash];
 }
 
 class SignInProcessingState extends AuthState {

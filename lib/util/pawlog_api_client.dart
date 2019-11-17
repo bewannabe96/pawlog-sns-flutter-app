@@ -13,12 +13,28 @@ class PawlogAPIClient {
   static Future<Profile> loadProfile(int userid) async {
     var path = '$_apiServerHost/profile/$userid';
 
-    var response = await _client.get(path);
+    final response = await _client.get(path);
+
     if (response.statusCode != 200) {
       throw Exception('error getting profile');
     }
 
-    var profileJSON = jsonDecode(response.body);
-    return Profile.fromJSON(profileJSON);
+    var json = jsonDecode(response.body);
+    return Profile.fromJSON(json);
+  }
+
+  static Future<List<Story>> loadProfileStories(int userid) async {
+    var path = '$_apiServerHost/story/user/$userid';
+
+    final response = await _client.get(path);
+
+    if (response.statusCode != 200) {
+      throw Exception('error getting profile stories');
+    }
+
+    var json = jsonDecode(response.body);
+    return (json as List<dynamic>)
+        .map((storyJson) => Story.fromJSON(storyJson))
+        .toList();
   }
 }

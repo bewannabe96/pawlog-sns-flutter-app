@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/model/model.dart';
 
-import 'package:pawlog/ui/widget/story_item.dart';
+import 'package:pawlog/ui/widget/story_timeline.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key key}) : super(key: key);
@@ -12,20 +12,12 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  final List<String> friends = const [
-    "Test",
-    "Test",
-    "Test",
-    "Test",
-    "Test",
-  ];
+  final List<Story> stories = const [];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.only(bottom: 10),
-      itemCount: friends.length,
-      itemBuilder: (BuildContext context, int index) => StoryItem(Story()),
+    return SingleChildScrollView(
+      child: StoryTimeline(stories),
     );
   }
 }

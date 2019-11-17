@@ -30,7 +30,14 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  StoryItemContent(Story()),
+                  StoryItemContent(Story(
+                    storyID: 1,
+                    content: '',
+                    created: '',
+                    updated: '',
+                    like: 2,
+                    comment: 2,
+                  )),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),

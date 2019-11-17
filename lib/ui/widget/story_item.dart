@@ -26,7 +26,7 @@ class StoryItemContent extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(15.0),
           child: Text(
-            'My kids seem tired…',
+            story.content,
             style: TextStyle(
               fontSize: 15,
             ),
@@ -99,7 +99,8 @@ class StoryItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  LikeCommentIndicator(like: 32, comment: 2),
+                  LikeCommentIndicator(
+                      like: story.like, comment: story.comment),
                 ],
               ),
             ),

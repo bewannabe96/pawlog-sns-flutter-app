@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/model/model.dart';
 
+import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/widget/pet_page_view.dart';
-import 'package:pawlog/ui/component/pl_spinner.dart';
 
 enum AskRequestActions {
   Sending,
@@ -133,9 +133,7 @@ class AskRequestModal extends ModalRoute<AskRequestResponses> {
                 children: <Widget>[
                   const Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: const PLSpinner(
-                      color: Colors.white70,
-                    ),
+                    child: const PLLoading(),
                   ),
                   const Text(
                     'Waiting for response...',

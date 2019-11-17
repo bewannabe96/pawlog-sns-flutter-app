@@ -26,17 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _tabPages = [
     {
-      'title': 'Meetup',
       'pageWidget': const MeetupStartPage(),
       'actionWidgetBuilder': (_) => null,
     },
     {
-      'title': 'Feed',
       'pageWidget': const FeedPage(),
       'actionWidgetBuilder': (_) => null,
     },
     {
-      'title': 'Friend',
       'pageWidget': const FriendPage(),
       'actionWidgetBuilder': (BuildContext context) => <Widget>[
             IconButton(
@@ -46,15 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
     },
     {
-      'title': 'Message',
       'pageWidget': const MessagePage(),
       'actionWidgetBuilder': (_) => null,
     },
     {
-      'title': 'Kate Kim',
       'pageWidget': BlocProvider(
         builder: (context) => ProfileBloc(),
-        child: ProfilePage(profileType: ProfileTypes.Self),
+        child: ProfilePage(
+          profileType: ProfileTypes.Self,
+          userID: 1,
+        ),
       ),
       'actionWidgetBuilder': (BuildContext context) => <Widget>[
             IconButton(
@@ -86,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _tabPages[_pageIndex]['actionWidgetBuilder'] as Function;
     return AppBar(
       title: Text(
-        _tabPages[_pageIndex]['title'] as String,
+        _mapPageTitle(_pageIndex),
         style: Theme.of(context).textTheme.title,
       ),
       backgroundColor: Colors.white,
@@ -94,5 +92,30 @@ class _HomeScreenState extends State<HomeScreen> {
       elevation: 0,
       actions: actionWidgetBuilder(context) as List<Widget>,
     );
+  }
+
+  String _mapPageTitle(int page) {
+    String title = '';
+    switch (page) {
+      case 0:
+        title = 'Meetup';
+        break;
+      case 1:
+        title = 'Feed';
+        break;
+      case 2:
+        title = 'Friend';
+        break;
+      case 3:
+        title = 'Message';
+        break;
+      case 4:
+        final authState = BlocProvider.of<AuthBloc>(context).state;
+        if (authState is AuthorizedState) {
+          title = authState.user.name;
+        }
+        break;
+    }
+    return title;
   }
 }
