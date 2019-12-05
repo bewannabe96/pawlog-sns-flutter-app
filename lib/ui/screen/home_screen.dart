@@ -12,6 +12,18 @@ import 'package:pawlog/ui/page/friend_page.dart';
 import 'package:pawlog/ui/page/message_page.dart';
 import 'package:pawlog/ui/page/profile_page.dart';
 
+class _PageConfig {
+  final String title;
+  final Widget body;
+  final List<Widget> actionWidgets;
+
+  const _PageConfig({
+    this.title,
+    this.body,
+    this.actionWidgets,
+  });
+}
+
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
 
@@ -24,50 +36,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
 
-  final _tabPages = [
-    {
-      'pageWidget': const MeetupStartPage(),
-      'actionWidgetBuilder': (_) => null,
-    },
-    {
-      'pageWidget': const FeedPage(),
-      'actionWidgetBuilder': (_) => null,
-    },
-    {
-      'pageWidget': const FriendPage(),
-      'actionWidgetBuilder': (BuildContext context) => <Widget>[
-            IconButton(
-              onPressed: () => Navigator.of(context).push(UserSearchModal()),
-              icon: Icon(FontAwesomeIcons.search),
-            ),
-          ],
-    },
-    {
-      'pageWidget': const MessagePage(),
-      'actionWidgetBuilder': (_) => null,
-    },
-    {
-      'pageWidget': BlocProvider(
-        builder: (context) => ProfileBloc(),
-        child: ProfilePage(
-          profileType: ProfileTypes.Self,
-          userID: 1,
-        ),
-      ),
-      'actionWidgetBuilder': (BuildContext context) => <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: Icon(FontAwesomeIcons.cog),
-            ),
-          ],
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final config = _mapPageConfig(_pageIndex);
+
     return Scaffold(
-      appBar: _buildAppBar(),
-      body: _tabPages[_pageIndex]['pageWidget'] as Widget,
+      appBar: _buildAppBar(config),
+      body: config.body,
       bottomNavigationBar: HomeBottomNavBar(
         currentIndex: _pageIndex,
         onTap: (index) => setState(
@@ -79,43 +54,66 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildAppBar() {
-    final actionWidgetBuilder =
-        _tabPages[_pageIndex]['actionWidgetBuilder'] as Function;
+  Widget _buildAppBar(_PageConfig config) {
     return AppBar(
       title: Text(
-        _mapPageTitle(_pageIndex),
+        config.title,
         style: Theme.of(context).textTheme.title,
       ),
       backgroundColor: Colors.white,
       centerTitle: false,
       elevation: 0,
-      actions: actionWidgetBuilder(context) as List<Widget>,
+      actions: config.actionWidgets,
     );
   }
 
-  String _mapPageTitle(int page) {
-    String title = '';
+  _PageConfig _mapPageConfig(int page) {
+    final authState = BlocProvider.of<AuthBloc>(context).state;
     switch (page) {
       case 0:
-        title = 'Meetup';
+        if (authState is AuthorizedState) {
+          return _PageConfig(
+            title: 'Meetup',
+            body: MeetupStartPage(),
+          );
+        }
         break;
       case 1:
-        title = 'Feed';
-        break;
+        return _PageConfig(
+          title: 'Feed',
+          body: const FeedPage(),
+        );
       case 2:
-        title = 'Friend';
-        break;
+        return _PageConfig(
+          title: 'Friend',
+          body: const FriendPage(),
+          actionWidgets: <Widget>[
+            IconButton(
+              onPressed: () => Navigator.of(context).push(UserSearchModal()),
+              icon: Icon(FontAwesomeIcons.search),
+            ),
+          ],
+        );
       case 3:
-        title = 'Message';
-        break;
+        return _PageConfig(
+          title: 'Message',
+          body: const MessagePage(),
+        );
       case 4:
-        final authState = BlocProvider.of<AuthBloc>(context).state;
         if (authState is AuthorizedState) {
-          title = authState.user.name;
+          return _PageConfig(
+            title: authState.user.name,
+            body: ProfilePage(),
+            actionWidgets: <Widget>[
+              IconButton(
+                onPressed: () {},
+                icon: Icon(FontAwesomeIcons.cog),
+              ),
+            ],
+          );
         }
         break;
     }
-    return title;
+    return null;
   }
 }

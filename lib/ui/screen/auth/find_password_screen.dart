@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/ui/component/auth.dart';
+import 'package:pawlog/ui/component/auth/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
 
 class FindPasswordScreen extends StatefulWidget {

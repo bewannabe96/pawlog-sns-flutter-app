@@ -2,31 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/model/model.dart';
+import 'package:pawlog/ui/component/pl_outlined_button.dart';
 
 import 'package:pawlog/ui/widget/pet_item.dart';
 
-class FamilyList extends StatelessWidget {
+class ProfileFamilyList extends StatelessWidget {
   final List<Pet> family;
 
-  const FamilyList(this.family);
+  const ProfileFamilyList(this.family);
 
   @override
   Widget build(BuildContext context) {
-    return family == null ? _buildNoFamily(context) : _buildFamily();
-  }
-
-  Widget _buildNoFamily(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Center(
-        child: Text(
-          'No story exists.',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.secondaryVariant,
-          ),
+    if (family is List<Pet>) {
+      return _buildFamily();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(20),
+        child: PLOutlinedButton(
+          title: 'Create My Family',
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget _buildFamily() {

@@ -1,15 +1,13 @@
 import 'dart:async';
+
 import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:bloc/bloc.dart';
 
 import './bloc.dart';
 
-import 'package:pawlog/model/model.dart';
+import 'package:pawlog/repository/repository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final _userPool =
-      CognitoUserPool('ap-southeast-1_f22LGhMmS', '6qkav978aam69mugad34kt7d8u');
-
   @override
   AuthState get initialState => UnauthorizedState();
 
@@ -33,15 +31,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return;
     }
 
-    final cognitoUser = CognitoUser(email, _userPool);
-
-    final authDetails =
-        AuthenticationDetails(username: email, password: password);
-
     try {
-      await cognitoUser.authenticateUser(authDetails);
-      final attributes = await cognitoUser.getUserAttributes();
-      yield AuthorizedState(user: User.fromCognitoUserAttribute(attributes));
+      final user = await AuthRepository.authenticate(email, password);
+      yield AuthorizedState(user: user);
     } on CognitoClientException catch (e) {
       switch (e.code) {
         case 'UserNotFoundException':

@@ -13,7 +13,7 @@ import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
 import 'package:pawlog/ui/screen/meetup/map_screen.dart';
 
-import 'package:pawlog/ui/screen/profile_screen.dart';
+import 'package:pawlog/ui/screen/user_profile_screen.dart';
 import 'package:pawlog/ui/screen/chat_screen.dart';
 import 'package:pawlog/ui/screen/story_detail_screen.dart';
 
@@ -52,8 +52,8 @@ class RouteGenerator {
         builder = (_) => MeetupMapScreen();
         break;
 
-      case ProfileScreen.routeName:
-        builder = (_) => ProfileScreen();
+      case UserProfileScreen.routeName:
+        builder = (_) => UserProfileScreen();
         break;
       case ChatScreen.routeName:
         builder = (_) => ChatScreen();

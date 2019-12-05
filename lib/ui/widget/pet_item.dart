@@ -29,7 +29,7 @@ class PetItem extends StatelessWidget {
                 ),
               ),
               Text(
-                name,
+                breed,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[500],

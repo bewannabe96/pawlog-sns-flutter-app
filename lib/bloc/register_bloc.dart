@@ -1,12 +1,13 @@
 import 'dart:async';
+
 import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:bloc/bloc.dart';
+
 import './bloc.dart';
 
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final _userPool =
-      CognitoUserPool('ap-southeast-1_f22LGhMmS', '6qkav978aam69mugad34kt7d8u');
+import 'package:pawlog/repository/repository.dart';
 
+class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   @override
   RegisterState get initialState => InitialRegisterState();
 
@@ -86,13 +87,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       return;
     }
 
-    final userAttributes = [
-      new AttributeArg(name: 'email', value: email),
-      new AttributeArg(name: 'name', value: name),
-    ];
-
     try {
-      await _userPool.signUp(email, password, userAttributes: userAttributes);
+      await AuthRepository.register(email, name, password);
+      yield RegisterSucceedState();
     } on CognitoClientException catch (e) {
       print(e);
       switch (e.code) {
@@ -121,15 +118,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     String email,
     String verificationCode,
   ) async* {
+    yield VerificationProcessingState();
+
     if (verificationCode == '') {
       yield VerificationErrorState(VerificationErrorTypes.EmptyCode);
       return;
     }
 
-    final cognitoUser = CognitoUser(email, _userPool);
-
     try {
-      await cognitoUser.confirmRegistration(verificationCode);
+      await AuthRepository.confirmRegistration(email, verificationCode);
+      yield VerificationSucceedState();
     } on CognitoClientException catch (e) {
       switch (e.code) {
         case 'CodeMismatchException':
@@ -142,7 +140,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> resendConfirmCode(String email) async* {
-    final cognitoUser = CognitoUser(email, _userPool);
-    await cognitoUser.resendConfirmationCode();
+    await AuthRepository.resendConfirmCode(email);
   }
 }

@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:pawlog/ui/component/pl_checkbox.dart';
-import 'package:pawlog/ui/component/pl_filled_button.dart';
+import 'package:pawlog/bloc/bloc.dart';
+import 'package:pawlog/model/model.dart';
+
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
-import 'package:pawlog/ui/widget/pet_item.dart';
+import 'package:pawlog/ui/widget/family_select.dart';
 
-class MeetupStartPage extends StatefulWidget {
+class MeetupStartPage extends StatelessWidget {
   const MeetupStartPage({Key key}) : super(key: key);
-
-  @override
-  _MeetupStartPageState createState() => _MeetupStartPageState();
-}
-
-class _MeetupStartPageState extends State<MeetupStartPage> {
-  var _pets = {
-    1: false,
-    2: false,
-    3: false,
-  };
-
-  void _startMeetup() {
-    _buildConfirmDialog().then(
-      (bool answer) {
-        if (answer) {
-          print(Navigator.of(context));
-          Navigator.of(context).pushNamed(MeetupListScreen.routeName);
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,90 +28,34 @@ class _MeetupStartPageState extends State<MeetupStartPage> {
                   style: const TextStyle(fontSize: 24),
                 ),
               ),
-              Column(
-                children: <Widget>[
-                  _buildPetItem(
-                    name: 'Coogie',
-                    breed: 'Beagle',
-                    checked: _pets[1],
-                    onChanged: (bool newValue) {
-                      setState(
-                        () {
-                          _pets[1] = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildPetItem(
-                    name: 'Coogie',
-                    breed: 'Beagle',
-                    checked: _pets[2],
-                    onChanged: (bool newValue) {
-                      setState(
-                        () {
-                          _pets[2] = newValue;
-                        },
-                      );
-                    },
-                  ),
-                  _buildPetItem(
-                    name: 'Coogie',
-                    breed: 'Beagle',
-                    checked: _pets[3],
-                    onChanged: (bool newValue) {
-                      setState(
-                        () {
-                          _pets[3] = newValue;
-                        },
-                      );
-                    },
-                  ),
-                ],
-              )
+              BlocBuilder<FamilyBloc, FamilyState>(
+                builder: (BuildContext context, FamilyState state) {
+                  if (state is FamilyLoadedState) {
+                    return FamilySelect(
+                      family: state.family,
+                      onSubmit: (List<Pet> family) {
+                        _startMeetup(context, family);
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: PLFilledButton(
-              title: 'Start Meetup',
-              onPressed: _startMeetup,
-            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPetItem({
-    name,
-    breed,
-    checked,
-    onChanged,
-  }) {
-    return InkWell(
-      onTap: () {
-        onChanged(!checked);
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: PLCheckbox(
-                value: checked,
-              ),
-            ),
-            Expanded(
-              child: PetItem(name, breed),
-            ),
-          ],
-        ),
-      ),
-    );
+  void _startMeetup(BuildContext context, List<Pet> family) async {
+    if (await _buildConfirmDialog(context)) {
+      Navigator.of(context).pushNamed(MeetupListScreen.routeName);
+    }
   }
 
-  Future<bool> _buildConfirmDialog() {
+  Future<bool> _buildConfirmDialog(BuildContext context) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,

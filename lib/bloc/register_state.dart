@@ -16,6 +16,13 @@ class RegisterProcessingState extends RegisterState {
   List<Object> get props => [];
 }
 
+class RegisterSucceedState extends RegisterState {
+  const RegisterSucceedState();
+
+  @override
+  List<Object> get props => [];
+}
+
 enum RegisterErrorTypes {
   EmailError,
   NameError,
@@ -32,6 +39,20 @@ class RegisterErrorState extends RegisterState {
 
   @override
   List<Object> get props => [type];
+}
+
+class VerificationProcessingState extends RegisterState {
+  const VerificationProcessingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class VerificationSucceedState extends RegisterState {
+  const VerificationSucceedState();
+
+  @override
+  List<Object> get props => [];
 }
 
 enum VerificationErrorTypes {

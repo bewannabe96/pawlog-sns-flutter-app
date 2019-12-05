@@ -4,8 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
 
-import 'package:pawlog/ui/component/auth.dart';
+import 'package:pawlog/ui/component/auth/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
+import 'package:pawlog/ui/component/pl_loading.dart';
 
 class ConfirmationScreenArgs {
   const ConfirmationScreenArgs(this.email);
@@ -56,7 +57,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         _verificationCodeController.text,
       ),
     );
-    Navigator.of(context).pop();
   }
 
   void _resendVerificationCode() {
@@ -67,23 +67,32 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<RegisterBloc>(context).state;
-    if (state is VerificationErrorState) {
-      switch (state.type) {
-        case VerificationErrorTypes.EmptyCode:
-          setState(() {
-            _errorMessage = 'Please type the verification code.';
-          });
-          break;
-        case VerificationErrorTypes.MismatchCode:
-          setState(() {
-            _errorMessage = 'Verification code is not correct.';
-          });
-          break;
-        case VerificationErrorTypes.Unknown:
-      }
-    }
+    return BlocListener(
+      bloc: BlocProvider.of<RegisterBloc>(context),
+      listener: (BuildContext context, RegisterState state) {
+        if (state is VerificationSucceedState) {
+          Navigator.of(context).pop();
+        } else if (state is VerificationErrorState) {
+          switch (state.type) {
+            case VerificationErrorTypes.EmptyCode:
+              setState(() {
+                _errorMessage = 'Please type the verification code.';
+              });
+              break;
+            case VerificationErrorTypes.MismatchCode:
+              setState(() {
+                _errorMessage = 'Verification code is not correct.';
+              });
+              break;
+            case VerificationErrorTypes.Unknown:
+          }
+        }
+      },
+      child: _buildPage(),
+    );
+  }
 
+  Widget _buildPage() {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -145,9 +154,20 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   ],
                 ),
               ),
-              PLFilledButton(
-                title: 'Verify Email',
-                onPressed: _confirmRegistration,
+              Container(
+                height: 50,
+                child: BlocBuilder<RegisterBloc, RegisterState>(
+                  builder: (BuildContext context, RegisterState state) {
+                    if (state is VerificationProcessingState) {
+                      return PLLoading();
+                    } else {
+                      return PLFilledButton(
+                        title: 'Verify Email',
+                        onPressed: _confirmRegistration,
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),

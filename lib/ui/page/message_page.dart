@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:pawlog/bloc/bloc.dart';
+import 'package:pawlog/model/model.dart';
+
+import 'package:pawlog/ui/component/pl_error.dart';
+import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/screen/chat_screen.dart';
 
-class MessagePage extends StatefulWidget {
+class MessagePage extends StatelessWidget {
   const MessagePage({Key key}) : super(key: key);
 
   @override
-  _MessagePageState createState() => _MessagePageState();
-}
-
-class _MessagePageState extends State<MessagePage> {
-  List<String> _messages = const <String>[
-    "Test",
-    "Test",
-    "Test",
-    "Test",
-    "Test",
-    "Test",
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.only(bottom: 10),
-      itemCount: _messages.length,
-      itemBuilder: (BuildContext context, int index) => _buildChatItem(),
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (BuildContext context, ChatState state) {
+        if (state is ChatsLoadedState) {
+          return ListView.builder(
+            padding: const EdgeInsets.only(bottom: 10),
+            itemCount: state.chats.length,
+            itemBuilder: (BuildContext context, int index) => _buildChatItem(
+              context,
+              state.chats[index],
+            ),
+          );
+        } else if (state is ChatsLoadingState) {
+          return PLLoading();
+        } else {
+          return PLError();
+        }
+      },
     );
   }
 
-  Widget _buildChatItem() {
+  Widget _buildChatItem(BuildContext context, Chat chat) {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(ChatScreen.routeName),
       child: Padding(
@@ -48,8 +53,8 @@ class _MessagePageState extends State<MessagePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
-                      'Name',
+                    Text(
+                      chat.userName,
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -57,7 +62,7 @@ class _MessagePageState extends State<MessagePage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 3),
                       child: Text(
-                        'I\'m in front of the bust station',
+                        chat.lastMessage,
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.grey[500],
@@ -75,7 +80,7 @@ class _MessagePageState extends State<MessagePage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    'PM 4:53',
+                    chat.lastMessageTime,
                     style: TextStyle(
                       fontSize: 11,
                       color: Colors.grey[500],

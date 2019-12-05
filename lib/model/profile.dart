@@ -1,41 +1,43 @@
-import 'package:equatable/equatable.dart';
+import 'package:pawlog/model/model.dart';
 
-import 'package:pawlog/model/pet.dart';
+class Profile {
+  String intro;
 
-class Profile extends Equatable {
-  final String profileURL;
-  final String email;
-  final String name;
-  final String intro;
+  int story;
+  int follower;
+  int following;
 
-  final int story;
-  final int follower;
-  final int following;
-
-  final List<Pet> family;
+  List<Story> stories;
 
   Profile({
-    this.profileURL,
-    this.email,
-    this.name,
-    this.intro,
+    this.intro = '',
     this.story = 0,
     this.follower = 0,
     this.following = 0,
-    this.family,
+    this.stories = const [],
   });
+}
 
-  @override
-  List<Object> get props => [email];
+class UserProfile extends Profile {
+  String name;
+  String profileURL;
 
-  static Profile fromJSON(dynamic json) {
-    return Profile(
-      profileURL: json['imageurl'],
+  List<Pet> family;
+
+  UserProfile({
+    this.name = '',
+    this.profileURL = '',
+    this.family,
+  }) : super();
+
+  factory UserProfile.fromJSON(Map<String, dynamic> json) {
+    return UserProfile(
       name: json['name'],
-      intro: json['intro'],
-      story: json['stories'],
-      follower: json['followers'],
-      following: json['followings'],
+      profileURL: json['imageurl'],
+      // intro: json['intro'],
+      // story: json['stories'],
+      // follower: json['followers'],
+      // following: json['followings'],
       family: json['family'],
     );
   }

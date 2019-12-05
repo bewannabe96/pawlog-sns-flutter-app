@@ -8,8 +8,6 @@ abstract class ProfileState extends Equatable {
 }
 
 class InitialProfileState extends ProfileState {
-  const InitialProfileState();
-
   @override
   List<Object> get props => [];
 }
@@ -23,16 +21,13 @@ class ProfileLoadingState extends ProfileState {
 
 class ProfileLoadedState extends ProfileState {
   final Profile profile;
-  final List<Story> stories;
 
   const ProfileLoadedState({
     @required this.profile,
-    @required this.stories,
-  })  : assert(profile != null),
-        assert(stories != null);
+  }) : assert(profile != null);
 
   @override
-  List<Object> get props => [profile];
+  List<Object> get props => [];
 }
 
 class ProfileErrorState extends ProfileState {

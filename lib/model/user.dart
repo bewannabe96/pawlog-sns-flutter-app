@@ -1,43 +1,32 @@
-import 'package:amazon_cognito_identity_dart/cognito.dart';
-import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-class User extends Equatable {
+import 'package:pawlog/entity/entity.dart';
+
+class User {
+  final int userID;
   final String hash;
   final String email;
   final String name;
 
-  User({
-    this.hash,
-    this.email,
-    this.name,
+  final String profileURL;
+
+  User._({
+    @required this.userID,
+    @required this.hash,
+    @required this.email,
+    @required this.name,
+    this.profileURL,
   });
 
-  @override
-  List<Object> get props => [email];
-
-  static User fromCognitoUserAttribute(List<CognitoUserAttribute> attrs) {
-    String hash;
-    String email;
-    String name;
-
-    attrs.forEach((attr) {
-      switch (attr.name) {
-        case 'sub':
-          hash = attr.value;
-          break;
-        case 'email':
-          email = attr.value;
-          break;
-        case 'name':
-          name = attr.value;
-          break;
-      }
-    });
-
-    return User(
-      hash: hash,
-      email: email,
-      name: name,
+  factory User.fromEntity({
+    UserEntity userEntity,
+    UserInfoEntity userInfoEntity,
+  }) {
+    return User._(
+      userID: userInfoEntity.userID,
+      hash: userEntity.hash,
+      email: userEntity.email,
+      name: userEntity.name,
     );
   }
 }

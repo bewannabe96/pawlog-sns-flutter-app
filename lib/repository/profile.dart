@@ -1,13 +1,32 @@
 import 'package:pawlog/model/model.dart';
 
-import 'package:pawlog/util/pawlog_api_client.dart';
-
 class ProfileRepository {
-  static Future<Profile> fetchUserProfile(int userid) {
-    return PawlogAPIClient.loadProfile(userid);
+  static Future<UserProfile> fetchUserProfile(int userid) async {
+    // return PawlogAPIClient.loadProfile(userid);
+    return UserProfile();
   }
 
-  static Future<List<Story>> fetchUserProfileStories(int userid) {
-    return PawlogAPIClient.loadProfileStories(userid);
+  static Future<List<Story>> fetchUserStories(int userid) async {
+    // return PawlogAPIClient.loadProfileStories(userid);
+    return [
+      Story(
+        storyID: 1,
+        content: 'This is an image',
+        updated: '',
+        created: '',
+      ),
+      Story(
+        storyID: 2,
+        content: 'Awesome Day!!',
+        updated: '',
+        created: '',
+      ),
+      Story(
+        storyID: 3,
+        content: 'Good boy~',
+        updated: '',
+        created: '',
+      ),
+    ];
   }
 }

@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 class Story extends Equatable {
   final int storyID;
   final String content;
+  final List<String> images;
   final String created;
   final String updated;
   final int like;
@@ -12,19 +13,21 @@ class Story extends Equatable {
   const Story({
     @required this.storyID,
     @required this.content,
+    this.images = const [],
     @required this.created,
     @required this.updated,
-    @required this.like,
-    @required this.comment,
-  }) : assert(storyID != null);
+    this.like = 0,
+    this.comment = 0,
+  });
 
   @override
   List<Object> get props => [storyID];
 
-  static Story fromJSON(dynamic json) {
+  factory Story.fromJSON(Map<String, dynamic> json) {
     return Story(
       storyID: json['storyid'],
       content: json['content'],
+      images: json['images'],
       created: json['created'],
       updated: json['updated'],
       like: json['likes'],

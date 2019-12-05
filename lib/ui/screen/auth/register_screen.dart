@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
 
-import 'package:pawlog/ui/component/auth.dart';
+import 'package:pawlog/ui/component/auth/auth.dart';
+import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
 import 'package:pawlog/ui/component/pl_page_indicator.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
@@ -19,8 +20,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  PageController _pageController;
   int _currentPage = 0;
+  PageController _pageController;
 
   TextEditingController _emailController;
   TextEditingController _nameController;
@@ -87,45 +88,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _passwordConfirmController.text,
       ),
     );
-    Navigator.of(context).pushReplacementNamed(
-      ConfirmationScreen.routeName,
-      arguments: ConfirmationScreenArgs(_emailController.text),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<RegisterBloc>(context).state;
-    if (state is RegisterErrorState) {
-      switch (state.type) {
-        case RegisterErrorTypes.EmailError:
-          _animateToPage(0);
-          setState(() {
-            _emailErrorMessage = state.message;
-          });
-          break;
-        case RegisterErrorTypes.NameError:
-          _animateToPage(1);
-          setState(() {
-            _nameErrorMessage = state.message;
-          });
-          break;
-        case RegisterErrorTypes.PasswordError:
-          _animateToPage(2);
-          setState(() {
-            _passwordErrorMessage = state.message;
-          });
-          break;
-        case RegisterErrorTypes.PasswordConfirmError:
-          _animateToPage(2);
-          setState(() {
-            _passwordConfirmErrorMessage = state.message;
-          });
-          break;
-        case RegisterErrorTypes.Unknown:
-      }
-    }
+    return BlocListener(
+      bloc: BlocProvider.of<RegisterBloc>(context),
+      listener: (BuildContext context, RegisterState state) {
+        if (state is RegisterSucceedState) {
+          Navigator.of(context).pushReplacementNamed(
+            ConfirmationScreen.routeName,
+            arguments: ConfirmationScreenArgs(_emailController.text),
+          );
+        } else if (state is RegisterErrorState) {
+          print(state.message);
+          switch (state.type) {
+            case RegisterErrorTypes.EmailError:
+              _animateToPage(0);
+              setState(() {
+                _emailErrorMessage = state.message;
+              });
+              break;
+            case RegisterErrorTypes.NameError:
+              _animateToPage(1);
+              setState(() {
+                _nameErrorMessage = state.message;
+              });
+              break;
+            case RegisterErrorTypes.PasswordError:
+              _animateToPage(2);
+              setState(() {
+                _passwordErrorMessage = state.message;
+              });
+              break;
+            case RegisterErrorTypes.PasswordConfirmError:
+              _animateToPage(2);
+              setState(() {
+                _passwordConfirmErrorMessage = state.message;
+              });
+              break;
+            case RegisterErrorTypes.Unknown:
+          }
+        }
+      },
+      child: _buildPage(),
+    );
+  }
 
+  Widget _buildPage() {
     return Scaffold(
       body: Container(
         child: SafeArea(
@@ -165,7 +175,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                _buildButtons(),
+                Container(
+                  height: 50,
+                  child: Center(
+                    child: _buildButtons(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -200,26 +215,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
     switch (_currentPage) {
       case 0:
         return AuthNavButton(
-          showPrev: false,
           onNext: _animateToNext,
         );
       case 2:
-        return Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: PLOutlinedButton(
-                title: 'Prev',
-                onPressed: _animateToPrev,
-              ),
-            ),
-            Expanded(
-              child: PLFilledButton(
-                title: 'Create an Accout',
-                onPressed: _createAccount,
-              ),
-            ),
-          ],
+        return BlocBuilder<RegisterBloc, RegisterState>(
+          builder: (BuildContext context, RegisterState state) {
+            if (state is RegisterProcessingState) {
+              return PLLoading();
+            } else {
+              return Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: PLOutlinedButton(
+                      title: 'Prev',
+                      onPressed: _animateToPrev,
+                    ),
+                  ),
+                  Expanded(
+                    child: PLFilledButton(
+                      title: 'Create an Account',
+                      onPressed: _createAccount,
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
         );
       default:
         return AuthNavButton(
