@@ -6,16 +6,19 @@ import 'package:pawlog/ui/component/chat_input_form.dart';
 import 'package:pawlog/ui/component/like_comment_indicator.dart';
 import 'package:pawlog/ui/widget/story_item.dart';
 
-class StoryDetailScreen extends StatefulWidget {
-  static const routeName = '/story-view';
+class StoryDetailScreenArgs {
+  final Story story;
 
-  const StoryDetailScreen({Key key}) : super(key: key);
-
-  @override
-  _StoryDetailScreenState createState() => _StoryDetailScreenState();
+  const StoryDetailScreenArgs(this.story);
 }
 
-class _StoryDetailScreenState extends State<StoryDetailScreen> {
+class StoryDetailScreen extends StatelessWidget {
+  static const routeName = '/story-view';
+
+  final Story story;
+
+  const StoryDetailScreen(this.story, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +33,7 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  StoryItemContent(Story(
-                    storyID: 1,
-                    content: '',
-                    created: '',
-                    updated: '',
-                    like: 2,
-                    comment: 2,
-                  )),
+                  StoryItemContent(story),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),

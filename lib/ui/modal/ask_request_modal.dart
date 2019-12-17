@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:pawlog/model/model.dart';
-
 import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/widget/pet_page_view.dart';
 
@@ -97,26 +95,7 @@ class AskRequestModal extends ModalRoute<AskRequestResponses> {
               ],
             ),
             PetPageView(
-              [
-                Pet(
-                  1,
-                  'Dexter',
-                  'Golden Retriever',
-                  'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                ),
-                Pet(
-                  2,
-                  'Dexter',
-                  'Golden Retriever',
-                  'https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=678&h=381',
-                ),
-                Pet(
-                  3,
-                  'Dexter',
-                  'Golden Retriever',
-                  'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
-                ),
-              ],
+              [],
               height: MediaQuery.of(context).size.width * 0.8,
               margin: const EdgeInsets.symmetric(vertical: 20),
               borderRadius: BorderRadius.circular(15),

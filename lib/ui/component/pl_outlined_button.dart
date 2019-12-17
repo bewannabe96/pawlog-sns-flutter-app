@@ -17,22 +17,25 @@ class PLOutlinedButton extends StatelessWidget {
 
     return FlatButton(
       onPressed: onPressed,
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: _color,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: _color,
+          ),
         ),
       ),
       splashColor: _color.withOpacity(0.2),
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 2,
           color: _color,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(30),
       ),
     );
   }

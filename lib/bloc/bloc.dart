@@ -19,3 +19,6 @@ export 'profile_state.dart';
 export 'family_bloc.dart';
 export 'family_event.dart';
 export 'family_state.dart';
+export 'feed_bloc.dart';
+export 'feed_event.dart';
+export 'feed_state.dart';

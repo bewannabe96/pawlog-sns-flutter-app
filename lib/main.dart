@@ -31,7 +31,8 @@ class PawlogApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          builder: (BuildContext context) => AuthBloc(),
+          builder: (BuildContext context) =>
+              AuthBloc()..add(CheckAuthenticationEvent()),
         ),
         BlocProvider<FamilyBloc>(
           builder: (BuildContext context) => FamilyBloc(),
@@ -44,6 +45,9 @@ class PawlogApp extends StatelessWidget {
         ),
         BlocProvider<ProfileBloc>(
           builder: (BuildContext context) => ProfileBloc(),
+        ),
+        BlocProvider<FeedBloc>(
+          builder: (BuildContext context) => FeedBloc(),
         ),
       ],
       child: _buildAppWidget(),

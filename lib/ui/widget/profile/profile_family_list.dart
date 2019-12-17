@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/model/model.dart';
-import 'package:pawlog/ui/component/pl_outlined_button.dart';
 
+import 'package:pawlog/ui/modal/new_family_modal.dart';
 import 'package:pawlog/ui/widget/pet_item.dart';
 
 class ProfileFamilyList extends StatelessWidget {
-  final List<Pet> family;
+  final Family family;
 
   const ProfileFamilyList(this.family);
 
   @override
   Widget build(BuildContext context) {
-    if (family is List<Pet>) {
+    if (family is Family) {
       return _buildFamily();
     } else {
-      return Padding(
-        padding: const EdgeInsets.all(20),
-        child: PLOutlinedButton(
-          title: 'Create My Family',
+      return FlatButton(
+        onPressed: () => Navigator.of(context).push(NewFamilyModal()),
+        child: Text(
+          "New Family",
+          style: TextStyle(fontSize: 18.0),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        textColor: Theme.of(context).colorScheme.primary,
       );
     }
   }
@@ -48,7 +51,9 @@ class ProfileFamilyList extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: (family.map((Pet pet) => _buildFamilyItem()).toList()),
+              children: (family.pets
+                  .map((Pet pet) => _buildFamilyItem(pet.name, pet.breed))
+                  .toList()),
             ),
           )
         ],
@@ -56,12 +61,12 @@ class ProfileFamilyList extends StatelessWidget {
     );
   }
 
-  Widget _buildFamilyItem() {
+  Widget _buildFamilyItem(String name, String breed) {
     return InkWell(
       onTap: () {},
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: PetItem('test', 'test'),
+        child: PetItem(name, breed),
       ),
     );
   }

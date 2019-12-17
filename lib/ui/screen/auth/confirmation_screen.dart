@@ -15,7 +15,7 @@ class ConfirmationScreenArgs {
 }
 
 class ConfirmationScreen extends StatefulWidget {
-  static const routeName = '/register-confirm';
+  static const routeName = '/auth/confirmation-confirm';
 
   const ConfirmationScreen({
     Key key,

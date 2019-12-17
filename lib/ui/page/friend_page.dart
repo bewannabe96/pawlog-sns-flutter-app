@@ -36,7 +36,10 @@ class FriendPage extends StatelessWidget {
 
   Widget _friendItemBuilder(BuildContext context, Friend friend) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(UserProfileScreen.routeName),
+      onTap: () => Navigator.of(context).pushNamed(
+        UserProfileScreen.routeName,
+        arguments: UserProfileScreenArgs(friend.userID),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(

@@ -22,16 +22,4 @@ class Story extends Equatable {
 
   @override
   List<Object> get props => [storyID];
-
-  factory Story.fromJSON(Map<String, dynamic> json) {
-    return Story(
-      storyID: json['storyid'],
-      content: json['content'],
-      images: json['images'],
-      created: json['created'],
-      updated: json['updated'],
-      like: json['likes'],
-      comment: json['comments'],
-    );
-  }
 }

@@ -12,7 +12,7 @@ import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
 import 'package:pawlog/ui/screen/auth/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = '/login';
+  static const routeName = '/auth/login';
 
   const LoginScreen({Key key}) : super(key: key);
 
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _signIn() {
     BlocProvider.of<AuthBloc>(context).add(
-      SignInEvent(_emailController.text, _passwordController.text),
+      AuthenticateEvent(_emailController.text, _passwordController.text),
     );
   }
 

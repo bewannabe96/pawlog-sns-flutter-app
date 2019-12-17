@@ -4,7 +4,7 @@ import 'package:pawlog/ui/component/auth/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  static const routeName = '/reset-password';
+  static const routeName = '/auth/reset-password';
 
   const ResetPasswordScreen({Key key}) : super(key: key);
 

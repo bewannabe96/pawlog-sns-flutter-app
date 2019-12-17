@@ -14,18 +14,29 @@ class FamilyBloc extends Bloc<FamilyEvent, FamilyState> {
   Stream<FamilyState> mapEventToState(
     FamilyEvent event,
   ) async* {
-    if (event is LoadFamilyEvent) {
-      yield* loadFamily(event.userID);
+    if (event is CreateFamilyEvent) {
+      yield* createFamily(event);
+    } else if (event is LoadFamilyEvent) {
+      yield* loadFamily(event);
     }
   }
 
-  Stream<FamilyState> loadFamily(int userID) async* {
-    yield FamilyLoadingState();
+  Stream<FamilyState> createFamily(CreateFamilyEvent event) async* {
+    yield FamilyCreatingState();
     try {
-      final family = await UserRepository.fetchFamily(userID);
+      final family =
+          await FamilyRepository.createFamily(event.userID, name: event.name);
       yield FamilyLoadedState(family: family);
-    } catch (_) {
-      yield FamilyErrorState();
-    }
+    } catch (_) {}
+  }
+}
+
+Stream<FamilyState> loadFamily(LoadFamilyEvent event) async* {
+  yield FamilyLoadingState();
+  try {
+    final family = await FamilyRepository.loadFamily(event.userID);
+    yield FamilyLoadedState(family: family);
+  } catch (_) {
+    yield FamilyErrorState();
   }
 }

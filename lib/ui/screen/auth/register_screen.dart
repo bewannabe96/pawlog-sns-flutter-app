@@ -11,7 +11,7 @@ import 'package:pawlog/ui/component/pl_filled_button.dart';
 import 'package:pawlog/ui/component/pl_outlined_button.dart';
 
 class RegisterScreen extends StatefulWidget {
-  static const routeName = '/register';
+  static const routeName = '/auth/register';
 
   const RegisterScreen({Key key}) : super(key: key);
 

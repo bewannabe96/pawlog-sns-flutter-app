@@ -15,14 +15,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ProfileEvent event,
   ) async* {
     if (event is LoadProfileEvent) {
-      yield* loadProfile(event.userID);
+      yield* loadProfile(event);
     }
   }
 
-  Stream<ProfileState> loadProfile(int userID) async* {
+  Stream<ProfileState> loadProfile(LoadProfileEvent event) async* {
     yield ProfileLoadingState();
     try {
-      final profile = await ProfileRepository.fetchUserProfile(userID);
+      final profile = await ProfileRepository.fetchUserProfile(event.userID);
       yield ProfileLoadedState(profile: profile);
     } catch (_) {
       yield ProfileErrorState();

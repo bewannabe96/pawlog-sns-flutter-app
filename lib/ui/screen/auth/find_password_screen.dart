@@ -4,7 +4,7 @@ import 'package:pawlog/ui/component/auth/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
 
 class FindPasswordScreen extends StatefulWidget {
-  static const routeName = '/find-password';
+  static const routeName = '/auth/find-password';
 
   const FindPasswordScreen({Key key}) : super(key: key);
 

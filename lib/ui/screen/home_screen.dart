@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
 
+import 'package:pawlog/ui/screen/settings_screen.dart';
+
 import 'package:pawlog/ui/widget/home_bottom_nav_bar.dart';
 import 'package:pawlog/ui/modal/user_search_modal.dart';
 import 'package:pawlog/ui/page/meetup_start_page.dart';
@@ -106,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
             body: ProfilePage(),
             actionWidgets: <Widget>[
               IconButton(
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(SettingsScreen.routeName),
                 icon: Icon(FontAwesomeIcons.cog),
               ),
             ],

@@ -16,70 +16,62 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEvent event,
   ) async* {
     if (event is NewRegisterEvent) {
-      yield* register(
-        event.email,
-        event.name,
-        event.password,
-        event.passwordConfirm,
-      );
+      yield* register(event);
     } else if (event is ConfirmRegistrationEvent) {
-      yield* confirmRegistration(event.email, event.verificationCode);
+      yield* confirmRegistration(event);
     } else if (event is ResendConfirmCodeEvent) {
-      yield* resendConfirmCode(event.email);
+      yield* resendConfirmCode(event);
     }
   }
 
   Stream<RegisterState> register(
-    String email,
-    String name,
-    String password,
-    String passwordConfirm,
+    NewRegisterEvent event,
   ) async* {
     yield RegisterProcessingState();
 
-    if (email == '') {
+    if (event.email == '') {
       yield RegisterErrorState(
         RegisterErrorTypes.EmailError,
         'Email should not be empty.',
       );
       return;
-    } else if (name == '') {
+    } else if (event.name == '') {
       yield RegisterErrorState(
         RegisterErrorTypes.NameError,
         'Name should not be empty.',
       );
       return;
-    } else if (password == '') {
+    } else if (event.password == '') {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordError,
         'Password cannot be empty.',
       );
       return;
-    } else if (password.length < 8) {
+    } else if (event.password.length < 8) {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordError,
         'Password is too short.',
       );
       return;
-    } else if (!RegExp(r"[a-z]").hasMatch(password)) {
+    } else if (!RegExp(r"[a-z]").hasMatch(event.password)) {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordError,
         'Password must contain lowercase characters.',
       );
       return;
-    } else if (!RegExp(r"[A-Z]").hasMatch(password)) {
+    } else if (!RegExp(r"[A-Z]").hasMatch(event.password)) {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordError,
         'Password must contain uppercase characters.',
       );
       return;
-    } else if (!RegExp(r"[0-9]").hasMatch(password)) {
+    } else if (!RegExp(r"[0-9]").hasMatch(event.password)) {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordError,
         'Password must contain numeric character.',
       );
       return;
-    } else if (password != passwordConfirm) {
+    } else if (event.password != event.passwordConfirm) {
       yield RegisterErrorState(
         RegisterErrorTypes.PasswordConfirmError,
         'Password does not match.',
@@ -88,7 +80,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
 
     try {
-      await AuthRepository.register(email, name, password);
+      await AuthRepository.register(event.email, event.name, event.password);
       yield RegisterSucceedState();
     } on CognitoClientException catch (e) {
       print(e);
@@ -115,18 +107,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> confirmRegistration(
-    String email,
-    String verificationCode,
-  ) async* {
+      ConfirmRegistrationEvent event) async* {
     yield VerificationProcessingState();
 
-    if (verificationCode == '') {
+    if (event.verificationCode == '') {
       yield VerificationErrorState(VerificationErrorTypes.EmptyCode);
       return;
     }
 
     try {
-      await AuthRepository.confirmRegistration(email, verificationCode);
+      await AuthRepository.confirmRegistration(
+          event.email, event.verificationCode);
       yield VerificationSucceedState();
     } on CognitoClientException catch (e) {
       switch (e.code) {
@@ -139,7 +130,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
-  Stream<RegisterState> resendConfirmCode(String email) async* {
-    await AuthRepository.resendConfirmCode(email);
+  Stream<RegisterState> resendConfirmCode(ResendConfirmCodeEvent event) async* {
+    await AuthRepository.resendConfirmCode(event.email);
   }
 }

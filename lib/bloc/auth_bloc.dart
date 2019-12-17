@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:bloc/bloc.dart';
 
 import './bloc.dart';
@@ -15,27 +14,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
-    if (event is SignInEvent) {
-      yield* signIn(event.email, event.password);
+    if (event is CheckAuthenticationEvent) {
+      yield* checkAuthentication();
+    } else if (event is AuthenticateEvent) {
+      yield* authenticate(event);
     }
   }
 
-  Stream<AuthState> signIn(String email, String password) async* {
+  Stream<AuthState> checkAuthentication() async* {
     yield SignInProcessingState();
 
-    if (email == '') {
+    try {
+      final user = await AuthRepository.checkAuthentication();
+      if (user != null) {
+        yield AuthorizedState(user: user);
+      } else {
+        yield UnauthorizedState();
+      }
+    } catch (e) {}
+  }
+
+  Stream<AuthState> authenticate(AuthenticateEvent event) async* {
+    yield SignInProcessingState();
+
+    if (event.email == '') {
       yield SignInErrorState(SignInErrorTypes.EmptyEmail);
       return;
-    } else if (password == '') {
+    } else if (event.password == '') {
       yield SignInErrorState(SignInErrorTypes.EmptyPassword);
       return;
     }
 
     try {
-      final user = await AuthRepository.authenticate(email, password);
+      final user =
+          await AuthRepository.authenticate(event.email, event.password);
       yield AuthorizedState(user: user);
-    } on CognitoClientException catch (e) {
-      switch (e.code) {
+    } catch (e) {
+      switch (e) {
         case 'UserNotFoundException':
           yield SignInErrorState(SignInErrorTypes.UserNotExist);
           break;

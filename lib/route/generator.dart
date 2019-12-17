@@ -6,6 +6,7 @@ import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/route/auth_switch.dart';
 
+import 'package:pawlog/ui/screen/settings_screen.dart';
 import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
 import 'package:pawlog/ui/screen/auth/register_screen.dart';
 import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
@@ -17,6 +18,8 @@ import 'package:pawlog/ui/screen/user_profile_screen.dart';
 import 'package:pawlog/ui/screen/chat_screen.dart';
 import 'package:pawlog/ui/screen/story_detail_screen.dart';
 
+import 'package:pawlog/ui/screen/family/create_family_screen.dart';
+
 class RouteGenerator {
   static const initialRoute = AuthSwitch.routeName;
 
@@ -26,6 +29,10 @@ class RouteGenerator {
     switch (settings.name) {
       case AuthSwitch.routeName:
         builder = (_) => AuthSwitch();
+        break;
+
+      case SettingsScreen.routeName:
+        builder = (_) => SettingsScreen();
         break;
 
       case FindPasswordScreen.routeName:
@@ -53,13 +60,19 @@ class RouteGenerator {
         break;
 
       case UserProfileScreen.routeName:
-        builder = (_) => UserProfileScreen();
+        final UserProfileScreenArgs args = settings.arguments;
+        builder = (_) => UserProfileScreen(args.userID);
         break;
       case ChatScreen.routeName:
         builder = (_) => ChatScreen();
         break;
       case StoryDetailScreen.routeName:
-        builder = (_) => StoryDetailScreen();
+        final StoryDetailScreenArgs args = settings.arguments;
+        builder = (_) => StoryDetailScreen(args.story);
+        break;
+
+      case CreateFamilyScreen.routeName:
+        builder = (_) => CreateFamilyScreen();
         break;
     }
 

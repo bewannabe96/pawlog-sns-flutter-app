@@ -12,9 +12,9 @@ class StoryTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return stories.length == 0
-        ? Padding(
-            padding: const EdgeInsets.all(20),
-            child: Center(
+        ? Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Text(
                 'No story exists.',
                 style: TextStyle(

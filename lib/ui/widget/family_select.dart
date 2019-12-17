@@ -43,35 +43,39 @@ class _FamilySelectState extends State<FamilySelect> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        SingleChildScrollView(
-          child: Column(
-            children: widget.family
-                .map(
-                  (Pet member) => _buildPetItem(
-                    name: member.name,
-                    breed: member.breed,
-                    checked: _family[member.petID],
-                    onChanged: (value) {
-                      setState(() {
-                        _family[member.petID] = value;
-                      });
-                    },
-                  ),
-                )
-                .toList(),
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: widget.family
+                    .map(
+                      (Pet member) => _buildPetItem(
+                        name: member.name,
+                        breed: member.breed,
+                        checked: _family[member.petID],
+                        onChanged: (value) {
+                          setState(() {
+                            _family[member.petID] = value;
+                          });
+                        },
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: PLFilledButton(
-            title: 'Start Meetup',
-            onPressed: onSubmit,
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: PLFilledButton(
+              title: 'Start Meetup',
+              onPressed: onSubmit,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

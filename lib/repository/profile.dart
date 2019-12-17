@@ -3,7 +3,7 @@ import 'package:pawlog/model/model.dart';
 class ProfileRepository {
   static Future<UserProfile> fetchUserProfile(int userid) async {
     // return PawlogAPIClient.loadProfile(userid);
-    return UserProfile();
+    return UserProfile(name: 'Test Name');
   }
 
   static Future<List<Story>> fetchUserStories(int userid) async {

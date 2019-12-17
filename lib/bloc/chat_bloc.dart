@@ -15,14 +15,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     ChatEvent event,
   ) async* {
     if (event is LoadChatsEvent) {
-      yield* loadChats(event.userID);
+      yield* loadChats(event);
     }
   }
 
-  Stream<ChatState> loadChats(int userID) async* {
+  Stream<ChatState> loadChats(LoadChatsEvent event) async* {
     yield ChatsLoadingState();
     try {
-      final chats = await UserRepository.fetchChats(userID);
+      final chats = await UserRepository.fetchChats(event.userID);
       yield ChatsLoadedState(chats: chats);
     } catch (_) {
       yield ChatErrorState();

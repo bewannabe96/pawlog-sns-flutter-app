@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pawlog/ui/widget/meetup_map.dart';
 
 class MeetupMapScreen extends StatefulWidget {
-  static const routeName = '/meetup-map';
+  static const routeName = '/meetup/map';
 
   const MeetupMapScreen({Key key}) : super(key: key);
 

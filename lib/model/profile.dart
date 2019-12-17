@@ -10,7 +10,7 @@ class Profile {
   List<Story> stories;
 
   Profile({
-    this.intro = '',
+    this.intro,
     this.story = 0,
     this.follower = 0,
     this.following = 0,
@@ -22,23 +22,11 @@ class UserProfile extends Profile {
   String name;
   String profileURL;
 
-  List<Pet> family;
+  Family family;
 
   UserProfile({
     this.name = '',
     this.profileURL = '',
     this.family,
   }) : super();
-
-  factory UserProfile.fromJSON(Map<String, dynamic> json) {
-    return UserProfile(
-      name: json['name'],
-      profileURL: json['imageurl'],
-      // intro: json['intro'],
-      // story: json['stories'],
-      // follower: json['followers'],
-      // following: json['followings'],
-      family: json['family'],
-    );
-  }
 }

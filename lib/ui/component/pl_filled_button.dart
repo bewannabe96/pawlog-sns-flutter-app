@@ -17,19 +17,22 @@ class PLFilledButton extends StatelessWidget {
 
     return FlatButton(
       onPressed: onPressed,
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
         ),
       ),
       color: _color,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       splashColor: Colors.white10,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(30),
       ),
     );
   }

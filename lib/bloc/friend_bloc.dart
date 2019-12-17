@@ -15,14 +15,14 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
     FriendEvent event,
   ) async* {
     if (event is LoadFriendsEvent) {
-      yield* loadFriends(event.userID);
+      yield* loadFriends(event);
     }
   }
 
-  Stream<FriendState> loadFriends(int userID) async* {
+  Stream<FriendState> loadFriends(LoadFriendsEvent event) async* {
     yield FriendsLoadingState();
     try {
-      final friends = await UserRepository.fetchFriends(userID);
+      final friends = await UserRepository.fetchFriends(event.userID);
       yield FriendsLoadedState(friends: friends);
     } catch (_) {
       yield FriendErrorState();

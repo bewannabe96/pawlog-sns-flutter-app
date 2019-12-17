@@ -22,7 +22,6 @@ class ProfilePage extends StatelessWidget {
           return _buildPage(
             context,
             state.profile,
-            null,
           );
         } else if (state is ProfileLoadingState) {
           return PLLoading();
@@ -36,7 +35,6 @@ class ProfilePage extends StatelessWidget {
   Widget _buildPage(
     BuildContext context,
     Profile profile,
-    List<Pet> family,
   ) {
     return SingleChildScrollView(
       child: Column(
@@ -44,11 +42,25 @@ class ProfilePage extends StatelessWidget {
         children: <Widget>[
           ProfileTitle(profile),
           Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-          ProfileFamilyList(family),
+          _buildFamilyList(),
           Divider(color: Theme.of(context).colorScheme.secondaryVariant),
-          ProfileStoryTimeline(profile.stories),
+          ProfileStoryTimeline([]),
         ],
       ),
+    );
+  }
+
+  Widget _buildFamilyList() {
+    return BlocBuilder<FamilyBloc, FamilyState>(
+      builder: (BuildContext context, FamilyState state) {
+        if (state is FamilyLoadedState) {
+          return ProfileFamilyList(state.family);
+        } else if (state is FamilyLoadingState) {
+          return PLLoading();
+        } else {
+          return PLError();
+        }
+      },
     );
   }
 }

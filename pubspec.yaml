@@ -27,11 +27,13 @@ dependencies:
   bloc: 2.0.0
   flutter_bloc: 2.0.0
   equatable: ^1.0.0
+  shared_preferences: 0.5.6
+  connectivity: 0.4.6+1
   # UI
   cupertino_icons: ^0.1.2
   font_awesome_flutter: 8.5.0
   flutter_page_indicator: 0.0.3
-  cached_network_image: 1.1.1
+  cached_network_image: 2.0.0-rc
   keyboard_visibility: ^0.5.6
   # Utils
   intl: 0.16.0
