@@ -36,7 +36,7 @@ Stream<FamilyState> loadFamily(LoadFamilyEvent event) async* {
   try {
     final family = await FamilyRepository.loadFamily(event.userID);
     yield FamilyLoadedState(family: family);
-  } catch (_) {
+  } catch (e) {
     yield FamilyErrorState();
   }
 }

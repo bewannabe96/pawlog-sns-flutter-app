@@ -37,11 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {
-        setState(
-          () {
-            _keyboardVisible = visible;
-          },
-        );
+        setState(() {
+          _keyboardVisible = visible;
+        });
       },
     );
     _emailController.addListener(() {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PetItem extends StatelessWidget {
-  const PetItem(this.name, this.breed);
+import 'package:pawlog/model/model.dart';
 
-  final String name;
-  final String breed;
+class PetItem extends StatelessWidget {
+  final Pet pet;
+
+  const PetItem(this.pet);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,12 @@ class PetItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 3),
                 child: Text(
-                  name,
+                  pet.name,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
               Text(
-                breed,
+                pet.breed,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[500],

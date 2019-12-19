@@ -1,3 +1,4 @@
+export 'sync_config.dart';
 export 'user.dart';
 export 'family.dart';
 export 'friend.dart';

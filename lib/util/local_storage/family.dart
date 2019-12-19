@@ -19,8 +19,12 @@ class FamilyLocalStorage {
   static Future<FamilyEntity> readUserFamily() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final json = jsonDecode(prefs.getString(_storageKey + 'family'));
+    final json = prefs.getString(_storageKey + 'family');
 
-    return FamilyEntity.fromJson(json);
+    if (json != null) {
+      return FamilyEntity.fromJson(jsonDecode(json));
+    }
+
+    return null;
   }
 }

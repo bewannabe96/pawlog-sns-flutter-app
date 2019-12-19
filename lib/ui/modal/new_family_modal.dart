@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:pawlog/ui/screen/settings/edit_family/create_family.dart';
 import 'package:pawlog/ui/widget/new_family_option.dart';
-import 'package:pawlog/ui/screen/family/create_family_screen.dart';
 
 class NewFamilyModal extends ModalRoute<void> {
   @override

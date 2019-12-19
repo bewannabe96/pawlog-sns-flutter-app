@@ -2,6 +2,13 @@ import 'package:meta/meta.dart';
 
 import 'package:pawlog/entity/entity.dart';
 
+class Breed {
+  final int breedID;
+  final String title;
+
+  const Breed(this.breedID, this.title);
+}
+
 class Pet {
   final int petID;
   final String name;

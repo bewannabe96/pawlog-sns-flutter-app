@@ -26,14 +26,14 @@ class _FamilySelectState extends State<FamilySelect> {
   @override
   void initState() {
     super.initState();
-    widget.family.forEach((Pet pet) {
+    widget.family.forEach((pet) {
       _family[pet.petID] = false;
     });
   }
 
   void onSubmit() {
     List<Pet> selected = [];
-    widget.family.forEach((Pet pet) {
+    widget.family.forEach((pet) {
       if (_family[pet.petID]) {
         selected.add(pet);
       }
@@ -52,13 +52,12 @@ class _FamilySelectState extends State<FamilySelect> {
               child: Column(
                 children: widget.family
                     .map(
-                      (Pet member) => _buildPetItem(
-                        name: member.name,
-                        breed: member.breed,
-                        checked: _family[member.petID],
-                        onChanged: (value) {
+                      (value) => _buildPetItem(
+                        pet: value,
+                        checked: _family[value.petID],
+                        onChanged: (val) {
                           setState(() {
-                            _family[member.petID] = value;
+                            _family[value.petID] = val;
                           });
                         },
                       ),
@@ -80,10 +79,9 @@ class _FamilySelectState extends State<FamilySelect> {
   }
 
   Widget _buildPetItem({
-    name,
-    breed,
-    checked,
-    onChanged,
+    Pet pet,
+    bool checked,
+    Function(bool) onChanged,
   }) {
     return InkWell(
       onTap: () {
@@ -100,7 +98,7 @@ class _FamilySelectState extends State<FamilySelect> {
               ),
             ),
             Expanded(
-              child: PetItem(name, breed),
+              child: PetItem(pet),
             ),
           ],
         ),

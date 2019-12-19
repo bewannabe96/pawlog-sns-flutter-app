@@ -47,6 +47,10 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Enable access to your album to upload</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Enable access to your camera to take photo to be uploaded</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<true/>
 </dict>

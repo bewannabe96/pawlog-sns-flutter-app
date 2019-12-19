@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:pawlog/bloc/bloc.dart';
 
-class CreateFamilyScreen extends StatelessWidget {
-  static const routeName = '/family/create';
+class CreateFamilyScreen extends StatefulWidget {
+  static const routeName = '/settings/edit-family/create';
 
   CreateFamilyScreen({Key key}) : super(key: key);
+
+  @override
+  _CreateFamilyScreenState createState() => _CreateFamilyScreenState();
+}
+
+class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
+  TextEditingController _nameController;
+
+  bool _nameEmpty = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _nameController.addListener(() {
+      setState(() {
+        _nameEmpty = _nameController.text.length == 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,33 +52,40 @@ class CreateFamilyScreen extends StatelessWidget {
         children: <Widget>[
           _buildContent(),
           FlatButton(
-            onPressed: () => _onSubmit(context),
+            onPressed: _nameEmpty ? null : () => _crateFamily(context),
             child: SafeArea(
               child: Text(
                 "Create",
                 style: TextStyle(fontSize: 18.0),
               ),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             color: Theme.of(context).colorScheme.primary,
+            disabledColor: Colors.grey,
             textColor: Colors.white,
+            disabledTextColor: Colors.black26,
           ),
         ],
       ),
     );
   }
 
-  void _onSubmit(BuildContext context) {
-    BlocProvider.of<FamilyBloc>(context).add(CreateFamilyEvent(
-      1,
-      name: 'Test Family',
-    ));
+  void _crateFamily(BuildContext context) {
+    final authState = BlocProvider.of<AuthBloc>(context).state;
+    if (authState is AuthorizedState) {
+      BlocProvider.of<FamilyBloc>(context).add(CreateFamilyEvent(
+        authState.user.userID,
+        name: _nameController.text,
+      ));
+      Navigator.of(context).pop();
+    }
   }
 
   Widget _buildContent() {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: TextFormField(
+        controller: _nameController,
         decoration: InputDecoration(
           labelText: 'Family Nickname',
           labelStyle: TextStyle(

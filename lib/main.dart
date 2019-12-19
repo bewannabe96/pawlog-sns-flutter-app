@@ -30,6 +30,10 @@ class PawlogApp extends StatelessWidget {
     ));
     return MultiBlocProvider(
       providers: [
+        BlocProvider<SyncConfigBloc>(
+          builder: (BuildContext context) =>
+              SyncConfigBloc()..add(LoadSyncConfigEvent()),
+        ),
         BlocProvider<AuthBloc>(
           builder: (BuildContext context) =>
               AuthBloc()..add(CheckAuthenticationEvent()),
