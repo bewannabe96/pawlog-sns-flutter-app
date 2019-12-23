@@ -102,7 +102,7 @@ class _BreedSelectScreen extends State<BreedSelectScreen> {
     final state = BlocProvider.of<SyncConfigBloc>(context).state;
 
     if (state is ConfigLoadedState) {
-      final breeds = state.config.breedTypes;
+      final breeds = state.config.breedTypes.values.toList();
 
       return Expanded(
         child: ListView.builder(

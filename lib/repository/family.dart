@@ -30,4 +30,25 @@ class FamilyRepository {
 
     return familyEntity == null ? null : Family.fromEntity(familyEntity);
   }
+
+  static Future<Family> registerPet(
+    int userID,
+    Family family, {
+    @required String name,
+    @required breedID,
+  }) async {
+    FamilyEntity familyEntity = family.toEntity();
+    PetEntity petEntity = PetEntity(name: name, breed: breedID);
+
+    try {
+      familyEntity = await FamilyAPIClient.registerUserPet(
+        userID,
+        familyEntity,
+        petEntity,
+      );
+      await FamilyLocalStorage.writeUserFamily(familyEntity);
+    } catch (_) {}
+
+    return Family.fromEntity(familyEntity);
+  }
 }

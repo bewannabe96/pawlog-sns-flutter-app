@@ -6,18 +6,18 @@ import 'package:pawlog/ui/component/chat_input_form.dart';
 import 'package:pawlog/ui/component/like_comment_indicator.dart';
 import 'package:pawlog/ui/widget/story_item.dart';
 
-class StoryDetailScreenArgs {
+class StoryViewScreenArgs {
   final Story story;
 
-  const StoryDetailScreenArgs(this.story);
+  const StoryViewScreenArgs(this.story);
 }
 
-class StoryDetailScreen extends StatelessWidget {
-  static const routeName = '/story-view';
+class StoryViewScreen extends StatelessWidget {
+  static const routeName = '/story/view';
 
   final Story story;
 
-  const StoryDetailScreen(this.story, {Key key}) : super(key: key);
+  const StoryViewScreen(this.story, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

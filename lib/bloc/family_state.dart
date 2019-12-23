@@ -19,8 +19,15 @@ class FamilyLoadingState extends FamilyState {
   List<Object> get props => [];
 }
 
-class FamilyCreatingState extends FamilyState {
+class FamilyCreatingState extends FamilyLoadingState {
   const FamilyCreatingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class PetRegisteringState extends FamilyLoadingState {
+  const PetRegisteringState();
 
   @override
   List<Object> get props => [];

@@ -12,10 +12,10 @@ class Breed {
 class Pet {
   final int petID;
   final String name;
-  final String breed;
+  final int breed;
   final String imageURL;
 
-  const Pet._({
+  const Pet({
     @required this.petID,
     @required this.name,
     @required this.breed,
@@ -23,11 +23,20 @@ class Pet {
   });
 
   factory Pet.fromEntity(PetEntity entity) {
-    return Pet._(
+    return Pet(
       petID: entity.petID,
       name: entity.name,
       breed: entity.breed,
       imageURL: entity.imageURL,
+    );
+  }
+
+  PetEntity toEntity() {
+    return PetEntity(
+      petID: petID,
+      name: name,
+      breed: breed,
+      imageURL: imageURL,
     );
   }
 }
@@ -47,5 +56,16 @@ class Family {
       name: entity.name,
       pets: entity.pets.map((value) => Pet.fromEntity(value)).toList(),
     );
+  }
+
+  FamilyEntity toEntity() {
+    return FamilyEntity(
+      name: name,
+      pets: pets.map((pet) => pet.toEntity()).toList(),
+    );
+  }
+
+  void registerPet(Pet pet) {
+    pets.add(pet);
   }
 }

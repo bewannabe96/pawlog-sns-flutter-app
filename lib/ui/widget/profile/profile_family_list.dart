@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/model/model.dart';
 
+import 'package:pawlog/ui/modal/pet_info_modal.dart';
 import 'package:pawlog/ui/widget/pet_item.dart';
 
 class ProfileFamilyList extends StatelessWidget {
@@ -11,37 +12,37 @@ class ProfileFamilyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0, right: 20.0, left: 20.0),
+          child: Text(
             family.name,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 20.0,
               fontWeight: FontWeight.w500,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: (family.pets
-                  .map((value) => _buildFamilyItem(value))
-                  .toList()),
-            ),
-          )
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: (family.pets
+                .map((value) => _buildFamilyItem(context, value))
+                .toList()),
+          ),
+        )
+      ],
     );
   }
 
-  Widget _buildFamilyItem(Pet pet) {
+  Widget _buildFamilyItem(BuildContext context, Pet pet) {
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.of(context).push(PetInfoModal(pet)),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: PetItem(pet),
       ),
     );

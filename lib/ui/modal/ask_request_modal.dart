@@ -16,9 +16,9 @@ enum AskRequestResponses {
 }
 
 class AskRequestModal extends ModalRoute<AskRequestResponses> {
-  AskRequestModal(this.requstAction);
-
   final AskRequestActions requstAction;
+
+  AskRequestModal(this.requstAction);
 
   @override
   Duration get transitionDuration => Duration(milliseconds: 500);

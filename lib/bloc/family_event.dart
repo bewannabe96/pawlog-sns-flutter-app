@@ -27,3 +27,18 @@ class LoadFamilyEvent extends FamilyEvent {
   @override
   List<Object> get props => [];
 }
+
+class RegisterPetEvent extends FamilyEvent {
+  final int userID;
+  final String name;
+  final int breedID;
+
+  const RegisterPetEvent(
+    this.userID, {
+    @required this.name,
+    @required this.breedID,
+  });
+
+  @override
+  List<Object> get props => [];
+}

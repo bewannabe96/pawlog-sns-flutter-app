@@ -3,13 +3,13 @@ import 'package:meta/meta.dart';
 class PetEntity {
   final int petID;
   final String name;
-  final String breed;
+  final int breed;
   final String imageURL;
 
   const PetEntity({
-    @required this.petID,
-    @required this.name,
-    @required this.breed,
+    this.petID,
+    this.name,
+    this.breed,
     this.imageURL,
   });
 
@@ -60,5 +60,9 @@ class FamilyEntity {
     json['pets'] = pets.map((value) => value.toJson()).toList();
 
     return json;
+  }
+
+  void registerPet(PetEntity petEntity) {
+    pets.add(petEntity);
   }
 }

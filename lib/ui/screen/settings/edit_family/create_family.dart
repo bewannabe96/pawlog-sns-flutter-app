@@ -52,7 +52,7 @@ class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
         children: <Widget>[
           _buildContent(),
           FlatButton(
-            onPressed: _nameEmpty ? null : () => _crateFamily(context),
+            onPressed: _nameEmpty ? null : _crateFamily,
             child: SafeArea(
               child: Text(
                 "Create",
@@ -70,13 +70,15 @@ class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
     );
   }
 
-  void _crateFamily(BuildContext context) {
+  void _crateFamily() {
     final authState = BlocProvider.of<AuthBloc>(context).state;
     if (authState is AuthorizedState) {
-      BlocProvider.of<FamilyBloc>(context).add(CreateFamilyEvent(
-        authState.user.userID,
-        name: _nameController.text,
-      ));
+      BlocProvider.of<FamilyBloc>(context).add(
+        CreateFamilyEvent(
+          authState.user.userID,
+          name: _nameController.text,
+        ),
+      );
       Navigator.of(context).pop();
     }
   }

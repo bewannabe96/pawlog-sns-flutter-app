@@ -41,30 +41,38 @@ class FriendPage extends StatelessWidget {
         arguments: UserProfileScreenArgs(friend.userID),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Row(
           children: <Widget>[
             const CircleAvatar(
               radius: 27,
-              backgroundColor: Colors.grey,
+              backgroundColor: Colors.black26,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     friend.name,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(
+                      fontSize: 15,
+                    ),
                   ),
-                  Text(
-                    friend.email,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: Text(
+                      friend.email,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black45,
+                      ),
+                    ),
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

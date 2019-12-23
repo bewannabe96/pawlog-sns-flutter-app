@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:pawlog/model/model.dart';
 
 class SyncConfig extends Equatable {
-  final List<Breed> breedTypes;
+  final Map<int, Breed> breedTypes;
 
   const SyncConfig({
     @required this.breedTypes,

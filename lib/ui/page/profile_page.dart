@@ -19,10 +19,7 @@ class ProfilePage extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (BuildContext context, ProfileState state) {
         if (state is ProfileLoadedState) {
-          return _buildPage(
-            context,
-            state.profile,
-          );
+          return _buildPage(state.profile);
         } else if (state is ProfileLoadingState) {
           return PLLoading();
         } else {
@@ -32,18 +29,15 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildPage(
-    BuildContext context,
-    Profile profile,
-  ) {
+  Widget _buildPage(Profile profile) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ProfileTitle(profile),
-          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+          Divider(),
           _buildFamilyList(),
-          Divider(color: Theme.of(context).colorScheme.secondaryVariant),
+          Divider(),
           ProfileStoryTimeline([]),
         ],
       ),

@@ -63,7 +63,6 @@ class EditFamilyScreen extends StatelessWidget {
           "New Family",
           style: TextStyle(fontSize: 18.0),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 20),
         textColor: Theme.of(context).colorScheme.primary,
       );
     } else if (family.pets.length == 0) {
@@ -81,7 +80,7 @@ class EditFamilyScreen extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
         child: PetItem(pet),
       ),
     );

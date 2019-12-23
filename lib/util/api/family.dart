@@ -11,9 +11,18 @@ class FamilyAPIClient extends PawlogAPIClient {
     return FamilyEntity(
       name: 'HappyFam',
       pets: [
-        PetEntity(petID: 1, name: 'Cash', breed: 'Pug'),
-        PetEntity(petID: 2, name: 'Soye', breed: 'Pug'),
+        PetEntity(petID: 1, name: 'Cash', breed: 1),
+        PetEntity(petID: 2, name: 'Soye', breed: 1),
       ],
     );
+  }
+
+  static Future<FamilyEntity> registerUserPet(
+    int userID,
+    FamilyEntity familyEntity,
+    PetEntity petEntity,
+  ) async {
+    familyEntity.registerPet(petEntity);
+    return familyEntity;
   }
 }

@@ -4,7 +4,7 @@ import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/component/feed_action_button.dart';
 import 'package:pawlog/ui/component/like_comment_indicator.dart';
-import 'package:pawlog/ui/screen/story_detail_screen.dart';
+import 'package:pawlog/ui/screen/story/view_screen.dart';
 import 'package:pawlog/ui/widget/story_images_page_view.dart';
 
 class StoryItemContent extends StatelessWidget {
@@ -72,8 +72,8 @@ class StoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
-        StoryDetailScreen.routeName,
-        arguments: StoryDetailScreenArgs(story),
+        StoryViewScreen.routeName,
+        arguments: StoryViewScreenArgs(story),
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),

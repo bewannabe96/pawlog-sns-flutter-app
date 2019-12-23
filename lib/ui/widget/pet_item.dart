@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:pawlog/bloc/bloc.dart';
 import 'package:pawlog/model/model.dart';
 
 class PetItem extends StatelessWidget {
@@ -9,6 +11,8 @@ class PetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _syncConfigState = BlocProvider.of<SyncConfigBloc>(context).state;
+
     return Row(
       children: <Widget>[
         Padding(
@@ -30,7 +34,9 @@ class PetItem extends StatelessWidget {
                 ),
               ),
               Text(
-                pet.breed,
+                _syncConfigState is ConfigLoadedState
+                    ? _syncConfigState.config.breedTypes[pet.breed].title
+                    : '',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[500],

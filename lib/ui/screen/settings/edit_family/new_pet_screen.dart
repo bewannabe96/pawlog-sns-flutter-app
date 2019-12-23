@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/model/model.dart';
 
@@ -79,13 +81,27 @@ class _NewPetScreenState extends State<NewPetScreen> {
     }
   }
 
+  void _registerPet() {
+    final authState = BlocProvider.of<AuthBloc>(context).state;
+    if (authState is AuthorizedState) {
+      BlocProvider.of<FamilyBloc>(context).add(
+        RegisterPetEvent(
+          authState.user.userID,
+          name: _nameController.text,
+          breedID: _breed.breedID,
+        ),
+      );
+      Navigator.of(context).pop();
+    }
+  }
+
   Widget _buildPage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         _buildContent(),
         FlatButton(
-          onPressed: _nameEmpty || _breed == null ? null : () {},
+          onPressed: _nameEmpty || _breed == null ? null : _registerPet,
           child: SafeArea(
             child: Text(
               "Save",
