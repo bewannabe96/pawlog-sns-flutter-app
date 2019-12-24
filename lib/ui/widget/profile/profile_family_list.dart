@@ -8,10 +8,14 @@ import 'package:pawlog/ui/widget/pet_item.dart';
 class ProfileFamilyList extends StatelessWidget {
   final Family family;
 
-  const ProfileFamilyList(this.family) : assert(family != null);
+  const ProfileFamilyList(this.family);
 
   @override
   Widget build(BuildContext context) {
+    return family == null ? _noFamily(context) : _buildContent(context);
+  }
+
+  Widget _buildContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -35,6 +39,20 @@ class ProfileFamilyList extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _noFamily(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Text(
+          'No family exists.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          ),
+        ),
+      ),
     );
   }
 

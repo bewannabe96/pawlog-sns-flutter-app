@@ -1,18 +1,19 @@
 import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:meta/meta.dart';
 
-class UserEntity {
+class CognitoUserEntity {
   final String hash;
   final String email;
   final String name;
 
-  const UserEntity._({
+  const CognitoUserEntity._({
     @required this.hash,
     @required this.email,
     @required this.name,
   });
 
-  factory UserEntity.fromCognitoUserAttrs(List<CognitoUserAttribute> attrs) {
+  factory CognitoUserEntity.fromCognitoUserAttrs(
+      List<CognitoUserAttribute> attrs) {
     var _hash, _eamil, _name;
 
     attrs.forEach((attr) {
@@ -29,7 +30,7 @@ class UserEntity {
       }
     });
 
-    return UserEntity._(
+    return CognitoUserEntity._(
       hash: _hash,
       email: _eamil,
       name: _name,
@@ -37,10 +38,10 @@ class UserEntity {
   }
 }
 
-class UserInfoEntity {
+class UserBaseEntity {
   final int userID;
 
-  const UserInfoEntity({
+  const UserBaseEntity({
     @required this.userID,
   });
 }

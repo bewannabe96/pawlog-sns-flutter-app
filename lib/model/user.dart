@@ -19,14 +19,14 @@ class User {
   });
 
   factory User.fromEntity({
-    UserEntity userEntity,
-    UserInfoEntity userInfoEntity,
+    CognitoUserEntity userBaseEntity,
+    UserBaseEntity userEntity,
   }) {
     return User._(
-      userID: userInfoEntity.userID,
-      hash: userEntity.hash,
-      email: userEntity.email,
-      name: userEntity.name,
+      userID: userEntity.userID,
+      hash: userBaseEntity.hash,
+      email: userBaseEntity.email,
+      name: userBaseEntity.name,
     );
   }
 }

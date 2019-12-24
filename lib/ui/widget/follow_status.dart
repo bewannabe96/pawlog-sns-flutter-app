@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
+enum FollowStatuses {
+  NoRelation,
+  Following,
+}
+
 class FollowStatus extends StatelessWidget {
-  const FollowStatus();
+  final FollowStatuses status;
+
+  const FollowStatus(this.status);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-      height: 30,
-      child: 1 == 1
+      height: 32.0,
+      child: status == FollowStatuses.Following
           ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -23,10 +30,10 @@ class FollowStatus extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: SizedBox(
-                    width: 90,
+                    width: 100,
                     child: _buildButton(
                       context,
-                      'Friend',
+                      'Following',
                       color: Theme.of(context).colorScheme.primary,
                       outlined: false,
                     ),
@@ -50,20 +57,21 @@ class FollowStatus extends StatelessWidget {
   }) {
     final _color =
         color == null ? Theme.of(context).colorScheme.primary : color;
+
     return FlatButton(
       onPressed: () => {},
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 12.0,
           color: outlined ? _color : Colors.white,
         ),
       ),
       color: outlined ? Colors.transparent : _color,
       splashColor: outlined ? _color.withOpacity(0.15) : Colors.white24,
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: outlined ? 1 : 0, color: _color),
-        borderRadius: BorderRadius.circular(15),
+        side: BorderSide(width: outlined ? 1.0 : 0, color: _color),
+        borderRadius: BorderRadius.circular(16.0),
       ),
     );
   }

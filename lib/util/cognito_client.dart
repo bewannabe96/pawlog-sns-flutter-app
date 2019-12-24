@@ -11,7 +11,7 @@ class CognitoClient {
     storage: _cognitoStorage,
   );
 
-  static Future<UserEntity> authenticateFromStorage() async {
+  static Future<CognitoUserEntity> authenticateFromStorage() async {
     final currentUser = await _userPool.getCurrentUser();
     if (currentUser == null) {
       return null;
@@ -22,12 +22,13 @@ class CognitoClient {
       return null;
     }
 
-    return UserEntity.fromCognitoUserAttrs(
+    return CognitoUserEntity.fromCognitoUserAttrs(
       await currentUser.getUserAttributes(),
     );
   }
 
-  static Future<UserEntity> authenticate(String email, String password) async {
+  static Future<CognitoUserEntity> authenticate(
+      String email, String password) async {
     final cognitoUser = CognitoUser(
       email,
       _userPool,
@@ -39,7 +40,7 @@ class CognitoClient {
 
     await cognitoUser.authenticateUser(authDetails);
 
-    return UserEntity.fromCognitoUserAttrs(
+    return CognitoUserEntity.fromCognitoUserAttrs(
       await cognitoUser.getUserAttributes(),
     );
   }

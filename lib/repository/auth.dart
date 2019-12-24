@@ -9,29 +9,29 @@ import 'package:pawlog/util/local_storage/local_storage.dart';
 
 class AuthRepository {
   static Future<User> checkAuthentication() async {
-    final userEntity = await CognitoClient.authenticateFromStorage();
-    if (userEntity == null) {
+    final userBaseEntity = await CognitoClient.authenticateFromStorage();
+    if (userBaseEntity == null) {
       return null;
     }
 
-    UserInfoEntity userInfoEntity;
+    UserBaseEntity userEntity;
     try {
-      userInfoEntity = await UserAPIClient.fetchUserInfo(userEntity.hash);
-      UserLocalStorage.writeUserInfo(userInfoEntity);
+      userEntity = await UserAPIClient.fetchUserInfo(userBaseEntity.hash);
+      UserLocalStorage.writeUserInfo(userEntity);
     } catch (_) {
-      userInfoEntity = await UserLocalStorage.readUserInfo(userEntity.hash);
+      userEntity = await UserLocalStorage.readUserInfo();
     }
 
     return User.fromEntity(
+      userBaseEntity: userBaseEntity,
       userEntity: userEntity,
-      userInfoEntity: userInfoEntity,
     );
   }
 
   static Future<User> authenticate(String email, String password) async {
-    UserEntity userEntity;
+    CognitoUserEntity userBaseEntity;
     try {
-      userEntity = await CognitoClient.authenticate(email, password);
+      userBaseEntity = await CognitoClient.authenticate(email, password);
     } on CognitoClientException catch (e) {
       switch (e.code) {
         case 'UserNotFoundException':
@@ -51,17 +51,17 @@ class AuthRepository {
       }
     }
 
-    UserInfoEntity userInfoEntity;
+    UserBaseEntity userEntity;
     try {
-      userInfoEntity = await UserAPIClient.fetchUserInfo(userEntity.hash);
-      UserLocalStorage.writeUserInfo(userInfoEntity);
+      userEntity = await UserAPIClient.fetchUserInfo(userBaseEntity.hash);
+      UserLocalStorage.writeUserInfo(userEntity);
     } catch (_) {
-      userInfoEntity = await UserLocalStorage.readUserInfo(userEntity.hash);
+      userEntity = await UserLocalStorage.readUserInfo();
     }
 
     return User.fromEntity(
+      userBaseEntity: userBaseEntity,
       userEntity: userEntity,
-      userInfoEntity: userInfoEntity,
     );
   }
 
