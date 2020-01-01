@@ -1,32 +1,40 @@
-import 'package:pawlog/model/model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-class Profile {
-  String intro;
+import 'package:pawlog/entity/entity.dart';
 
-  int story;
-  int follower;
-  int following;
+class Profile extends Equatable {
+  final String email;
+  final String name;
+  final String imageURL;
+  final String intro;
 
-  List<Story> stories;
+  final int stories;
+  final int followers;
+  final int followings;
 
-  Profile({
+  Profile._({
+    @required this.email,
+    @required this.name,
+    this.imageURL,
     this.intro,
-    this.story = 0,
-    this.follower = 0,
-    this.following = 0,
-    this.stories = const [],
+    this.stories,
+    this.followers,
+    this.followings,
   });
-}
 
-class UserProfile extends Profile {
-  String name;
-  String profileURL;
+  @override
+  List<Object> get props => [email];
 
-  Family family;
-
-  UserProfile({
-    this.name = '',
-    this.profileURL = '',
-    this.family,
-  }) : super();
+  factory Profile.fromEntity(ProfileEntity entity) {
+    return Profile._(
+      email: entity.email,
+      name: entity.name,
+      imageURL: entity.imageURL,
+      intro: entity.intro,
+      stories: entity.stories,
+      followers: entity.followers,
+      followings: entity.followings,
+    );
+  }
 }

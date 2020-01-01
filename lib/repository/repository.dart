@@ -2,5 +2,4 @@ export 'config.dart';
 export 'auth.dart';
 export 'user.dart';
 export 'family.dart';
-export 'profile.dart';
-export 'feed.dart';
+export 'story.dart';

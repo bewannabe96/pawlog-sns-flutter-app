@@ -6,8 +6,8 @@ import 'package:pawlog/util/local_storage/local_storage.dart';
 class CognitoClient {
   static final _cognitoStorage = CognitoLocalStorage();
   static final _userPool = CognitoUserPool(
-    'ap-southeast-1_BBYEpehDx',
-    '7b8qlbiti2joh7939b1329mbjd',
+    'ap-southeast-1_NaVJ6Sf4p',
+    '1ej89k8uegcbjg1k7t4aic3v8d',
     storage: _cognitoStorage,
   );
 

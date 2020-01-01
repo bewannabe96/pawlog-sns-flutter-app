@@ -61,8 +61,4 @@ class FamilyEntity {
 
     return json;
   }
-
-  void registerPet(PetEntity petEntity) {
-    pets.add(petEntity);
-  }
 }

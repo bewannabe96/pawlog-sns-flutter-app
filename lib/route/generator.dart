@@ -41,15 +41,15 @@ class RouteGenerator {
         builder = (_) => FindPasswordScreen();
         break;
       case RegisterScreen.routeName:
-        builder = (_) => BlocProvider(
-              builder: (context) => RegisterBloc(),
+        builder = (_) => BlocProvider<RegisterBloc>(
+              create: (context) => RegisterBloc(),
               child: RegisterScreen(),
             );
         break;
       case ConfirmationScreen.routeName:
         final ConfirmationScreenArgs args = settings.arguments;
-        builder = (_) => BlocProvider(
-              builder: (context) => RegisterBloc(),
+        builder = (_) => BlocProvider<RegisterBloc>(
+              create: (context) => RegisterBloc(),
               child: ConfirmationScreen(email: args.email),
             );
         break;

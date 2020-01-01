@@ -13,7 +13,7 @@ class FamilyRepository {
     FamilyEntity familyEntity = FamilyEntity(name: name);
 
     try {
-      await FamilyAPIClient.createUserFamily(userID, familyEntity);
+      await UserAPIClient.createFamily(userID, familyEntity);
       await FamilyLocalStorage.writeUserFamily(familyEntity);
     } catch (_) {}
 
@@ -23,7 +23,7 @@ class FamilyRepository {
   static Future<Family> loadFamily(int userID) async {
     FamilyEntity familyEntity;
     try {
-      familyEntity = await FamilyAPIClient.fetchUserFamily(userID);
+      familyEntity = await UserAPIClient.fetchFamily(userID);
     } catch (_) {
       familyEntity = await FamilyLocalStorage.readUserFamily();
     }
@@ -41,7 +41,7 @@ class FamilyRepository {
     PetEntity petEntity = PetEntity(name: name, breed: breedID);
 
     try {
-      familyEntity = await FamilyAPIClient.registerUserPet(
+      familyEntity = await UserAPIClient.registerPet(
         userID,
         familyEntity,
         petEntity,

@@ -2,18 +2,16 @@ import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/model/model.dart';
 import 'package:pawlog/util/api/api.dart';
 
-class ConfigRepository {
-  static Future<SyncConfig> loadConfig() async {
-    BreedTypesEntity breedTypesEntity;
+class StoryRepository {
+  static Future<List<Story>> loadStories(int page) async {
+    List<StoryEntity> storyEntities;
     try {
-      breedTypesEntity = await ConfigAPIClient.loadBreedTypes();
+      storyEntities = await StoryAPIClient.loadStories(page);
       // UserLocalStorage.writeUserInfo(userEntity);
     } catch (_) {
       // userEntity = await UserLocalStorage.readUserInfo();
     }
 
-    return SyncConfig.fromEntity(
-      breedTypes: breedTypesEntity,
-    );
+    return storyEntities.map((entity) => Story.fromEntity(entity)).toList();
   }
 }

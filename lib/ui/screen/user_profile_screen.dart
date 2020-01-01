@@ -25,8 +25,8 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      builder: (context) => UserProfileBloc()
+    return BlocProvider<UserProfileBloc>(
+      create: (context) => UserProfileBloc()
         ..add(
           LoadUserProfileEvent(userID),
         ),
@@ -46,7 +46,7 @@ class UserProfileScreen extends StatelessWidget {
 
   Widget _buildPage(
     BuildContext context,
-    UserProfile profile,
+    Profile profile,
   ) {
     return Scaffold(
       appBar: AppBar(

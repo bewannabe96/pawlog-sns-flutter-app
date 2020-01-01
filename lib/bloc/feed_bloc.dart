@@ -31,13 +31,14 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
     try {
       if (currentState is InitialFeedState) {
-        final stories = await FeedRepository.loadStories(0);
+        final stories = await StoryRepository.loadStories(0);
         yield StoriesLoadedState(
           stories: stories,
           hasReachedMax: stories.isEmpty,
         );
       } else if (currentState is StoriesLoadedState) {
-        final stories = await FeedRepository.loadStories(currentState.page + 1);
+        final stories =
+            await StoryRepository.loadStories(currentState.page + 1);
         yield currentState.copyWith(
           stories: stories,
           hasReachedMax: stories.isEmpty,

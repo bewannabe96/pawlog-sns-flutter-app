@@ -20,11 +20,11 @@ class ChatsLoadingState extends ChatState {
 }
 
 class ChatsLoadedState extends ChatState {
-  final List<Chat> chats;
+  final List<ChatHeader> chatHeaders;
 
   const ChatsLoadedState({
-    @required this.chats,
-  }) : assert(chats != null);
+    @required this.chatHeaders,
+  }) : assert(chatHeaders != null);
 
   @override
   List<Object> get props => [];

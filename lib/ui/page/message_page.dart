@@ -19,10 +19,10 @@ class MessagePage extends StatelessWidget {
         if (state is ChatsLoadedState) {
           return ListView.builder(
             padding: const EdgeInsets.only(bottom: 10),
-            itemCount: state.chats.length,
+            itemCount: state.chatHeaders.length,
             itemBuilder: (BuildContext context, int index) => _buildChatItem(
               context,
-              state.chats[index],
+              state.chatHeaders[index],
             ),
           );
         } else if (state is ChatsLoadingState) {
@@ -34,7 +34,7 @@ class MessagePage extends StatelessWidget {
     );
   }
 
-  Widget _buildChatItem(BuildContext context, Chat chat) {
+  Widget _buildChatItem(BuildContext context, ChatHeader chat) {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(ChatScreen.routeName),
       child: Padding(
@@ -80,7 +80,7 @@ class MessagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    chat.lastMessageTime,
+                    chat.lastTime,
                     style: TextStyle(
                       fontSize: 11,
                       color: Colors.grey[500],

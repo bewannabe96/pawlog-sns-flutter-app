@@ -22,8 +22,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   Stream<UserProfileState> loadProfile(LoadUserProfileEvent event) async* {
     yield UserProfileLoadingState();
     try {
-      final profile = await ProfileRepository.fetchUserProfile(event.userID);
-      final stories = await ProfileRepository.fetchUserStories(event.userID);
+      final profile = await UserRepository.fetchUserProfile(event.userID);
+      final stories = await UserRepository.fetchUserStories(event.userID);
 
       yield UserProfileLoadedState(
         profile: profile,

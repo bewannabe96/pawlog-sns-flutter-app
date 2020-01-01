@@ -98,7 +98,7 @@ class StoryItem extends StatelessWidget {
                     ],
                   ),
                   LikeCommentIndicator(
-                      like: story.like, comment: story.comment),
+                      like: story.likes, comment: story.comments),
                 ],
               ),
             ),

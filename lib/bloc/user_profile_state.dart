@@ -22,7 +22,7 @@ class UserProfileLoadingState extends UserProfileState {
 }
 
 class UserProfileLoadedState extends UserProfileState {
-  final UserProfile profile;
+  final Profile profile;
   final List<Story> stories;
 
   const UserProfileLoadedState({

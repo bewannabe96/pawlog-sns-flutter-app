@@ -22,8 +22,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Stream<ChatState> loadChats(LoadChatsEvent event) async* {
     yield ChatsLoadingState();
     try {
-      final chats = await UserRepository.fetchChats(event.userID);
-      yield ChatsLoadedState(chats: chats);
+      final chats = await UserRepository.fetchChatHeaders(event.userID);
+      yield ChatsLoadedState(chatHeaders: chats);
     } catch (_) {
       yield ChatErrorState();
     }

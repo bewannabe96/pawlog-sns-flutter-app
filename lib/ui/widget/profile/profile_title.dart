@@ -20,9 +20,9 @@ class ProfileTitle extends StatelessWidget {
                 flex: 1,
                 child: Row(
                   children: <Widget>[
-                    _SummaryItem('Story', profile.story),
-                    _SummaryItem('Follower', profile.follower),
-                    _SummaryItem('Following', profile.following),
+                    _SummaryItem('Story', profile.stories),
+                    _SummaryItem('Follower', profile.followers),
+                    _SummaryItem('Following', profile.followings),
                   ],
                 ),
               ),

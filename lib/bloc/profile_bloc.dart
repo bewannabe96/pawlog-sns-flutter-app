@@ -22,7 +22,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> loadProfile(LoadProfileEvent event) async* {
     yield ProfileLoadingState();
     try {
-      final profile = await ProfileRepository.fetchUserProfile(event.userID);
+      final profile = await UserRepository.fetchUserProfile(event.userID);
       yield ProfileLoadedState(profile: profile);
     } catch (_) {
       yield ProfileErrorState();
