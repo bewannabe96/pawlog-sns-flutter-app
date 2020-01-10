@@ -3,6 +3,9 @@ import 'package:meta/meta.dart';
 
 abstract class FamilyEvent extends Equatable {
   const FamilyEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class CreateFamilyEvent extends FamilyEvent {
@@ -14,18 +17,12 @@ class CreateFamilyEvent extends FamilyEvent {
     this.userID, {
     @required this.name,
   });
-
-  @override
-  List<Object> get props => [];
 }
 
 class LoadFamilyEvent extends FamilyEvent {
   final int userID;
 
   const LoadFamilyEvent(this.userID);
-
-  @override
-  List<Object> get props => [];
 }
 
 class RegisterPetEvent extends FamilyEvent {
@@ -38,7 +35,4 @@ class RegisterPetEvent extends FamilyEvent {
     @required this.name,
     @required this.breedID,
   });
-
-  @override
-  List<Object> get props => [];
 }

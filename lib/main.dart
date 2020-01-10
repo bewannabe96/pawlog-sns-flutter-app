@@ -25,18 +25,20 @@ void main() {
 class PawlogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.transparent,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SyncConfigBloc>(
-          create: (BuildContext context) =>
-              SyncConfigBloc()..add(LoadSyncConfigEvent()),
-        ),
         BlocProvider<AuthBloc>(
           create: (BuildContext context) =>
               AuthBloc()..add(CheckAuthenticationEvent()),
+        ),
+        BlocProvider<SyncConfigBloc>(
+          create: (BuildContext context) =>
+              SyncConfigBloc()..add(LoadSyncConfigEvent()),
         ),
         BlocProvider<FamilyBloc>(
           create: (BuildContext context) => FamilyBloc(),

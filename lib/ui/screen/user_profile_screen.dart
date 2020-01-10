@@ -33,7 +33,12 @@ class UserProfileScreen extends StatelessWidget {
       child: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
           if (state is UserProfileLoadedState) {
-            return _buildPage(context, state.profile);
+            return _buildPage(
+              context,
+              state.profile,
+              state.family,
+              state.stories,
+            );
           } else if (state is UserProfileErrorState) {
             return PLError();
           } else {
@@ -47,6 +52,8 @@ class UserProfileScreen extends StatelessWidget {
   Widget _buildPage(
     BuildContext context,
     Profile profile,
+    Family family,
+    List<Story> stories,
   ) {
     return Scaffold(
       appBar: AppBar(
@@ -65,9 +72,9 @@ class UserProfileScreen extends StatelessWidget {
             ProfileTitle(profile),
             FollowStatus(FollowStatuses.Following),
             Divider(),
-            ProfileFamilyList(profile.family),
+            ProfileFamilyList(family),
             Divider(),
-            StoryTimeline(profile.stories),
+            StoryTimeline(stories),
           ],
         ),
       ),

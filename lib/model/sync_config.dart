@@ -15,12 +15,12 @@ class SyncConfig extends Equatable {
   List<Object> get props => [];
 
   factory SyncConfig.fromEntity({
-    @required BreedTypesEntity breedTypes,
+    @required List<BreedTypeEntity> breedTypes,
   }) {
     Map<int, Breed> _types = {};
 
-    breedTypes.types.keys.forEach(
-      (breedID) => _types[breedID] = Breed(breedID, breedTypes.types[breedID]),
+    breedTypes.forEach(
+      (entity) => _types[entity.breedID] = Breed(entity.breedID, entity.title),
     );
 
     return SyncConfig._(

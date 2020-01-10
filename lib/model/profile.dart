@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 import 'package:pawlog/entity/entity.dart';
 
@@ -13,9 +12,9 @@ class Profile extends Equatable {
   final int followers;
   final int followings;
 
-  Profile._({
-    @required this.email,
-    @required this.name,
+  const Profile._({
+    this.email,
+    this.name,
     this.imageURL,
     this.intro,
     this.stories,

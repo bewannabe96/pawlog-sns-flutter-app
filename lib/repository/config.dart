@@ -4,16 +4,16 @@ import 'package:pawlog/util/api/api.dart';
 
 class ConfigRepository {
   static Future<SyncConfig> loadConfig() async {
-    BreedTypesEntity breedTypesEntity;
+    List<BreedTypeEntity> breedTypeEntities;
     try {
-      breedTypesEntity = await ConfigAPIClient.loadBreedTypes();
+      breedTypeEntities = await ConfigAPIClient.loadBreedTypes();
       // UserLocalStorage.writeUserInfo(userEntity);
     } catch (_) {
       // userEntity = await UserLocalStorage.readUserInfo();
     }
 
     return SyncConfig.fromEntity(
-      breedTypes: breedTypesEntity,
+      breedTypes: breedTypeEntities,
     );
   }
 }

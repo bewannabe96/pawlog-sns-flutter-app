@@ -41,9 +41,12 @@ class MessagePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Row(
           children: <Widget>[
-            const CircleAvatar(
+            CircleAvatar(
               radius: 25,
               backgroundColor: Colors.black26,
+              backgroundImage: chat.userImageURL == null
+                  ? null
+                  : NetworkImage(chat.userImageURL),
             ),
             Expanded(
               flex: 1,

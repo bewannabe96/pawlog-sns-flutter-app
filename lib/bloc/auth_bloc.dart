@@ -25,13 +25,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield SignInProcessingState();
 
     try {
-      final user = await AuthRepository.checkAuthentication();
-      if (user != null) {
-        yield AuthorizedState(user: user);
+      final userHash = await AuthRepository.checkAuthentication();
+      if (userHash != null) {
+        final user = await UserRepository.fetchUserInfo(userHash);
+        yield AuthorizedState(userHash: userHash, user: user);
       } else {
         yield UnauthorizedState();
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+      yield UnauthorizedState();
+    }
   }
 
   Stream<AuthState> authenticate(AuthenticateEvent event) async* {
@@ -46,10 +50,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     try {
-      final user =
+      final userHash =
           await AuthRepository.authenticate(event.email, event.password);
-      yield AuthorizedState(user: user);
+      if (userHash != null) {
+        final user = await UserRepository.fetchUserInfo(userHash);
+        yield AuthorizedState(userHash: userHash, user: user);
+      } else {
+        yield UnauthorizedState();
+      }
     } catch (e) {
+      print(e);
       switch (e) {
         case 'UserNotFoundException':
           yield SignInErrorState(SignInErrorTypes.UserNotExist);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:pawlog/entity/entity.dart';
@@ -5,17 +7,24 @@ import 'package:pawlog/entity/entity.dart';
 class UserLocalStorage {
   static const _storageKey = 'user:';
 
-  static Future<void> writeUserInfo(UserBaseEntity entity) async {
+  static Future<void> writeUserInfo(UserEntity userEntity) async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setInt(_storageKey + 'user_id', entity.userID);
+    prefs.setString(
+      _storageKey + 'user',
+      jsonEncode(userEntity.toJson()),
+    );
   }
 
-  static Future<UserBaseEntity> readUserInfo() async {
+  static Future<UserEntity> readUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final _userID = prefs.getInt(_storageKey + 'user_id');
+    final json = prefs.getString(_storageKey + 'user');
 
-    return UserBaseEntity(userID: _userID);
+    if (json != null) {
+      return UserEntity.fromJson(jsonDecode(json));
+    }
+
+    return null;
   }
 }

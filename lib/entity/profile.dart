@@ -22,25 +22,11 @@ class ProfileEntity {
     return ProfileEntity(
       email: json['email'],
       name: json['name'],
-      imageURL: json['image'],
+      imageURL: json['imageurl'],
       intro: json['intro'],
       stories: json['stories'],
       followers: json['followers'],
       followings: json['followings'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['email'] = email;
-    json['name'] = name;
-    json['image'] = imageURL;
-    json['intro'] = intro;
-    json['stories'] = stories;
-    json['followers'] = followers;
-    json['followings'] = followings;
-
-    return json;
   }
 }

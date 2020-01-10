@@ -5,29 +5,31 @@ import 'package:pawlog/model/model.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class UnauthorizedState extends AuthState {
   const UnauthorizedState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class AuthorizedState extends AuthState {
+  final String userHash;
   final User user;
 
-  const AuthorizedState({@required this.user}) : assert(user != null);
+  const AuthorizedState({
+    @required this.userHash,
+    @required this.user,
+  })  : assert(userHash != null),
+        assert(user != null);
 
   @override
-  List<Object> get props => [user.hash];
+  List<Object> get props => [userHash];
 }
 
 class SignInProcessingState extends AuthState {
   const SignInProcessingState();
-
-  @override
-  List<Object> get props => [];
 }
 
 enum SignInErrorTypes {
@@ -43,7 +45,4 @@ class SignInErrorState extends UnauthorizedState {
   final SignInErrorTypes type;
 
   const SignInErrorState(this.type);
-
-  @override
-  List<Object> get props => [];
 }

@@ -7,11 +7,13 @@ class Friend extends Equatable {
   final int userID;
   final String name;
   final String email;
+  final String imageURL;
 
   const Friend._({
     @required this.userID,
     @required this.name,
     @required this.email,
+    @required this.imageURL,
   });
 
   @override
@@ -22,6 +24,7 @@ class Friend extends Equatable {
       userID: entity.userID,
       name: entity.name,
       email: entity.email,
+      imageURL: entity.imageURL,
     );
   }
 }

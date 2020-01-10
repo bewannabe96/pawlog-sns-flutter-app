@@ -28,9 +28,12 @@ class ProfileTitle extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 42,
                   backgroundColor: Colors.grey,
+                  backgroundImage: profile.imageURL == null
+                      ? null
+                      : NetworkImage(profile.imageURL),
                 ),
               ),
             ],

@@ -7,7 +7,6 @@ import 'package:pawlog/model/model.dart';
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
-import 'package:pawlog/ui/modal/new_family_modal.dart';
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
 import 'package:pawlog/ui/widget/family_select.dart';
 
@@ -47,7 +46,7 @@ class MeetupStartPage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 30),
             child: PLFilledButton(
               title: 'Organize family',
-              onPressed: () => Navigator.of(context).push(NewFamilyModal()),
+              // onPressed: () => Navigator.of(context).push(NewFamilyModal()),
             ),
           ),
         ],

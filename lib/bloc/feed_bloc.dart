@@ -22,29 +22,26 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
   Stream<FeedState> loadStories() async* {
     final currentState = state;
 
-    yield StoriesLoadingState();
-
-    // If no more stories to be loaded
-    if (currentState is StoriesLoadedState && currentState.hasReachedMax) {
-      return;
-    }
-
     try {
       if (currentState is InitialFeedState) {
-        final stories = await StoryRepository.loadStories(0);
+        yield StoriesLoadingState();
+        final stories = await StoryRepository.loadStories(1);
         yield StoriesLoadedState(
           stories: stories,
-          hasReachedMax: stories.isEmpty,
+          hasReachedMax: stories.length < 10,
         );
-      } else if (currentState is StoriesLoadedState) {
+      } else if (currentState is StoriesLoadedState &&
+          !currentState.hasReachedMax) {
+        yield StoriesLoadingState();
         final stories =
             await StoryRepository.loadStories(currentState.page + 1);
         yield currentState.copyWith(
           stories: stories,
-          hasReachedMax: stories.isEmpty,
+          hasReachedMax: stories.length < 10,
         );
       }
-    } catch (_) {
+    } catch (e) {
+      print(e);
       yield FeedErrorState();
     }
   }

@@ -6,7 +6,6 @@ import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
-import 'package:pawlog/ui/modal/new_family_modal.dart';
 import 'package:pawlog/ui/widget/profile/profile.dart';
 import 'package:pawlog/ui/widget/story_timeline.dart';
 
@@ -20,7 +19,7 @@ class ProfilePage extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (BuildContext context, ProfileState state) {
         if (state is ProfileLoadedState) {
-          return _buildPage(state.profile);
+          return _buildPage(state.profile, state.stories);
         } else if (state is ProfileLoadingState) {
           return PLLoading();
         } else {
@@ -30,7 +29,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildPage(Profile profile) {
+  Widget _buildPage(Profile profile, List<Story> stories) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,7 +38,7 @@ class ProfilePage extends StatelessWidget {
           Divider(),
           _buildFamilyList(),
           Divider(),
-          StoryTimeline(profile.stories),
+          StoryTimeline(stories),
         ],
       ),
     );
@@ -51,7 +50,7 @@ class ProfilePage extends StatelessWidget {
         if (state is FamilyLoadedState) {
           if (state.family == null) {
             return FlatButton(
-              onPressed: () => Navigator.of(context).push(NewFamilyModal()),
+              onPressed: () {},
               child: Text(
                 "New Family",
                 style: TextStyle(fontSize: 18.0),

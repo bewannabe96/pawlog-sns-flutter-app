@@ -1,47 +1,62 @@
 import 'package:amazon_cognito_identity_dart/cognito.dart';
-import 'package:meta/meta.dart';
 
 class CognitoUserEntity {
   final String hash;
-  final String email;
-  final String name;
 
   const CognitoUserEntity._({
-    @required this.hash,
-    @required this.email,
-    @required this.name,
+    this.hash,
   });
 
   factory CognitoUserEntity.fromCognitoUserAttrs(
       List<CognitoUserAttribute> attrs) {
-    var _hash, _eamil, _name;
+    var _hash;
 
     attrs.forEach((attr) {
-      switch (attr.name) {
-        case 'sub':
-          _hash = attr.value;
-          break;
-        case 'email':
-          _eamil = attr.value;
-          break;
-        case 'name':
-          _name = attr.value;
-          break;
+      if (attr.name == 'sub') {
+        _hash = attr.value;
       }
     });
 
     return CognitoUserEntity._(
       hash: _hash,
-      email: _eamil,
-      name: _name,
     );
   }
 }
 
-class UserBaseEntity {
+class UserEntity {
   final int userID;
+  final String email;
+  final String name;
+  final String imageURL;
+  final String intro;
 
-  const UserBaseEntity({
-    @required this.userID,
+  const UserEntity._({
+    this.userID,
+    this.email,
+    this.name,
+    this.imageURL,
+    this.intro,
   });
+
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    return UserEntity._(
+      userID: json['userid'],
+      email: json['email'],
+      name: json['name'],
+      imageURL: json['imageurl'],
+      intro: json['intro'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+
+    json['userid'] = userID;
+    json['email'] = email;
+    json['name'] = name;
+    json['imageurl'] = imageURL;
+    json['intro'] = intro;
+
+    return json;
+  }
 }

@@ -1,29 +1,22 @@
 class FriendEntity {
   final int userID;
-  final String name;
   final String email;
+  final String name;
+  final String imageURL;
 
   const FriendEntity({
     this.userID,
-    this.name,
     this.email,
+    this.name,
+    this.imageURL,
   });
 
   factory FriendEntity.fromJson(Map<String, dynamic> json) {
     return FriendEntity(
       userID: json['userid'],
-      name: json['name'],
       email: json['email'],
+      name: json['name'],
+      imageURL: json['imageurl'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['userid'] = userID;
-    json['name'] = name;
-    json['email'] = email;
-
-    return json;
   }
 }

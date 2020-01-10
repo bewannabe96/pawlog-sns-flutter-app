@@ -63,10 +63,11 @@ class PetInfoModal extends ModalRoute<void> {
           CircleAvatar(
             radius: _modalWidth,
             backgroundColor: Colors.grey[350],
-            backgroundImage: pet.imageURL == null ? null : null,
+            backgroundImage:
+                pet.imageURL == null ? null : NetworkImage(pet.imageURL),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
             child: Text(
               pet.name,
               style: const TextStyle(

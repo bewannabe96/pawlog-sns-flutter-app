@@ -7,7 +7,7 @@ import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
-import 'package:pawlog/ui/modal/new_family_modal.dart';
+import 'package:pawlog/ui/screen/settings/edit_family/create_family.dart';
 import 'package:pawlog/ui/screen/settings/edit_family/new_pet_screen.dart';
 import 'package:pawlog/ui/widget/pet_item.dart';
 
@@ -57,13 +57,23 @@ class EditFamilyScreen extends StatelessWidget {
 
   Widget _buildList(BuildContext context, Family family) {
     if (family == null) {
-      return FlatButton(
-        onPressed: () => Navigator.of(context).push(NewFamilyModal()),
-        child: Text(
-          "New Family",
-          style: TextStyle(fontSize: 18.0),
-        ),
-        textColor: Theme.of(context).colorScheme.primary,
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Image(
+            width: MediaQuery.of(context).size.width * 0.4,
+            image: AssetImage('res/asset/no_family.jpeg'),
+          ),
+          FlatButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(CreateFamilyScreen.routeName),
+            child: Text(
+              "Create Family",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            textColor: Theme.of(context).colorScheme.primary,
+          ),
+        ],
       );
     } else if (family.pets.length == 0) {
       return const Text('No family member exist');

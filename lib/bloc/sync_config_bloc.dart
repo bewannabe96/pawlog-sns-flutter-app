@@ -15,16 +15,17 @@ class SyncConfigBloc extends Bloc<SyncConfigEvent, SyncConfigState> {
     SyncConfigEvent event,
   ) async* {
     if (event is LoadSyncConfigEvent) {
-      yield* loadProfile(event);
+      yield* loadSyncConfig(event);
     }
   }
 
-  Stream<SyncConfigState> loadProfile(LoadSyncConfigEvent event) async* {
+  Stream<SyncConfigState> loadSyncConfig(LoadSyncConfigEvent event) async* {
     yield ConfigLoadingState();
     try {
       final config = await ConfigRepository.loadConfig();
       yield ConfigLoadedState(config: config);
-    } catch (_) {
+    } catch (e) {
+      print(e);
       yield SyncConfigErrorState();
     }
   }

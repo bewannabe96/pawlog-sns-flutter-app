@@ -4,29 +4,25 @@ import 'package:pawlog/entity/entity.dart';
 
 class User {
   final int userID;
-  final String hash;
   final String email;
   final String name;
-
-  final String profileURL;
+  final String imageURL;
+  final String intro;
 
   User._({
     @required this.userID,
-    @required this.hash,
     @required this.email,
     @required this.name,
-    this.profileURL,
+    this.imageURL,
+    this.intro,
   });
 
-  factory User.fromEntity({
-    CognitoUserEntity userBaseEntity,
-    UserBaseEntity userEntity,
-  }) {
+  factory User.fromEntity(UserEntity userEntity) {
     return User._(
       userID: userEntity.userID,
-      hash: userBaseEntity.hash,
-      email: userBaseEntity.email,
-      name: userBaseEntity.name,
+      email: userEntity.email,
+      name: userEntity.name,
+      intro: userEntity.intro,
     );
   }
 }

@@ -55,6 +55,7 @@ class FamilyBloc extends Bloc<FamilyEvent, FamilyState> {
         );
         yield FamilyLoadedState(family: family);
       } catch (e) {
+        print(e);
         yield FamilyErrorState();
       }
     }

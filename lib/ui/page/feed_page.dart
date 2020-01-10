@@ -59,13 +59,11 @@ class _FeedPageState extends State<FeedPage> {
 
   Widget _buildPage(List<Story> stories, bool hasReachedMax) {
     if (stories.isEmpty) {
-      return Expanded(
-        child: Center(
-          child: Text(
-            'No story exists.',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondaryVariant,
-            ),
+      return Center(
+        child: Text(
+          'No story exists.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondaryVariant,
           ),
         ),
       );

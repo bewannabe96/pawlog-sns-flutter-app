@@ -24,7 +24,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     try {
       final chats = await UserRepository.fetchChatHeaders(event.userID);
       yield ChatsLoadedState(chatHeaders: chats);
-    } catch (_) {
+    } catch (e) {
+      print(e);
       yield ChatErrorState();
     }
   }

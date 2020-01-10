@@ -5,32 +5,23 @@ import 'package:pawlog/model/model.dart';
 
 abstract class FamilyState extends Equatable {
   const FamilyState();
-}
 
-class InitialFamilyState extends FamilyState {
   @override
   List<Object> get props => [];
 }
+
+class InitialFamilyState extends FamilyState {}
 
 class FamilyLoadingState extends FamilyState {
   const FamilyLoadingState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class FamilyCreatingState extends FamilyLoadingState {
   const FamilyCreatingState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class PetRegisteringState extends FamilyLoadingState {
   const PetRegisteringState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class FamilyLoadedState extends FamilyState {
@@ -46,7 +37,4 @@ class FamilyLoadedState extends FamilyState {
 
 class FamilyErrorState extends FamilyState {
   const FamilyErrorState();
-
-  @override
-  List<Object> get props => [];
 }

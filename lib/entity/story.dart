@@ -1,14 +1,21 @@
 class StoryEntity {
   final int storyID;
+
+  final String profileImageURL;
+  final String profileName;
+
   final String content;
   final List<String> images;
   final String created;
   final String updated;
+
   final int likes;
   final int comments;
 
   const StoryEntity._({
     this.storyID,
+    this.profileImageURL,
+    this.profileName,
     this.content,
     this.images,
     this.created,
@@ -20,26 +27,37 @@ class StoryEntity {
   factory StoryEntity.fromJson(Map<String, dynamic> json) {
     return StoryEntity._(
       storyID: json['storyid'],
+      profileImageURL: json['profile'],
+      profileName: json['owner'],
       content: json['content'],
-      images: json['images'],
+      images: (json['images'] as List).map((image) => image as String).toList(),
       created: json['created'],
       updated: json['updated'],
       likes: json['likes'],
       comments: json['comments'],
     );
   }
+}
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
+class CommentEntity {
+  final String name;
+  final String imageURL;
+  final String content;
+  final String created;
 
-    json['storyid'] = storyID;
-    json['content'] = content;
-    json['images'] = images;
-    json['created'] = created;
-    json['updated'] = updated;
-    json['likes'] = likes;
-    json['comments'] = comments;
+  const CommentEntity._({
+    this.name,
+    this.imageURL,
+    this.content,
+    this.created,
+  });
 
-    return json;
+  factory CommentEntity.fromJson(Map<String, dynamic> json) {
+    return CommentEntity._(
+      name: json['name'],
+      imageURL: json['imageurl'],
+      content: json['content'],
+      created: json['created'],
+    );
   }
 }

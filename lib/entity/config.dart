@@ -1,21 +1,16 @@
-class BreedTypesEntity {
-  final Map<int, String> types;
+class BreedTypeEntity {
+  final int breedID;
+  final String title;
 
-  const BreedTypesEntity({
-    this.types,
+  const BreedTypeEntity._({
+    this.breedID,
+    this.title,
   });
 
-  factory BreedTypesEntity.fromJson(Map<String, dynamic> json) {
-    return BreedTypesEntity(
-      types: json['breedTypes'] as Map<int, String>,
+  factory BreedTypeEntity.fromJson(Map<String, dynamic> json) {
+    return BreedTypeEntity._(
+      breedID: json['breedid'],
+      title: json['breedname'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['breedTypes'] = types;
-
-    return json;
   }
 }

@@ -2,6 +2,9 @@ import 'package:equatable/equatable.dart';
 
 abstract class RegisterEvent extends Equatable {
   const RegisterEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class NewRegisterEvent extends RegisterEvent {
@@ -16,9 +19,6 @@ class NewRegisterEvent extends RegisterEvent {
     this.password,
     this.passwordConfirm,
   );
-
-  @override
-  List<Object> get props => [];
 }
 
 class ConfirmRegistrationEvent extends RegisterEvent {
@@ -26,16 +26,10 @@ class ConfirmRegistrationEvent extends RegisterEvent {
   final String verificationCode;
 
   const ConfirmRegistrationEvent(this.email, this.verificationCode);
-
-  @override
-  List<Object> get props => [];
 }
 
 class ResendConfirmCodeEvent extends RegisterEvent {
   final String email;
 
   const ResendConfirmCodeEvent(this.email);
-
-  @override
-  List<Object> get props => [];
 }

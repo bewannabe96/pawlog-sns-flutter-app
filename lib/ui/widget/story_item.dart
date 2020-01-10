@@ -21,21 +21,24 @@ class StoryItemContent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           child: Row(
             children: <Widget>[
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 24,
                 backgroundColor: Colors.grey,
+                backgroundImage: story.profileImageURL == null
+                    ? null
+                    : NetworkImage(story.profileImageURL),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
-                      'Name',
+                    Text(
+                      story.profileName,
                       style: const TextStyle(fontSize: 17),
                     ),
                     Text(
-                      '12min ago',
+                      story.created,
                       style: TextStyle(
                         fontSize: 11,
                         color: Theme.of(context).colorScheme.secondaryVariant,

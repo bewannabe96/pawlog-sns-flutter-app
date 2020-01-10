@@ -23,8 +23,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield ProfileLoadingState();
     try {
       final profile = await UserRepository.fetchUserProfile(event.userID);
-      yield ProfileLoadedState(profile: profile);
-    } catch (_) {
+      final family = await FamilyRepository.loadFamily(event.userID);
+      final stories = await UserRepository.fetchUserStories(event.userID);
+      yield ProfileLoadedState(
+        profile: profile,
+        family: family,
+        stories: stories,
+      );
+    } catch (e) {
+      print(e);
       yield ProfileErrorState();
     }
   }

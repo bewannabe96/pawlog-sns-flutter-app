@@ -17,9 +17,11 @@ class PetItem extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child: const CircleAvatar(
+          child: CircleAvatar(
             radius: 27,
             backgroundColor: Colors.black26,
+            backgroundImage:
+                pet.imageURL == null ? null : NetworkImage(pet.imageURL),
           ),
         ),
         Expanded(

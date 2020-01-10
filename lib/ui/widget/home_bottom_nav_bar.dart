@@ -12,9 +12,6 @@ class HomeBottomNavBar extends StatelessWidget {
 
   final _pages = const {
     0: {
-      "icon": FontAwesomeIcons.home,
-    },
-    1: {
       "icon": FontAwesomeIcons.solidNewspaper,
     },
     2: {

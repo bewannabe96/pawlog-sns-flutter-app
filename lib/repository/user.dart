@@ -3,6 +3,18 @@ import 'package:pawlog/model/model.dart';
 import 'package:pawlog/util/api/api.dart';
 
 class UserRepository {
+  static Future<User> fetchUserInfo(String userHash) async {
+    UserEntity userEntity;
+    try {
+      userEntity = await UserAPIClient.fetchUserInfo(userHash);
+      // UserLocalStorage.writeUserInfo(userEntity);
+    } catch (_) {
+      // userEntity = await UserLocalStorage.readUserInfo();
+    }
+
+    return User.fromEntity(userEntity);
+  }
+
   static Future<List<Friend>> fetchFriends(int userID) async {
     List<FriendEntity> friendEntities;
     try {

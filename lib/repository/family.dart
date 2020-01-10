@@ -3,19 +3,13 @@ import 'package:meta/meta.dart';
 import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/model/model.dart';
 import 'package:pawlog/util/api/api.dart';
-import 'package:pawlog/util/local_storage/local_storage.dart';
 
 class FamilyRepository {
   static Future<Family> createFamily(
     int userID, {
     @required String name,
   }) async {
-    FamilyEntity familyEntity = FamilyEntity(name: name);
-
-    try {
-      await UserAPIClient.createFamily(userID, familyEntity);
-      await FamilyLocalStorage.writeUserFamily(familyEntity);
-    } catch (_) {}
+    final familyEntity = await UserAPIClient.createFamily(userID, name);
 
     return Family.fromEntity(familyEntity);
   }
@@ -24,8 +18,9 @@ class FamilyRepository {
     FamilyEntity familyEntity;
     try {
       familyEntity = await UserAPIClient.fetchFamily(userID);
+      // await FamilyLocalStorage.writeUserFamily(familyEntity);
     } catch (_) {
-      familyEntity = await FamilyLocalStorage.readUserFamily();
+      // familyEntity = await FamilyLocalStorage.readUserFamily();
     }
 
     return familyEntity == null ? null : Family.fromEntity(familyEntity);
@@ -37,18 +32,9 @@ class FamilyRepository {
     @required String name,
     @required breedID,
   }) async {
-    FamilyEntity familyEntity = family.toEntity();
-    PetEntity petEntity = PetEntity(name: name, breed: breedID);
+    final petEntity =
+        await UserAPIClient.registerPet(userID, name, breedID, null);
 
-    try {
-      familyEntity = await UserAPIClient.registerPet(
-        userID,
-        familyEntity,
-        petEntity,
-      );
-      await FamilyLocalStorage.writeUserFamily(familyEntity);
-    } catch (_) {}
-
-    return Family.fromEntity(familyEntity);
+    return family.registerPet(Pet.fromEntity(petEntity));
   }
 }

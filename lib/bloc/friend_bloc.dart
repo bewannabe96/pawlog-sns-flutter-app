@@ -24,7 +24,8 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
     try {
       final friends = await UserRepository.fetchFriends(event.userID);
       yield FriendsLoadedState(friends: friends);
-    } catch (_) {
+    } catch (e) {
+      print(e);
       yield FriendErrorState();
     }
   }

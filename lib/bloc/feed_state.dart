@@ -5,18 +5,15 @@ import 'package:pawlog/model/model.dart';
 
 abstract class FeedState extends Equatable {
   const FeedState();
-}
 
-class InitialFeedState extends FeedState {
   @override
   List<Object> get props => [];
 }
+
+class InitialFeedState extends FeedState {}
 
 class StoriesLoadingState extends FeedState {
   const StoriesLoadingState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class StoriesLoadedState extends FeedState {
@@ -26,7 +23,7 @@ class StoriesLoadedState extends FeedState {
 
   const StoriesLoadedState({
     @required this.stories,
-    this.page = 0,
+    this.page = 1,
     this.hasReachedMax = false,
   });
 
@@ -40,14 +37,8 @@ class StoriesLoadedState extends FeedState {
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
-
-  @override
-  List<Object> get props => [];
 }
 
 class FeedErrorState extends FeedState {
   const FeedErrorState();
-
-  @override
-  List<Object> get props => [];
 }

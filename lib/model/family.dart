@@ -58,14 +58,8 @@ class Family {
     );
   }
 
-  FamilyEntity toEntity() {
-    return FamilyEntity(
-      name: name,
-      pets: pets.map((pet) => pet.toEntity()).toList(),
-    );
-  }
-
-  void registerPet(Pet pet) {
+  Family registerPet(Pet pet) {
     pets.add(pet);
+    return this;
   }
 }

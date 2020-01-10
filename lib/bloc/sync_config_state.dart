@@ -5,18 +5,15 @@ import 'package:pawlog/model/model.dart';
 
 abstract class SyncConfigState extends Equatable {
   const SyncConfigState();
-}
 
-class InitialSyncConfigState extends SyncConfigState {
   @override
   List<Object> get props => [];
 }
+
+class InitialSyncConfigState extends SyncConfigState {}
 
 class ConfigLoadingState extends SyncConfigState {
   const ConfigLoadingState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class ConfigLoadedState extends SyncConfigState {
@@ -25,14 +22,8 @@ class ConfigLoadedState extends SyncConfigState {
   const ConfigLoadedState({
     @required this.config,
   });
-
-  @override
-  List<Object> get props => [];
 }
 
 class SyncConfigErrorState extends SyncConfigState {
   const SyncConfigErrorState();
-
-  @override
-  List<Object> get props => [];
 }

@@ -9,7 +9,6 @@ import 'package:pawlog/ui/screen/story/new_story_screen.dart';
 
 import 'package:pawlog/ui/widget/home_bottom_nav_bar.dart';
 import 'package:pawlog/ui/modal/user_search_modal.dart';
-import 'package:pawlog/ui/page/meetup_start_page.dart';
 import 'package:pawlog/ui/page/feed_page.dart';
 import 'package:pawlog/ui/page/friend_page.dart';
 import 'package:pawlog/ui/page/message_page.dart';
@@ -74,14 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final authState = BlocProvider.of<AuthBloc>(context).state;
     switch (page) {
       case 0:
-        if (authState is AuthorizedState) {
-          return _PageConfig(
-            title: 'Meetup',
-            body: MeetupStartPage(),
-          );
-        }
-        break;
-      case 1:
         return _PageConfig(
           title: 'Feed',
           body: const FeedPage(),

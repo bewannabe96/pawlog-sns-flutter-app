@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class PetEntity {
   final int petID;
   final String name;
@@ -35,17 +33,20 @@ class PetEntity {
 }
 
 class FamilyEntity {
+  final int familyID;
   final String name;
 
   final List<PetEntity> pets;
 
-  const FamilyEntity({
-    @required this.name,
+  const FamilyEntity._({
+    this.familyID,
+    this.name,
     this.pets = const [],
-  }) : assert(pets != null);
+  });
 
   factory FamilyEntity.fromJson(Map<String, dynamic> json) {
-    return FamilyEntity(
+    return FamilyEntity._(
+      familyID: json['familyid'],
       name: json['name'],
       pets: (json['pets'] as List)
           .map((value) => PetEntity.fromJson(value))

@@ -120,6 +120,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           event.email, event.verificationCode);
       yield VerificationSucceedState();
     } on CognitoClientException catch (e) {
+      print(e);
       switch (e.code) {
         case 'CodeMismatchException':
           yield VerificationErrorState(VerificationErrorTypes.MismatchCode);

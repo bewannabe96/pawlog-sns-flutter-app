@@ -12,34 +12,7 @@ class ProfileFamilyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return family == null ? _noFamily(context) : _buildContent(context);
-  }
-
-  Widget _buildContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0, right: 20.0, left: 20.0),
-          child: Text(
-            family.name,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: (family.pets
-                .map((value) => _buildFamilyItem(context, value))
-                .toList()),
-          ),
-        )
-      ],
-    );
+    return family == null ? _noFamily(context) : _buildFamilyInfo(context);
   }
 
   Widget _noFamily(BuildContext context) {
@@ -56,12 +29,55 @@ class ProfileFamilyList extends StatelessWidget {
     );
   }
 
+  Widget _buildFamilyInfo(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0, right: 20.0, left: 20.0),
+          child: Text(
+            family.name,
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        family.pets.length > 0
+            ? Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: (family.pets
+                      .map((value) => _buildFamilyItem(context, value))
+                      .toList()),
+                ),
+              )
+            : _buildNoFamilyMember(context),
+      ],
+    );
+  }
+
   Widget _buildFamilyItem(BuildContext context, Pet pet) {
     return InkWell(
       onTap: () => Navigator.of(context).push(PetInfoModal(pet)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: PetItem(pet),
+      ),
+    );
+  }
+
+  Widget _buildNoFamilyMember(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: Center(
+        child: Text(
+          'No family member exists.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          ),
+        ),
       ),
     );
   }

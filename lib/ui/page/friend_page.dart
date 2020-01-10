@@ -44,9 +44,12 @@ class FriendPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Row(
           children: <Widget>[
-            const CircleAvatar(
+            CircleAvatar(
               radius: 27,
               backgroundColor: Colors.black26,
+              backgroundImage: friend.imageURL == null
+                  ? null
+                  : NetworkImage(friend.imageURL),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
