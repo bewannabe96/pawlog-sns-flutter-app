@@ -25,3 +25,6 @@ export 'feed_state.dart';
 export 'sync_config_bloc.dart';
 export 'sync_config_event.dart';
 export 'sync_config_state.dart';
+export 'story_comments_bloc.dart';
+export 'story_comments_event.dart';
+export 'story_comments_state.dart';

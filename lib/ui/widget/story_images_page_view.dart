@@ -4,11 +4,11 @@ import 'package:pawlog/ui/component/pl_image_overlay.dart';
 import 'package:pawlog/ui/component/pl_page_indicator.dart';
 
 class StoryImagesPageView extends StatefulWidget {
+  final List<String> imageUrls;
+
   const StoryImagesPageView(
     this.imageUrls,
   );
-
-  final List<String> imageUrls;
 
   _StoryImagesPageViewState createState() => _StoryImagesPageViewState();
 }
@@ -44,10 +44,12 @@ class _StoryImagesPageViewState extends State<StoryImagesPageView> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: PLPageIndicator(
-              controller: _pageController,
-              count: widget.imageUrls.length,
-            ),
+            child: widget.imageUrls.length > 1
+                ? PLPageIndicator(
+                    controller: _pageController,
+                    count: widget.imageUrls.length,
+                  )
+                : Container(),
           ),
         ],
       ),

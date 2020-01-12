@@ -35,7 +35,12 @@ class _FeedPageState extends State<FeedPage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      BlocProvider.of<FeedBloc>(context).add(LoadStoriesEvent());
+      final authState = BlocProvider.of<AuthBloc>(context).state;
+      if (authState is AuthorizedState) {
+        BlocProvider.of<FeedBloc>(context).add(
+          LoadStoriesEvent(authState.user.userID),
+        );
+      }
     }
   }
 

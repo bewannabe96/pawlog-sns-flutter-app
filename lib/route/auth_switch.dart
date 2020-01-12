@@ -29,7 +29,7 @@ class AuthSwitch extends StatelessWidget {
             LoadProfileEvent(state.user.userID),
           );
           BlocProvider.of<FeedBloc>(context).add(
-            LoadStoriesEvent(),
+            LoadStoriesEvent(state.user.userID),
           );
         }
       },

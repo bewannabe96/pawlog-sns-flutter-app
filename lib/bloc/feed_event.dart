@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'package:pawlog/model/model.dart';
+
 abstract class FeedEvent extends Equatable {
   const FeedEvent();
 
@@ -8,5 +10,14 @@ abstract class FeedEvent extends Equatable {
 }
 
 class LoadStoriesEvent extends FeedEvent {
-  const LoadStoriesEvent();
+  final int userID;
+
+  const LoadStoriesEvent(this.userID);
+}
+
+class ToggleStoryLikeEvent extends FeedEvent {
+  final Story story;
+  final int userID;
+
+  const ToggleStoryLikeEvent(this.story, this.userID);
 }

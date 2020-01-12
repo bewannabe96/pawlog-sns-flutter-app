@@ -5,8 +5,9 @@ import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/util/api/api.dart';
 
 class StoryAPIClient extends PawlogAPIClient {
-  static Future<List<StoryEntity>> loadStories(int page) async {
-    final path = PawlogAPIClient.apiServerHost + '/story?page=$page';
+  static Future<List<StoryEntity>> loadStories(int page, int userID) async {
+    final path = PawlogAPIClient.apiServerHost +
+        '/story?page=$page&requestingUserID=$userID';
 
     final response = await PawlogAPIClient.client.get(path);
 
@@ -76,8 +77,12 @@ class StoryAPIClient extends PawlogAPIClient {
     }
   }
 
-  static Future<List<CommentEntity>> fetchComments(int storyID) async {
-    final path = PawlogAPIClient.apiServerHost + '/story/$storyID/comment';
+  static Future<List<CommentEntity>> fetchComments(
+    int storyID,
+    int page,
+  ) async {
+    final path =
+        PawlogAPIClient.apiServerHost + '/story/$storyID/comment?page=$page';
 
     final response = await PawlogAPIClient.client.get(path);
 

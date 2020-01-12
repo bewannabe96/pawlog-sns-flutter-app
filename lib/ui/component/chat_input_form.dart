@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChatInputForm extends StatefulWidget {
+  final Function(String message) onEnter;
+
   const ChatInputForm({
     this.onEnter,
   });
-
-  final Function(String message) onEnter;
 
   @override
   _ChatInputFormState createState() => _ChatInputFormState();
@@ -39,17 +39,17 @@ class _ChatInputFormState extends State<ChatInputForm> {
 
   @override
   Widget build(BuildContext context) {
-    final textInputBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: Theme.of(context).colorScheme.secondaryVariant,
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          const BoxShadow(
+            color: Colors.black12,
+            blurRadius: 0.5,
+          ),
+        ],
       ),
-      borderRadius: BorderRadius.circular(30),
-    );
-
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+      child: SafeArea(
         child: Row(
           children: <Widget>[
             Expanded(
@@ -61,17 +61,23 @@ class _ChatInputFormState extends State<ChatInputForm> {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 8,
+                    vertical: 0,
                   ),
-                  border: textInputBorder,
-                  focusedBorder: textInputBorder,
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            IconButton(
-              onPressed: _buttonActive ? _onEnter : null,
-              icon: const Icon(FontAwesomeIcons.solidArrowAltCircleRight),
-              color: Theme.of(context).colorScheme.primary,
+            GestureDetector(
+              onTap: _buttonActive ? _onEnter : null,
+              child: Container(
+                padding: const EdgeInsets.all(15.0),
+                color: Theme.of(context).colorScheme.primary,
+                child: const Icon(
+                  FontAwesomeIcons.solidPaperPlane,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
             ),
           ],
         ),

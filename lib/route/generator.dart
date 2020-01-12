@@ -66,7 +66,13 @@ class RouteGenerator {
         break;
       case StoryViewScreen.routeName:
         final StoryViewScreenArgs args = settings.arguments;
-        builder = (_) => StoryViewScreen(args.story);
+        builder = (_) => BlocProvider<StoryCommentsBloc>(
+              create: (context) => StoryCommentsBloc()
+                ..add(
+                  LoadCommentsEvent(args.story.storyID),
+                ),
+              child: StoryViewScreen(args.story),
+            );
         break;
 
       case UserProfileScreen.routeName:

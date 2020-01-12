@@ -12,6 +12,8 @@ class StoryEntity {
   final int likes;
   final int comments;
 
+  final bool userLiked;
+
   const StoryEntity._({
     this.storyID,
     this.profileImageURL,
@@ -22,6 +24,7 @@ class StoryEntity {
     this.updated,
     this.likes,
     this.comments,
+    this.userLiked,
   });
 
   factory StoryEntity.fromJson(Map<String, dynamic> json) {
@@ -35,6 +38,7 @@ class StoryEntity {
       updated: json['updated'],
       likes: json['likes'],
       comments: json['comments'],
+      userLiked: json['userliked'],
     );
   }
 }

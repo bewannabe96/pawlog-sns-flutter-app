@@ -32,8 +32,14 @@ class HomeBottomNavBar extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
       decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
+        color: Colors.white,
+        boxShadow: const [
+          const BoxShadow(
+            color: Colors.black12,
+            blurRadius: 0.5,
+          ),
+        ],
+      ),
       child: Row(
         children: _pages.keys
             .map(

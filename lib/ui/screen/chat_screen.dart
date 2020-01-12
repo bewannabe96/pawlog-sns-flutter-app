@@ -203,42 +203,37 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildChatBubble(Message message) {
-    final bubble = Container(
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width / 2,
-      ),
-      decoration: BoxDecoration(
-        color: message.direction == MessageDirections.Sent
-            ? Theme.of(context).colorScheme.secondaryVariant
-            : Colors.white,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-      child: Text(
-        message.content,
-        maxLines: null,
-      ),
-    );
+  Widget _buildChatContent() {
+    final reversedMessages = _messages.reversed.toList();
 
-    final timeText = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: message.showTime
-          ? Text(
-              _timeFormater.format(message.sentDate),
-              style: TextStyle(
-                fontSize: 10,
-                color: Theme.of(context).colorScheme.secondaryVariant,
-              ),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      reverse: true,
+      itemCount: _messages.length,
+      itemBuilder: (BuildContext context, int index) =>
+          _buildChatRow(reversedMessages, index),
+    );
+  }
+
+  Widget _buildChatRow(List<Message> messages, int index) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 3,
+        horizontal: 10,
+      ),
+      child: messages[index].direction == MessageDirections.Sent
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                _buildChatBubble(messages[index]),
+              ],
             )
-          : null,
-    );
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: message.direction == MessageDirections.Sent
-          ? <Widget>[timeText, bubble]
-          : <Widget>[bubble, timeText],
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _buildReceivedChatBubble(messages[index]),
+              ],
+            ),
     );
   }
 
@@ -275,37 +270,42 @@ class _ChatScreenState extends State<ChatScreen> {
           );
   }
 
-  Widget _buildChatRow(List<Message> messages, int index) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 3,
-        horizontal: 10,
+  Widget _buildChatBubble(Message message) {
+    final bubble = Container(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width / 2,
       ),
-      child: messages[index].direction == MessageDirections.Sent
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                _buildChatBubble(messages[index]),
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildReceivedChatBubble(messages[index]),
-              ],
-            ),
+      decoration: BoxDecoration(
+        color: message.direction == MessageDirections.Sent
+            ? Theme.of(context).colorScheme.secondaryVariant
+            : Colors.white,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      child: Text(
+        message.content,
+        maxLines: null,
+      ),
     );
-  }
 
-  Widget _buildChatContent() {
-    final reversedMessages = _messages.reversed.toList();
+    final timeText = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: message.showTime
+          ? Text(
+              _timeFormater.format(message.sentDate),
+              style: TextStyle(
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.secondaryVariant,
+              ),
+            )
+          : null,
+    );
 
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      reverse: true,
-      itemCount: _messages.length,
-      itemBuilder: (BuildContext context, int index) =>
-          _buildChatRow(reversedMessages, index),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: message.direction == MessageDirections.Sent
+          ? <Widget>[timeText, bubble]
+          : <Widget>[bubble, timeText],
     );
   }
 }

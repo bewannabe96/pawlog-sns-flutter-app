@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'package:pawlog/entity/entity.dart';
 
 class Breed {
@@ -16,9 +14,9 @@ class Pet {
   final String imageURL;
 
   const Pet({
-    @required this.petID,
-    @required this.name,
-    @required this.breed,
+    this.petID,
+    this.name,
+    this.breed,
     this.imageURL,
   });
 
@@ -47,8 +45,8 @@ class Family {
   final List<Pet> pets;
 
   Family._({
-    @required this.name,
-    @required this.pets,
+    this.name,
+    this.pets,
   });
 
   factory Family.fromEntity(FamilyEntity entity) {
