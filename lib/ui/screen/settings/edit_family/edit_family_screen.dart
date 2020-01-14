@@ -62,7 +62,7 @@ class EditFamilyScreen extends StatelessWidget {
         children: <Widget>[
           Image(
             width: MediaQuery.of(context).size.width * 0.4,
-            image: AssetImage('res/asset/no_family.jpeg'),
+            image: AssetImage('res/asset/error.png'),
           ),
           FlatButton(
             onPressed: () =>

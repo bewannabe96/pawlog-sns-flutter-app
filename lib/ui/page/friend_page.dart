@@ -16,15 +16,17 @@ class FriendPage extends StatelessWidget {
     return BlocBuilder<FriendBloc, FriendState>(
       builder: (BuildContext context, FriendState state) {
         if (state is FriendsLoadedState) {
-          return ListView.builder(
-            padding: EdgeInsets.only(bottom: 10),
-            itemCount: state.friends.length,
-            itemBuilder: (BuildContext context, int index) =>
-                _friendItemBuilder(
-              context,
-              state.friends[index],
-            ),
-          );
+          return state.friends.length > 0
+              ? ListView.builder(
+                  padding: EdgeInsets.only(bottom: 10),
+                  itemCount: state.friends.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      _buildFriendBuild(
+                    context,
+                    state.friends[index],
+                  ),
+                )
+              : _buildEmptyList(context);
         } else if (state is FriendsLoadingState) {
           return PLLoading();
         } else {
@@ -34,7 +36,22 @@ class FriendPage extends StatelessWidget {
     );
   }
 
-  Widget _friendItemBuilder(BuildContext context, Friend friend) {
+  Widget _buildEmptyList(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Image(
+            width: MediaQuery.of(context).size.width * 0.5,
+            image: AssetImage('res/asset/no_friends.png'),
+          ),
+          Text('No Friends')
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFriendBuild(BuildContext context, Friend friend) {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(
         UserProfileScreen.routeName,
