@@ -82,17 +82,13 @@ class _NewPetScreenState extends State<NewPetScreen> {
   }
 
   void _registerPet() {
-    final authState = BlocProvider.of<AuthBloc>(context).state;
-    if (authState is AuthorizedState) {
-      BlocProvider.of<FamilyBloc>(context).add(
-        RegisterPetEvent(
-          authState.user.userID,
-          name: _nameController.text,
-          breedID: _breed.breedID,
-        ),
-      );
-      Navigator.of(context).pop();
-    }
+    BlocProvider.of<FamilyBloc>(context).add(
+      RegisterPetEvent(
+        name: _nameController.text,
+        breedID: _breed.breedID,
+      ),
+    );
+    Navigator.of(context).pop();
   }
 
   Widget _buildPage() {

@@ -33,11 +33,17 @@ class StoryRepository {
     );
   }
 
-  static Future<void> writeStoryComment(
+  static Future<Comment> writeStoryComment(
     int storyID,
     int userID,
     String comment,
   ) async {
-    await StoryAPIClient.writeComment(storyID, userID, comment);
+    final entity = await StoryAPIClient.writeComment(
+      storyID,
+      userID,
+      comment,
+    );
+
+    return Comment.fromEntity(entity);
   }
 }

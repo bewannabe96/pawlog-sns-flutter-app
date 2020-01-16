@@ -13,7 +13,7 @@ import 'package:pawlog/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(PawlogApp());
+    // await tester.pumpWidget(PawlogApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

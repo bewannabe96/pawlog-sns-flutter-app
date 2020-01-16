@@ -71,16 +71,12 @@ class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
   }
 
   void _crateFamily() {
-    final authState = BlocProvider.of<AuthBloc>(context).state;
-    if (authState is AuthorizedState) {
-      BlocProvider.of<FamilyBloc>(context).add(
-        CreateFamilyEvent(
-          authState.user.userID,
-          name: _nameController.text,
-        ),
-      );
-      Navigator.of(context).pop();
-    }
+    BlocProvider.of<FamilyBloc>(context).add(
+      CreateFamilyEvent(
+        name: _nameController.text,
+      ),
+    );
+    Navigator.of(context).pop();
   }
 
   Widget _buildContent() {

@@ -9,29 +9,22 @@ abstract class FamilyEvent extends Equatable {
 }
 
 class CreateFamilyEvent extends FamilyEvent {
-  final int userID;
-
   final String name;
 
-  const CreateFamilyEvent(
-    this.userID, {
+  const CreateFamilyEvent({
     @required this.name,
   });
 }
 
 class LoadFamilyEvent extends FamilyEvent {
-  final int userID;
-
-  const LoadFamilyEvent(this.userID);
+  const LoadFamilyEvent();
 }
 
 class RegisterPetEvent extends FamilyEvent {
-  final int userID;
   final String name;
   final int breedID;
 
-  const RegisterPetEvent(
-    this.userID, {
+  const RegisterPetEvent({
     @required this.name,
     @required this.breedID,
   });

@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:pawlog/bloc/bloc.dart';
 
 import 'package:pawlog/route/auth_switch.dart';
 
+import 'package:pawlog/screen/register/screen.dart';
+import 'package:pawlog/screen/register_confirm/screen.dart';
+import 'package:pawlog/screen/story_view/screen.dart';
+import 'package:pawlog/screen/user_profile/screen.dart';
+
 import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
-import 'package:pawlog/ui/screen/auth/register_screen.dart';
-import 'package:pawlog/ui/screen/auth/confirmation_screen.dart';
 
 import 'package:pawlog/ui/screen/meetup/list_screen.dart';
 import 'package:pawlog/ui/screen/meetup/map_screen.dart';
 
 import 'package:pawlog/ui/screen/story/new_story_screen.dart';
-import 'package:pawlog/ui/screen/story/view_screen.dart';
 
-import 'package:pawlog/ui/screen/user_profile_screen.dart';
 import 'package:pawlog/ui/screen/chat_screen.dart';
 
 import 'package:pawlog/ui/screen/settings/settings_screen.dart';
@@ -41,17 +39,10 @@ class RouteGenerator {
         builder = (_) => FindPasswordScreen();
         break;
       case RegisterScreen.routeName:
-        builder = (_) => BlocProvider<RegisterBloc>(
-              create: (context) => RegisterBloc(),
-              child: RegisterScreen(),
-            );
+        builder = (_) => RegisterScreen();
         break;
-      case ConfirmationScreen.routeName:
-        final ConfirmationScreenArgs args = settings.arguments;
-        builder = (_) => BlocProvider<RegisterBloc>(
-              create: (context) => RegisterBloc(),
-              child: ConfirmationScreen(email: args.email),
-            );
+      case RegisterConfirmScreen.routeName:
+        builder = (_) => RegisterConfirmScreen(settings.arguments);
         break;
 
       case MeetupListScreen.routeName:
@@ -65,14 +56,7 @@ class RouteGenerator {
         builder = (_) => NewStoryScreen();
         break;
       case StoryViewScreen.routeName:
-        final StoryViewScreenArgs args = settings.arguments;
-        builder = (_) => BlocProvider<StoryCommentsBloc>(
-              create: (context) => StoryCommentsBloc()
-                ..add(
-                  LoadCommentsEvent(args.story.storyID),
-                ),
-              child: StoryViewScreen(args.story),
-            );
+        builder = (_) => StoryViewScreen(settings.arguments);
         break;
 
       case UserProfileScreen.routeName:

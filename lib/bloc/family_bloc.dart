@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
 
@@ -7,6 +8,13 @@ import './bloc.dart';
 import 'package:pawlog/repository/repository.dart';
 
 class FamilyBloc extends Bloc<FamilyEvent, FamilyState> {
+  final AuthenticationBloc _authenticationBloc;
+
+  FamilyBloc({
+    @required AuthenticationBloc authenticationBloc,
+  })  : assert(authenticationBloc != null),
+        _authenticationBloc = authenticationBloc;
+
   @override
   FamilyState get initialState => InitialFamilyState();
 
@@ -24,32 +32,43 @@ class FamilyBloc extends Bloc<FamilyEvent, FamilyState> {
   }
 
   Stream<FamilyState> createFamily(CreateFamilyEvent event) async* {
-    yield FamilyCreatingState();
-    try {
-      final family =
-          await FamilyRepository.createFamily(event.userID, name: event.name);
-      yield FamilyLoadedState(family: family);
-    } catch (_) {}
+    final authState = _authenticationBloc.state;
+
+    if (authState is Authenticated) {
+      yield FamilyCreatingState();
+      try {
+        final family = await FamilyRepository.createFamily(
+            authState.user.userID,
+            name: event.name);
+        yield FamilyLoadedState(family: family);
+      } catch (_) {}
+    }
   }
 
   Stream<FamilyState> loadFamily(LoadFamilyEvent event) async* {
-    yield FamilyLoadingState();
-    try {
-      final family = await FamilyRepository.loadFamily(event.userID);
-      yield FamilyLoadedState(family: family);
-    } catch (e) {
-      yield FamilyErrorState();
+    final authState = _authenticationBloc.state;
+
+    if (authState is Authenticated) {
+      yield FamilyLoadingState();
+      try {
+        final family = await FamilyRepository.loadFamily(authState.user.userID);
+        yield FamilyLoadedState(family: family);
+      } catch (e) {
+        yield FamilyErrorState();
+      }
     }
   }
 
   Stream<FamilyState> registerPet(RegisterPetEvent event) async* {
-    final _state = state;
-    if (_state is FamilyLoadedState) {
+    final currentState = state;
+    final authState = _authenticationBloc.state;
+
+    if (authState is Authenticated && currentState is FamilyLoadedState) {
       yield PetRegisteringState();
       try {
         final family = await FamilyRepository.registerPet(
-          event.userID,
-          _state.family,
+          authState.user.userID,
+          currentState.family,
           name: event.name,
           breedID: event.breedID,
         );

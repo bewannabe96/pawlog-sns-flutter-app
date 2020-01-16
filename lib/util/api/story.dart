@@ -57,7 +57,7 @@ class StoryAPIClient extends PawlogAPIClient {
     }
   }
 
-  static Future writeComment(
+  static Future<CommentEntity> writeComment(
     int storyID,
     int userID,
     String comment,
@@ -72,8 +72,12 @@ class StoryAPIClient extends PawlogAPIClient {
       }),
     );
 
-    if (response.statusCode != 201) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.created:
+        var json = jsonDecode(response.body);
+        return CommentEntity.fromJson(json);
+      default:
+        throw ('');
     }
   }
 

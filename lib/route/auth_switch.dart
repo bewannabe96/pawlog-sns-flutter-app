@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
 
-import 'package:pawlog/ui/screen/auth/login_screen.dart';
-import 'package:pawlog/ui/screen/home_screen.dart';
+import 'package:pawlog/screen/login/screen.dart';
+import 'package:pawlog/screen/home/screen.dart';
 
 class AuthSwitch extends StatelessWidget {
   static const routeName = '/';
@@ -13,29 +13,17 @@ class AuthSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (BuildContext context, AuthState state) {
-        if (state is AuthorizedState) {
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (BuildContext context, AuthenticationState state) {
+        if (state is Authenticated) {
           BlocProvider.of<FamilyBloc>(context).add(
-            LoadFamilyEvent(state.user.userID),
-          );
-          BlocProvider.of<FriendBloc>(context).add(
-            LoadFriendsEvent(state.user.userID),
-          );
-          BlocProvider.of<ChatBloc>(context).add(
-            LoadChatsEvent(state.user.userID),
-          );
-          BlocProvider.of<ProfileBloc>(context).add(
-            LoadProfileEvent(state.user.userID),
-          );
-          BlocProvider.of<FeedBloc>(context).add(
-            LoadStoriesEvent(state.user.userID),
+            LoadFamilyEvent(),
           );
         }
       },
-      child: BlocBuilder<AuthBloc, AuthState>(
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is AuthorizedState) {
+          if (state is Authenticated) {
             return HomeScreen();
           } else {
             return LoginScreen();

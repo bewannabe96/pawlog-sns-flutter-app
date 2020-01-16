@@ -10,8 +10,8 @@ class Story extends Equatable {
 
   final String content;
   final List<String> images;
-  final String created;
-  final String updated;
+  final DateTime created;
+  final DateTime updated;
 
   final int likes;
   final int comments;
@@ -41,15 +41,15 @@ class Story extends Equatable {
       profileName: entity.profileName,
       content: entity.content,
       images: entity.images,
-      created: entity.created,
-      updated: entity.updated,
+      created: DateTime.parse(entity.created),
+      updated: DateTime.parse(entity.updated),
       likes: entity.likes,
       comments: entity.comments,
       userLiked: entity.userLiked,
     );
   }
 
-  Story copy({
+  Story copyWith({
     storyID,
     profileImageURL,
     profileName,
@@ -80,7 +80,7 @@ class Comment {
   final String name;
   final String imageURL;
   final String content;
-  final String created;
+  final DateTime created;
 
   const Comment._({
     this.name,
@@ -94,7 +94,7 @@ class Comment {
       name: entity.name,
       imageURL: entity.imageURL,
       content: entity.content,
-      created: entity.created,
+      created: DateTime.parse(entity.created),
     );
   }
 }

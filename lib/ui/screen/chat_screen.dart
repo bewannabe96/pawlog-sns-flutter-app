@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pawlog/model/model.dart';
-
-import 'package:pawlog/ui/component/chat_input_form.dart';
+import 'package:pawlog/widget/chat_input_form.dart';
 
 class ChatScreen extends StatefulWidget {
   static const routeName = '/chat';
