@@ -8,7 +8,7 @@ import 'package:pawlog/ui/widget/pet_item.dart';
 class ProfileFamilyList extends StatelessWidget {
   final Family family;
 
-  const ProfileFamilyList(this.family);
+  const ProfileFamilyList({@required this.family});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ProfileFamilyList extends StatelessWidget {
   Widget _noFamily(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(30.0),
         child: Text(
           'No family exists.',
           style: TextStyle(

@@ -13,16 +13,40 @@ class User {
     @required this.userID,
     @required this.email,
     @required this.name,
-    this.imageURL,
-    this.intro,
+    @required this.imageURL,
+    @required this.intro,
   });
 
-  factory User.fromEntity(UserEntity userEntity) {
+  factory User.fromEntity(UserEntity entity) {
     return User._(
-      userID: userEntity.userID,
-      email: userEntity.email,
-      name: userEntity.name,
-      intro: userEntity.intro,
+      userID: entity.userID,
+      email: entity.email,
+      name: entity.name,
+      imageURL: entity.imageURL,
+      intro: entity.intro,
+    );
+  }
+}
+
+class UserSearchResult {
+  final int userID;
+  final String name;
+  final String imageURL;
+  final String intro;
+
+  UserSearchResult._({
+    @required this.userID,
+    @required this.name,
+    @required this.imageURL,
+    @required this.intro,
+  });
+
+  factory UserSearchResult.fromEntity(UserSearchResultEntity entity) {
+    return UserSearchResult._(
+      userID: entity.userID,
+      name: entity.name,
+      imageURL: entity.imageURL,
+      intro: entity.intro,
     );
   }
 }

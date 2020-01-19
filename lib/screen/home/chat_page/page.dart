@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import './bloc/bloc.dart';
 
 import 'package:pawlog/model/model.dart';
 
+import 'package:pawlog/screen/home/screen.dart';
+
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/screen/chat_screen.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({Key key}) : super(key: key);
+class ChatPage extends StatelessWidget with HomeScreenPage {
+  ChatPage({Key key}) : super(key: key);
+
+  @override
+  IconData icon() => FontAwesomeIcons.solidComments;
+
+  @override
+  String title(BuildContext context) => 'Chat';
 
   @override
   Widget build(BuildContext context) {

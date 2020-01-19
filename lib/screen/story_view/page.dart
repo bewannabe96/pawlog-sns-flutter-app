@@ -54,9 +54,9 @@ class _StoryViewPageState extends State<StoryViewPage> {
       ),
       body: BlocBuilder<StoryViewBloc, StoryViewState>(
         builder: (context, state) {
-          if (state is StoryLoaded) {
+          if (state is StoryLoadSuccess) {
             return _buildContent(context, state.story, state.comments);
-          } else if (state is StoryLoading) {
+          } else if (state is StoryLoadProgress) {
             return Center(
               child: PLLoading(),
             );

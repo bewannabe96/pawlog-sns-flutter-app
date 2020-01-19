@@ -12,14 +12,14 @@ abstract class ProfileState extends Equatable {
 
 class InitialProfileState extends ProfileState {}
 
-class ProfileLoading extends ProfileState {}
+class ProfileLoadProgress extends ProfileState {}
 
-class ProfileLoaded extends ProfileState {
+class ProfileLoadSuccess extends ProfileState {
   final Profile profile;
   final Family family;
   final List<Story> stories;
 
-  const ProfileLoaded({
+  const ProfileLoadSuccess({
     @required this.profile,
     @required this.family,
     @required this.stories,
@@ -27,4 +27,4 @@ class ProfileLoaded extends ProfileState {
         assert(stories != null);
 }
 
-class ProfileLoadingError extends ProfileState {}
+class ProfileLoadFailure extends ProfileState {}

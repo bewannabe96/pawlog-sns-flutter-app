@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import './bloc/bloc.dart';
 
+import './user_search_modal.dart';
+
 import 'package:pawlog/model/model.dart';
 
+import 'package:pawlog/screen/home/screen.dart';
 import 'package:pawlog/screen/user_profile/screen.dart';
 
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
 
-class FriendPage extends StatelessWidget {
-  const FriendPage({Key key}) : super(key: key);
+class FriendPage extends StatelessWidget with HomeScreenPage {
+  FriendPage({Key key}) : super(key: key);
+
+  @override
+  IconData icon() => FontAwesomeIcons.users;
+
+  @override
+  String title(BuildContext context) => 'Friend';
+
+  @override
+  List<Widget> actionWidgets(BuildContext context) => <Widget>[
+        IconButton(
+          onPressed: () => Navigator.of(context).push(UserSearchModal()),
+          icon: const Icon(FontAwesomeIcons.search),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {

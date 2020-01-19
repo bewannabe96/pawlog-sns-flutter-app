@@ -10,7 +10,7 @@ import './bloc.dart';
 class RegisterConfirmBloc
     extends Bloc<RegisterConfirmEvent, RegisterConfirmState> {
   @override
-  RegisterConfirmState get initialState => InitialRegisterConfirmState();
+  RegisterConfirmState get initialState => RegisterConfirmIntial();
 
   @override
   Stream<RegisterConfirmState> mapEventToState(
@@ -26,10 +26,10 @@ class RegisterConfirmBloc
   Stream<RegisterConfirmState> _mapConfirmationCheckRequestedToState(
     ConfirmationCheckRequested event,
   ) async* {
-    yield VerificationConfirming();
+    yield RegisterConfirmProgress();
 
     if (event.verificationCode == '') {
-      yield ConfirmationFailed(
+      yield ConfirmFailure(
         generalError: 'Please enter the verification code.',
       );
       return;
@@ -40,16 +40,16 @@ class RegisterConfirmBloc
         event.email,
         event.verificationCode,
       );
-      yield Confirmed();
+      yield ConfirmSuccess();
     } on CognitoClientException catch (e) {
       switch (e.code) {
         case 'CodeMismatchException':
-          yield ConfirmationFailed(
+          yield ConfirmFailure(
             generalError: 'Verification code is not correct.',
           );
           break;
         default:
-          yield ConfirmationFailed(
+          yield ConfirmFailure(
             generalError: 'Unknown Error',
           );
       }

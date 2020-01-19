@@ -106,8 +106,12 @@ class UserAPIClient extends PawlogAPIClient {
         .toList();
   }
 
-  static Future<ProfileEntity> fetchUserProfile(int userID) async {
-    final path = PawlogAPIClient.apiServerHost + '/user/$userID/profile';
+  static Future<ProfileEntity> fetchUserProfile(
+    int userID,
+    int requestingUserID,
+  ) async {
+    final path = PawlogAPIClient.apiServerHost +
+        '/user/$userID/profile?requestingUserID=$requestingUserID';
 
     final response = await PawlogAPIClient.client.get(path);
 
@@ -116,5 +120,21 @@ class UserAPIClient extends PawlogAPIClient {
     }
 
     return ProfileEntity.fromJson(jsonDecode(response.body));
+  }
+
+  static Future<UserSearchResultEntity> searchUserByEmail(String email) async {
+    final path = PawlogAPIClient.apiServerHost + '/user/search?email=$email';
+
+    final response = await PawlogAPIClient.client.get(path);
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return UserSearchResultEntity.fromJson(json);
+      case HttpStatus.notFound:
+        return null;
+      default:
+        throw ('');
+    }
   }
 }

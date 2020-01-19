@@ -1,4 +1,5 @@
 class ProfileEntity {
+  final int userID;
   final String email;
   final String name;
   final String imageURL;
@@ -8,7 +9,10 @@ class ProfileEntity {
   final int followers;
   final int followings;
 
+  final int isFollowing;
+
   const ProfileEntity({
+    this.userID,
     this.email,
     this.name,
     this.imageURL,
@@ -16,10 +20,12 @@ class ProfileEntity {
     this.stories,
     this.followers,
     this.followings,
+    this.isFollowing,
   });
 
   factory ProfileEntity.fromJson(Map<String, dynamic> json) {
     return ProfileEntity(
+      userID: json['userid'],
       email: json['email'],
       name: json['name'],
       imageURL: json['imageurl'],
@@ -27,6 +33,7 @@ class ProfileEntity {
       stories: json['stories'],
       followers: json['followers'],
       followings: json['followings'],
+      isFollowing: json['isfollowing'],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:pawlog/entity/entity.dart';
 
 class Profile extends Equatable {
+  final int userID;
   final String email;
   final String name;
   final String imageURL;
@@ -12,7 +13,10 @@ class Profile extends Equatable {
   final int followers;
   final int followings;
 
+  final int isFollowing;
+
   const Profile._({
+    this.userID,
     this.email,
     this.name,
     this.imageURL,
@@ -20,6 +24,7 @@ class Profile extends Equatable {
     this.stories,
     this.followers,
     this.followings,
+    this.isFollowing,
   });
 
   @override
@@ -27,6 +32,7 @@ class Profile extends Equatable {
 
   factory Profile.fromEntity(ProfileEntity entity) {
     return Profile._(
+      userID: entity.userID,
       email: entity.email,
       name: entity.name,
       imageURL: entity.imageURL,
@@ -34,6 +40,7 @@ class Profile extends Equatable {
       stories: entity.stories,
       followers: entity.followers,
       followings: entity.followings,
+      isFollowing: entity.isFollowing,
     );
   }
 }

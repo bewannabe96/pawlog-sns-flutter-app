@@ -60,3 +60,26 @@ class UserEntity {
     return json;
   }
 }
+
+class UserSearchResultEntity {
+  final int userID;
+  final String imageURL;
+  final String name;
+  final String intro;
+
+  const UserSearchResultEntity._({
+    this.userID,
+    this.imageURL,
+    this.name,
+    this.intro,
+  });
+
+  factory UserSearchResultEntity.fromJson(Map<String, dynamic> json) {
+    return UserSearchResultEntity._(
+      userID: json['userid'],
+      imageURL: json['imageurl'],
+      name: json['name'],
+      intro: json['intro'],
+    );
+  }
+}

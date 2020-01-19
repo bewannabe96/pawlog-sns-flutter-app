@@ -10,9 +10,9 @@ abstract class StoryViewState extends Equatable {
   List<Object> get props => [];
 }
 
-class StoryLoading extends StoryViewState {}
+class StoryLoadProgress extends StoryViewState {}
 
-class StoryLoaded extends StoryViewState {
+class StoryLoadSuccess extends StoryViewState {
   final Story story;
   final List<Comment> comments;
   final int page;
@@ -20,21 +20,24 @@ class StoryLoaded extends StoryViewState {
 
   final int stateVersion;
 
-  const StoryLoaded({
+  const StoryLoadSuccess({
     @required this.story,
     @required this.comments,
     this.page = 1,
     this.hasReachedMax = false,
-    this.stateVersion = 0,
+    this.stateVersion = 1,
   });
 
-  StoryLoaded copyWith({
+  @override
+  List<Object> get props => [stateVersion];
+
+  StoryLoadSuccess copyWith({
     Story story,
     List<Comment> comments,
     int page,
     bool hasReachedMax,
   }) {
-    return StoryLoaded(
+    return StoryLoadSuccess(
       story: story ?? this.story,
       comments: comments ?? this.comments,
       page: page ?? this.page,
@@ -42,9 +45,6 @@ class StoryLoaded extends StoryViewState {
       stateVersion: stateVersion + 1,
     );
   }
-
-  @override
-  List<Object> get props => [stateVersion];
 }
 
-class StoryLoadingError extends StoryViewState {}
+class StoryLoadFailure extends StoryViewState {}

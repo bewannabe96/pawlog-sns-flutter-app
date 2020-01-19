@@ -7,8 +7,8 @@ abstract class UserProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadUserProfileEvent extends UserProfileEvent {
+class UserProfilePageLoaded extends UserProfileEvent {
   final int userID;
 
-  const LoadUserProfileEvent(this.userID);
+  const UserProfilePageLoaded(this.userID);
 }

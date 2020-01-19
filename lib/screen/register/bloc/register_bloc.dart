@@ -9,7 +9,7 @@ import './bloc.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   @override
-  RegisterState get initialState => InitialRegisterState();
+  RegisterState get initialState => RegisterInitial();
 
   @override
   Stream<RegisterState> mapEventToState(
@@ -22,45 +22,45 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Stream<RegisterState> _mapRegisterSubmittedToState(
       RegisterSubmitted event) async* {
-    yield RegisterRequesting();
+    yield RegisterProgress();
 
     if (event.email == '') {
-      yield RegisterFailed(
+      yield RegisterFailure(
         emailError: 'Email should not be empty.',
       );
       return;
     } else if (event.name == '') {
-      yield RegisterFailed(
+      yield RegisterFailure(
         nameError: 'Name should not be empty.',
       );
       return;
     } else if (event.password == '') {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordError: 'Password cannot be empty.',
       );
       return;
     } else if (event.password.length < 8) {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordError: 'Password is too short.',
       );
       return;
     } else if (!RegExp(r"[a-z]").hasMatch(event.password)) {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordError: 'Password must contain lowercase characters.',
       );
       return;
     } else if (!RegExp(r"[A-Z]").hasMatch(event.password)) {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordError: 'Password must contain uppercase characters.',
       );
       return;
     } else if (!RegExp(r"[0-9]").hasMatch(event.password)) {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordError: 'Password must contain numeric character.',
       );
       return;
     } else if (event.password != event.passwordConfirm) {
-      yield RegisterFailed(
+      yield RegisterFailure(
         passwordConfirmError: 'Password does not match.',
       );
       return;
@@ -68,22 +68,22 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     try {
       await AuthRepository.register(event.email, event.name, event.password);
-      yield Registered();
+      yield RegisterSuccess();
     } on CognitoClientException catch (e) {
       print(e);
       switch (e.code) {
         case 'UsernameExistsException':
-          yield RegisterFailed(
+          yield RegisterFailure(
             emailError: 'An account with the given email already exists.',
           );
           break;
         case 'InvalidParameterException':
-          yield RegisterFailed(
+          yield RegisterFailure(
             emailError: 'Invalid email address format.',
           );
           break;
         default:
-          yield RegisterFailed(generalError: e.message);
+          yield RegisterFailure(generalError: e.message);
       }
     }
   }

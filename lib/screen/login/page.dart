@@ -7,7 +7,6 @@ import './bloc/bloc.dart';
 import 'package:pawlog/screen/register/screen.dart';
 import 'package:pawlog/screen/register_confirm/screen.dart';
 
-import 'package:pawlog/ui/component/pl_loading.dart';
 import 'package:pawlog/ui/component/auth/auth.dart';
 import 'package:pawlog/ui/component/pl_filled_button.dart';
 import 'package:pawlog/ui/screen/auth/find_password_screen.dart';
@@ -24,8 +23,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _keyboardVisible = false;
 
-  TextEditingController _emailController;
-  TextEditingController _passwordController;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   String _emailErrorMessage;
   String _passwordErrorMessage;
@@ -34,8 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
 
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {
@@ -77,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<LoginBloc, LoginState>(
         listener: (BuildContext context, LoginState state) {
-          if (state is LoginFailed) {
+          if (state is LoginFailure) {
             if (state.emailError != null) {
               setState(() {
                 _emailErrorMessage = state.emailError;

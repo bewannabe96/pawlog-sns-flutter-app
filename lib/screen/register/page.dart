@@ -94,12 +94,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocListener(
       bloc: BlocProvider.of<RegisterBloc>(context),
       listener: (BuildContext context, RegisterState state) {
-        if (state is Registered) {
+        if (state is RegisterSuccess) {
           Navigator.of(context).pushReplacementNamed(
             RegisterConfirmScreen.routeName,
             arguments: RegisterConfirmScreenArgs(email: _emailController.text),
           );
-        } else if (state is RegisterFailed) {
+        } else if (state is RegisterFailure) {
           // switch (state.type) {
           //   case RegisterErrorTypes.EmailError:
           //     _animateToPage(0);
@@ -218,7 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
       case 2:
         return BlocBuilder<RegisterBloc, RegisterState>(
           builder: (BuildContext context, RegisterState state) {
-            if (state is RegisterRequesting) {
+            if (state is RegisterProgress) {
               return PLLoading();
             } else {
               return Row(

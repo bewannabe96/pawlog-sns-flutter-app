@@ -7,16 +7,16 @@ abstract class RegisterConfirmState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialRegisterConfirmState extends RegisterConfirmState {}
+class RegisterConfirmIntial extends RegisterConfirmState {}
 
-class VerificationConfirming extends RegisterConfirmState {}
+class RegisterConfirmProgress extends RegisterConfirmState {}
 
-class Confirmed extends RegisterConfirmState {}
+class ConfirmSuccess extends RegisterConfirmState {}
 
-class ConfirmationFailed extends RegisterConfirmState {
+class ConfirmFailure extends RegisterConfirmState {
   final String generalError;
 
-  const ConfirmationFailed({
+  const ConfirmFailure({
     this.generalError,
   });
 

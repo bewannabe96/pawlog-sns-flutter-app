@@ -10,20 +10,16 @@ abstract class UserProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialUserProfileState extends UserProfileState {
-  const InitialUserProfileState();
-}
+class UserProfileIntial extends UserProfileState {}
 
-class UserProfileLoadingState extends UserProfileState {
-  const UserProfileLoadingState();
-}
+class UserProfileLoadProgress extends UserProfileState {}
 
-class UserProfileLoadedState extends UserProfileState {
+class UserProfileLoadSuccess extends UserProfileState {
   final Profile profile;
   final Family family;
   final List<Story> stories;
 
-  const UserProfileLoadedState({
+  const UserProfileLoadSuccess({
     @required this.profile,
     @required this.family,
     @required this.stories,
@@ -33,6 +29,4 @@ class UserProfileLoadedState extends UserProfileState {
   List<Object> get props => [profile];
 }
 
-class UserProfileErrorState extends UserProfileState {
-  const UserProfileErrorState();
-}
+class UserProfileLoadFailure extends UserProfileState {}

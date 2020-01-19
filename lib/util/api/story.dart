@@ -21,8 +21,12 @@ class StoryAPIClient extends PawlogAPIClient {
         .toList();
   }
 
-  static Future<List<StoryEntity>> loadUserStories(int userID) async {
-    final path = PawlogAPIClient.apiServerHost + '/story?page=1&userID=$userID';
+  static Future<List<StoryEntity>> loadUserStories(
+    int userID,
+    int requestingUserID,
+  ) async {
+    final path = PawlogAPIClient.apiServerHost +
+        '/story?page=1&userID=$userID&requestingUserID=$requestingUserID';
 
     final response = await PawlogAPIClient.client.get(path);
 

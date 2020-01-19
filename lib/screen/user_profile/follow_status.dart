@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-enum FollowStatuses {
-  NoRelation,
-  Following,
-}
-
 class FollowStatus extends StatelessWidget {
-  final FollowStatuses status;
+  final bool following;
 
-  const FollowStatus(this.status);
+  const FollowStatus({
+    Key key,
+    @required this.following,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       height: 32.0,
-      child: status == FollowStatuses.Following
+      child: following
           ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -63,7 +61,7 @@ class FollowStatus extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 12.0,
+          fontSize: 12.5,
           color: outlined ? _color : Colors.white,
         ),
       ),

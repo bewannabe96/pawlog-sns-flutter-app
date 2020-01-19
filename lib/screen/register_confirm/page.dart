@@ -61,9 +61,9 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
   Widget build(BuildContext context) {
     return BlocListener<RegisterConfirmBloc, RegisterConfirmState>(
       listener: (BuildContext context, RegisterConfirmState state) {
-        if (state is Confirmed) {
+        if (state is ConfirmSuccess) {
           Navigator.of(context).pop();
-        } else if (state is ConfirmationFailed) {
+        } else if (state is ConfirmFailure) {
           // switch (state.type) {
           //   case VerificationErrorTypes.EmptyCode:
           //     setState(() {
@@ -149,7 +149,7 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
                 height: 50,
                 child: BlocBuilder<RegisterConfirmBloc, RegisterConfirmState>(
                   builder: (BuildContext context, RegisterConfirmState state) {
-                    if (state is VerificationConfirming) {
+                    if (state is RegisterConfirmProgress) {
                       return PLLoading();
                     } else {
                       return PLFilledButton(

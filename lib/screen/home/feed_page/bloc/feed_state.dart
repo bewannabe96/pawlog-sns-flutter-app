@@ -8,37 +8,39 @@ abstract class FeedState extends Equatable {
   List<Object> get props => [];
 }
 
-class StoriesFirstLoading extends FeedState {}
+class StoriesFirstLoadProgress extends FeedState {}
 
-class StoriesReloading extends FeedState {}
+class StoriesLoadProgress extends FeedState {}
 
-class StoriesLoading extends FeedState {}
-
-class StoriesLoaded extends FeedState {
+class StoriesLoadSuccess extends FeedState {
   final List<Story> stories;
   final int page;
   final bool hasReachedMax;
 
-  const StoriesLoaded({
+  final int stateVersion;
+
+  const StoriesLoadSuccess({
     this.stories,
     this.page = 1,
     this.hasReachedMax = false,
+    this.stateVersion = 1,
   });
 
   @override
-  List<Object> get props => [stories, hasReachedMax];
+  List<Object> get props => [stateVersion];
 
-  StoriesLoaded copyWith({
+  StoriesLoadSuccess copyWith({
     List<Story> stories,
     int page,
     bool hasReachedMax,
   }) {
-    return StoriesLoaded(
+    return StoriesLoadSuccess(
       stories: stories ?? this.stories,
       page: page ?? this.page,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      stateVersion: stateVersion + 1,
     );
   }
 }
 
-class StoriesLoadedFailed extends FeedState {}
+class StoriesLoadFailure extends FeedState {}

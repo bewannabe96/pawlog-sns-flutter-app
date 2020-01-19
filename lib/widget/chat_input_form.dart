@@ -21,7 +21,7 @@ class _ChatInputFormState extends State<ChatInputForm> {
     super.initState();
     _controller.addListener(() {
       setState(() {
-        _buttonActive = _controller.text != '';
+        _buttonActive = _controller.text.length > 0;
       });
     });
   }
@@ -71,10 +71,12 @@ class _ChatInputFormState extends State<ChatInputForm> {
               onTap: _buttonActive ? _onEnter : null,
               child: Container(
                 padding: const EdgeInsets.all(15.0),
-                color: Theme.of(context).colorScheme.primary,
-                child: const Icon(
+                color: _buttonActive
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey,
+                child: Icon(
                   FontAwesomeIcons.solidPaperPlane,
-                  color: Colors.white,
+                  color: _buttonActive ? Colors.white : Colors.black26,
                   size: 20.0,
                 ),
               ),

@@ -18,7 +18,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
         _authenticationBloc = authenticationBloc;
 
   @override
-  FeedState get initialState => StoriesFirstLoading();
+  FeedState get initialState => StoriesFirstLoadProgress();
 
   @override
   Stream<FeedState> mapEventToState(
@@ -47,12 +47,12 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
           authState.user.userID,
         );
 
-        yield StoriesLoaded(
+        yield StoriesLoadSuccess(
           stories: stories,
           hasReachedMax: stories.length < 10,
         );
       } catch (e) {
-        yield StoriesLoadedFailed();
+        yield StoriesLoadFailure();
       }
     }
   }
@@ -64,18 +64,17 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
     if (authState is Authenticated) {
       try {
-        yield StoriesReloading();
         final stories = await StoryRepository.loadStories(
           1,
           authState.user.userID,
         );
 
-        yield StoriesLoaded(
+        yield StoriesLoadSuccess(
           stories: stories,
           hasReachedMax: stories.length < 10,
         );
       } catch (e) {
-        yield StoriesLoadedFailed();
+        yield StoriesLoadFailure();
       }
     }
   }
@@ -87,10 +86,10 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     final authState = _authenticationBloc.state;
 
     if (authState is Authenticated &&
-        currentState is StoriesLoaded &&
+        currentState is StoriesLoadSuccess &&
         !currentState.hasReachedMax) {
       try {
-        yield StoriesLoading();
+        yield StoriesLoadProgress();
         final stories = await StoryRepository.loadStories(
           currentState.page + 1,
           authState.user.userID,
@@ -101,7 +100,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
           hasReachedMax: stories.length < 10,
         );
       } catch (e) {
-        yield StoriesLoadedFailed();
+        yield StoriesLoadFailure();
       }
     }
   }
@@ -112,7 +111,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     final currentState = state;
     final authState = _authenticationBloc.state;
 
-    if (authState is Authenticated && currentState is StoriesLoaded) {
+    if (authState is Authenticated && currentState is StoriesLoadSuccess) {
       final index = currentState.stories.indexOf(event.story);
 
       try {
@@ -122,7 +121,8 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
               : event.story.likes + 1,
           userLiked: !event.story.userLiked,
         );
-        yield currentState;
+        yield currentState.copyWith();
+        // yield StoriesLoadFailure();
 
         await StoryRepository.toggleStoryLike(
           event.story.storyID,

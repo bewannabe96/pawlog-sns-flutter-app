@@ -34,9 +34,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final authState = _authenticationBloc.state;
 
     if (authState is Authenticated) {
-      yield ProfileLoading();
+      yield ProfileLoadProgress();
       try {
         final profile = await UserRepository.fetchUserProfile(
+          authState.user.userID,
           authState.user.userID,
         );
         final family = await FamilyRepository.loadFamily(
@@ -44,15 +45,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         );
         final stories = await UserRepository.fetchUserStories(
           authState.user.userID,
+          authState.user.userID,
         );
-        yield ProfileLoaded(
+        yield ProfileLoadSuccess(
           profile: profile,
           family: family,
           stories: stories,
         );
       } catch (e) {
-        print(e);
-        yield ProfileLoadingError();
+        yield ProfileLoadFailure();
       }
     }
   }

@@ -17,7 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         _authenticationBloc = authenticationBloc;
 
   @override
-  LoginState get initialState => InitialLoginState();
+  LoginState get initialState => LoginInitial();
 
   @override
   Stream<LoginState> mapEventToState(
@@ -29,13 +29,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _mapLoginSubmittedToState(LoginSubmitted event) async* {
-    yield LoginLoading();
+    yield LoginProgress();
 
     if (event.email == '') {
-      yield LoginFailed(emailError: 'Please type the email.');
+      yield LoginFailure(emailError: 'Please type the email.');
       return;
     } else if (event.password == '') {
-      yield LoginFailed(passwordError: 'Please type the password.');
+      yield LoginFailure(passwordError: 'Please type the password.');
       return;
     }
 
@@ -45,20 +45,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (userHash != null) {
         _authenticationBloc.add(LoggedIn(hash: userHash));
       }
-      yield InitialLoginState();
+      yield LoginSuccess();
     } catch (e) {
       switch (e) {
         case 'UserNotFoundException':
-          yield LoginFailed(generalError: 'User does not exist.');
+          yield LoginFailure(generalError: 'User does not exist.');
           break;
         case 'NotAuthorizedException':
-          yield LoginFailed(generalError: 'Incorrect username or password.');
+          yield LoginFailure(generalError: 'Incorrect username or password.');
           break;
         case 'UserNotConfirmedException':
-          yield LoginFailed(userNotConfirmed: true);
+          yield LoginFailure(userNotConfirmed: true);
           break;
         default:
-          yield LoginFailed(generalError: 'Unknown Error');
+          yield LoginFailure(generalError: 'Unknown Error');
       }
     }
   }

@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import './bloc/bloc.dart';
-import './feed_page.dart';
-import './friend_page.dart';
-import './chat_page.dart';
-import './profile_page.dart';
+import './feed_page/bloc/bloc.dart';
+import './friend_page/bloc/bloc.dart';
+import './chat_page/bloc/bloc.dart';
+import './profile_page/bloc/bloc.dart';
+
+import './feed_page/page.dart';
+import './friend_page/page.dart';
+import './chat_page/page.dart';
+import './profile_page/page.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
 
-import 'package:pawlog/ui/screen/settings/settings_screen.dart';
-import 'package:pawlog/ui/screen/story/new_story_screen.dart';
-
-import 'package:pawlog/ui/widget/home_bottom_nav_bar.dart';
-import 'package:pawlog/ui/modal/user_search_modal.dart';
-
-class _PageConfig {
-  final String title;
-  final Widget body;
-  final List<Widget> actionWidgets;
-
-  const _PageConfig({
-    this.title,
-    this.body,
-    this.actionWidgets,
-  });
+mixin HomeScreenPage on Widget {
+  IconData icon();
+  String title(BuildContext context);
+  List<Widget> actionWidgets(BuildContext context) => const <Widget>[];
 }
 
 class HomeScreen extends StatefulWidget {
@@ -40,10 +31,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
 
+  final Map<int, HomeScreenPage> _pages = {
+    0: FeedPage(),
+    1: FriendPage(),
+    2: ChatPage(),
+    3: ProfilePage(),
+  };
+
   @override
   Widget build(BuildContext context) {
-    final config = _mapPageConfig(_pageIndex);
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<FeedBloc>(
@@ -68,78 +64,57 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
       child: Scaffold(
-        appBar: _buildAppBar(config),
-        body: config.body,
-        bottomNavigationBar: HomeBottomNavBar(
-          currentIndex: _pageIndex,
-          onTap: (index) => setState(
-            () {
-              _pageIndex = index;
-            },
+        appBar: AppBar(
+          title: Text(
+            _pages[_pageIndex].title(context),
+            style: Theme.of(context).textTheme.title,
           ),
+          backgroundColor: Colors.white,
+          centerTitle: false,
+          elevation: 0,
+          actions: _pages[_pageIndex].actionWidgets(context),
         ),
+        body: _pages[_pageIndex],
+        bottomNavigationBar: _buildBottomNavBar(),
       ),
     );
   }
 
-  Widget _buildAppBar(_PageConfig config) {
-    return AppBar(
-      title: Text(
-        config.title,
-        style: Theme.of(context).textTheme.title,
+  Widget _buildBottomNavBar() {
+    return Container(
+      height: MediaQuery.of(context).padding.bottom + 56,
+      width: double.infinity,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          const BoxShadow(
+            color: Colors.black12,
+            blurRadius: 0.5,
+          ),
+        ],
       ),
-      backgroundColor: Colors.white,
-      centerTitle: false,
-      elevation: 0,
-      actions: config.actionWidgets,
+      child: Row(
+        children: _pages.keys
+            .map(
+              (pageIndex) => Expanded(
+                child: IconButton(
+                  onPressed: () => setState(() {
+                    _pageIndex = pageIndex;
+                  }),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(
+                    _pages[pageIndex].icon(),
+                    color: pageIndex == _pageIndex
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey[400],
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      ),
     );
-  }
-
-  _PageConfig _mapPageConfig(int page) {
-    final authState = BlocProvider.of<AuthenticationBloc>(context).state;
-    switch (page) {
-      case 0:
-        return _PageConfig(
-          title: 'Feed',
-          body: const FeedPage(),
-        );
-      case 2:
-        return _PageConfig(
-          title: 'Friend',
-          body: const FriendPage(),
-          actionWidgets: <Widget>[
-            IconButton(
-              onPressed: () => Navigator.of(context).push(UserSearchModal()),
-              icon: const Icon(FontAwesomeIcons.search),
-            ),
-          ],
-        );
-      case 3:
-        return _PageConfig(
-          title: 'Chat',
-          body: const ChatPage(),
-        );
-      case 4:
-        if (authState is Authenticated) {
-          return _PageConfig(
-            title: authState.user.name,
-            body: ProfilePage(),
-            actionWidgets: <Widget>[
-              IconButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(NewStoryScreen.routeName),
-                icon: const Icon(FontAwesomeIcons.solidEdit),
-              ),
-              IconButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(SettingsScreen.routeName),
-                icon: const Icon(FontAwesomeIcons.cog),
-              ),
-            ],
-          );
-        }
-        break;
-    }
-    return null;
   }
 }

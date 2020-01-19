@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './bloc/bloc.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
-import 'package:pawlog/screen/home/bloc/bloc.dart';
 
 import 'package:pawlog/model/model.dart';
 import 'package:pawlog/screen/story_view/page.dart';

@@ -7,20 +7,20 @@ abstract class RegisterState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialRegisterState extends RegisterState {}
+class RegisterInitial extends RegisterState {}
 
-class RegisterRequesting extends RegisterState {}
+class RegisterProgress extends RegisterState {}
 
-class Registered extends RegisterState {}
+class RegisterSuccess extends RegisterState {}
 
-class RegisterFailed extends RegisterState {
+class RegisterFailure extends RegisterState {
   final String generalError;
   final String emailError;
   final String nameError;
   final String passwordError;
   final String passwordConfirmError;
 
-  const RegisterFailed({
+  const RegisterFailure({
     this.generalError,
     this.emailError,
     this.nameError,

@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import './bloc.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
-import 'package:pawlog/screen/home/bloc/feed_bloc.dart';
+// import 'package:pawlog/screen/home/bloc/feed_bloc.dart';
 
 import 'package:pawlog/repository/repository.dart';
 
@@ -23,7 +23,7 @@ class StoryViewBloc extends Bloc<StoryViewEvent, StoryViewState> {
   // _feedBloc = feedBloc;
 
   @override
-  StoryViewState get initialState => StoryLoading();
+  StoryViewState get initialState => StoryLoadProgress();
 
   @override
   Stream<StoryViewState> mapEventToState(
@@ -41,18 +41,18 @@ class StoryViewBloc extends Bloc<StoryViewEvent, StoryViewState> {
   Stream<StoryViewState> _mapStoryViewScreenLoadedToState(
     StoryViewScreenLoaded event,
   ) async* {
-    yield StoryLoading();
+    yield StoryLoadProgress();
     try {
       final comments = await StoryRepository.loadComments(
         event.story.storyID,
         1,
       );
-      yield StoryLoaded(
+      yield StoryLoadSuccess(
           story: event.story,
           comments: comments,
           hasReachedMax: comments.length < 10);
     } catch (e) {
-      yield StoryLoadingError();
+      yield StoryLoadFailure();
     }
   }
 
@@ -61,7 +61,7 @@ class StoryViewBloc extends Bloc<StoryViewEvent, StoryViewState> {
   ) async* {
     final currentState = state;
 
-    if (currentState is StoryLoaded && !currentState.hasReachedMax) {
+    if (currentState is StoryLoadSuccess && !currentState.hasReachedMax) {
       try {
         final comments = await StoryRepository.loadComments(
           currentState.story.storyID,
@@ -73,7 +73,7 @@ class StoryViewBloc extends Bloc<StoryViewEvent, StoryViewState> {
           hasReachedMax: comments.length < 10,
         );
       } catch (e) {
-        yield StoryLoadingError();
+        yield StoryLoadFailure();
       }
     }
   }
@@ -84,7 +84,7 @@ class StoryViewBloc extends Bloc<StoryViewEvent, StoryViewState> {
     final currentState = state;
     final authState = _authenticationBloc.state;
 
-    if (authState is Authenticated && currentState is StoryLoaded) {
+    if (authState is Authenticated && currentState is StoryLoadSuccess) {
       try {
         final comment = await StoryRepository.writeStoryComment(
           currentState.story.storyID,
