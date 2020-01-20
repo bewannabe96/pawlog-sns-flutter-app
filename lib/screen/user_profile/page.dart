@@ -57,22 +57,24 @@ class UserProfilePage extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            ProfileTitle(profile),
-            authState is Authenticated &&
-                    authState.user.userID == profile.userID
-                ? Container()
-                : FollowStatus(following: profile.isFollowing != null),
-            Divider(),
-            ProfileFamilyList(family: family),
-            Divider(),
-            ProfileStoryTimeline(
-              stories: stories,
-              hasReachedMax: false,
-            ),
-          ],
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ProfileTitle(profile),
+              authState is Authenticated &&
+                      authState.user.userID == profile.userID
+                  ? Container()
+                  : FollowStatus(),
+              Divider(),
+              ProfileFamilyList(family: family),
+              Divider(),
+              ProfileStoryTimeline(
+                stories: stories,
+                hasReachedMax: false,
+              ),
+            ],
+          ),
         ),
       ),
     );

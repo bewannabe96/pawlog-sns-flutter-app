@@ -40,7 +40,31 @@ class Profile extends Equatable {
       stories: entity.stories,
       followers: entity.followers,
       followings: entity.followings,
-      isFollowing: entity.isFollowing,
+      isFollowing: entity.isFollowing ?? -1,
+    );
+  }
+
+  Profile copyWith({
+    int userID,
+    String email,
+    String name,
+    String imageURL,
+    String intro,
+    int stories,
+    int followers,
+    int followings,
+    int isFollowing,
+  }) {
+    return Profile._(
+      userID: userID ?? this.userID,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      imageURL: imageURL ?? this.imageURL,
+      intro: intro ?? this.intro,
+      stories: stories ?? this.stories,
+      followers: followers ?? this.followers,
+      followings: followings ?? this.followings,
+      isFollowing: isFollowing ?? this.isFollowing,
     );
   }
 }

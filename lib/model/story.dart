@@ -50,16 +50,16 @@ class Story extends Equatable {
   }
 
   Story copyWith({
-    storyID,
-    profileImageURL,
-    profileName,
-    content,
-    images,
-    created,
-    updated,
-    likes,
-    comments,
-    userLiked,
+    int storyID,
+    String profileImageURL,
+    String profileName,
+    String content,
+    List<String> images,
+    DateTime created,
+    DateTime updated,
+    int likes,
+    int comments,
+    bool userLiked,
   }) {
     return Story._(
       storyID: storyID ?? this.storyID,

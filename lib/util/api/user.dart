@@ -137,4 +137,24 @@ class UserAPIClient extends PawlogAPIClient {
         throw ('');
     }
   }
+
+  static Future<void> followUser(
+    int actionUserID,
+    int targetUserID,
+    bool follow,
+  ) async {
+    final path = PawlogAPIClient.apiServerHost +
+        '/user/$actionUserID/follow/$targetUserID';
+
+    final response = follow
+        ? await PawlogAPIClient.client.put(path)
+        : await PawlogAPIClient.client.delete(path);
+
+    switch (response.statusCode) {
+      case HttpStatus.noContent:
+        return;
+      default:
+        throw ('');
+    }
+  }
 }

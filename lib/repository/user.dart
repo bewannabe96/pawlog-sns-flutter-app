@@ -82,4 +82,9 @@ class UserRepository {
 
     return entity == null ? null : UserSearchResult.fromEntity(entity);
   }
+
+  static Future<void> followUser(
+      int actionUserID, int targetUserID, bool follow) async {
+    await UserAPIClient.followUser(actionUserID, targetUserID, follow);
+  }
 }

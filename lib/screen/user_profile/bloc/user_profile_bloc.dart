@@ -25,11 +25,15 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     UserProfileEvent event,
   ) async* {
     if (event is UserProfilePageLoaded) {
-      yield* loadProfile(event);
+      yield* _mapUserProfilePageLoadedToState(event);
+    } else if (event is UserFollowStatusChanged) {
+      yield* _mapUserFollowStatusChangedToState(event);
     }
   }
 
-  Stream<UserProfileState> loadProfile(UserProfilePageLoaded event) async* {
+  Stream<UserProfileState> _mapUserProfilePageLoadedToState(
+    UserProfilePageLoaded event,
+  ) async* {
     final authState = _authenticationBloc.state;
 
     if (authState is Authenticated) {
@@ -51,9 +55,25 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
           stories: stories,
         );
       } catch (e) {
-        print(e);
         yield UserProfileLoadFailure();
       }
+    }
+  }
+
+  Stream<UserProfileState> _mapUserFollowStatusChangedToState(
+    UserFollowStatusChanged event,
+  ) async* {
+    final currentState = state;
+
+    if (currentState is UserProfileLoadSuccess) {
+      final profile = currentState.profile.copyWith(
+        followers: event.follow
+            ? currentState.profile.followers + 1
+            : currentState.profile.followers - 1,
+        isFollowing: event.follow ? 1 : -1,
+      );
+
+      yield currentState.copyWith(profile: profile);
     }
   }
 }

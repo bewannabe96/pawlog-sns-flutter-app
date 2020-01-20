@@ -22,12 +22,20 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserProfileBloc>(
-      create: (context) => UserProfileBloc(
-        authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-      )..add(
-          UserProfilePageLoaded(userID),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserProfileBloc>(
+          create: (context) => UserProfileBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          )..add(UserProfilePageLoaded(userID: userID)),
+          child: UserProfilePage(),
         ),
+        BlocProvider<UserFollowBloc>(
+          create: (context) => UserFollowBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          ),
+        ),
+      ],
       child: UserProfilePage(),
     );
   }
