@@ -26,7 +26,7 @@ class ChatPage extends StatelessWidget with HomeScreenPage {
   Widget build(BuildContext context) {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (BuildContext context, ChatState state) {
-        if (state is ChatHeadersLoaded) {
+        if (state is ChatHeadersLoadSuccess) {
           return ListView.builder(
             padding: const EdgeInsets.only(bottom: 10),
             itemCount: state.messageHeaders.length,
@@ -35,7 +35,7 @@ class ChatPage extends StatelessWidget with HomeScreenPage {
               state.messageHeaders[index],
             ),
           );
-        } else if (state is ChatHeadersLoading) {
+        } else if (state is ChatHeadersLoadProgress) {
           return Center(
             child: PLLoading(),
           );

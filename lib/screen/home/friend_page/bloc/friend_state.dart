@@ -10,16 +10,14 @@ abstract class FriendState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialFriendState extends FriendState {}
+class FriendsLoadProgress extends FriendState {}
 
-class FriendsLoading extends FriendState {}
-
-class FriendsLoaded extends FriendState {
+class FriendsLoadSuccess extends FriendState {
   final List<Friend> friends;
 
-  const FriendsLoaded({
+  const FriendsLoadSuccess({
     @required this.friends,
   });
 }
 
-class FriendsLoadingError extends FriendState {}
+class FriendsLoadFailure extends FriendState {}

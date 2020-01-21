@@ -10,8 +10,6 @@ abstract class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialProfileState extends ProfileState {}
-
 class ProfileLoadProgress extends ProfileState {}
 
 class ProfileLoadSuccess extends ProfileState {

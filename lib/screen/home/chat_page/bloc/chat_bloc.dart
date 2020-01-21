@@ -17,7 +17,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         _authenticationBloc = authenticationBloc;
 
   @override
-  ChatState get initialState => InitialChatState();
+  ChatState get initialState => ChatHeadersLoadProgress();
 
   @override
   Stream<ChatState> mapEventToState(
@@ -34,14 +34,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final authState = _authenticationBloc.state;
 
     if (authState is Authenticated) {
-      yield ChatHeadersLoading();
+      yield ChatHeadersLoadProgress();
       try {
         final messageHeaders = await UserRepository.fetchChatHeaders(
           authState.user.userID,
         );
-        yield ChatHeadersLoaded(messageHeaders: messageHeaders);
+        yield ChatHeadersLoadSuccess(messageHeaders: messageHeaders);
       } catch (e) {
-        yield ChatHeadersLoadingFailed();
+        yield ChatHeadersLoadFailure();
       }
     }
   }

@@ -3,7 +3,8 @@ import 'package:amazon_cognito_identity_dart/cognito.dart';
 class CognitoUserEntity {
   final String hash;
 
-  const CognitoUserEntity._({
+  // TODO: Change constructor to private
+  const CognitoUserEntity({
     this.hash,
   });
 
@@ -17,7 +18,7 @@ class CognitoUserEntity {
       }
     });
 
-    return CognitoUserEntity._(
+    return CognitoUserEntity(
       hash: _hash,
     );
   }

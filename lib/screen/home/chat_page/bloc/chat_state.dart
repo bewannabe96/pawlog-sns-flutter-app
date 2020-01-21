@@ -10,16 +10,14 @@ abstract class ChatState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialChatState extends ChatState {}
+class ChatHeadersLoadProgress extends ChatState {}
 
-class ChatHeadersLoading extends ChatState {}
-
-class ChatHeadersLoaded extends ChatState {
+class ChatHeadersLoadSuccess extends ChatState {
   final List<ChatHeader> messageHeaders;
 
-  const ChatHeadersLoaded({
+  const ChatHeadersLoadSuccess({
     @required this.messageHeaders,
   }) : assert(messageHeaders != null);
 }
 
-class ChatHeadersLoadingFailed extends ChatState {}
+class ChatHeadersLoadFailure extends ChatState {}

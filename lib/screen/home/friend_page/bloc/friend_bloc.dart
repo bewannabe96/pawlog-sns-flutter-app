@@ -17,7 +17,7 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
         _authenticationBloc = authenticationBloc;
 
   @override
-  FriendState get initialState => InitialFriendState();
+  FriendState get initialState => FriendsLoadProgress();
 
   @override
   Stream<FriendState> mapEventToState(
@@ -34,14 +34,14 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
     final authState = _authenticationBloc.state;
 
     if (authState is Authenticated) {
-      yield FriendsLoading();
+      yield FriendsLoadProgress();
       try {
         final friends = await UserRepository.fetchFriends(
           authState.user.userID,
         );
-        yield FriendsLoaded(friends: friends);
+        yield FriendsLoadSuccess(friends: friends);
       } catch (e) {
-        yield FriendsLoadingError();
+        yield FriendsLoadFailure();
       }
     }
   }

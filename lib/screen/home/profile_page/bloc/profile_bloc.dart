@@ -17,7 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         _authenticationBloc = authenticationBloc;
 
   @override
-  ProfileState get initialState => InitialProfileState();
+  ProfileState get initialState => ProfileLoadProgress();
 
   @override
   Stream<ProfileState> mapEventToState(

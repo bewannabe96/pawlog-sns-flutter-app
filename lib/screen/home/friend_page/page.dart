@@ -35,7 +35,7 @@ class FriendPage extends StatelessWidget with HomeScreenPage {
   Widget build(BuildContext context) {
     return BlocBuilder<FriendBloc, FriendState>(
       builder: (BuildContext context, FriendState state) {
-        if (state is FriendsLoaded) {
+        if (state is FriendsLoadSuccess) {
           return state.friends.length > 0
               ? ListView.builder(
                   padding: EdgeInsets.only(bottom: 10),
@@ -47,7 +47,7 @@ class FriendPage extends StatelessWidget with HomeScreenPage {
                   ),
                 )
               : _buildEmptyList(context);
-        } else if (state is FriendsLoading) {
+        } else if (state is FriendsLoadProgress) {
           return Center(
             child: PLLoading(),
           );
@@ -87,7 +87,7 @@ class FriendPage extends StatelessWidget with HomeScreenPage {
               radius: 27,
               backgroundColor: Colors.black26,
               backgroundImage: friend.imageURL == null
-                  ? null
+                  ? AssetImage('res/asset/user_avatar.png')
                   : NetworkImage(friend.imageURL),
             ),
             Padding(
