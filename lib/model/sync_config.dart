@@ -20,7 +20,10 @@ class SyncConfig extends Equatable {
     Map<int, Breed> _types = {};
 
     breedTypes.forEach(
-      (entity) => _types[entity.breedID] = Breed(entity.breedID, entity.title),
+      (entity) => _types[entity.breedid] = Breed(
+        entity.breedid,
+        entity.breedname,
+      ),
     );
 
     return SyncConfig._(

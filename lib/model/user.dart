@@ -19,10 +19,10 @@ class User {
 
   factory User.fromEntity(UserEntity entity) {
     return User._(
-      userID: entity.userID,
+      userID: entity.userid,
       email: entity.email,
       name: entity.name,
-      imageURL: entity.imageURL,
+      imageURL: entity.imageurl,
       intro: entity.intro,
     );
   }
@@ -43,9 +43,9 @@ class UserSearchResult {
 
   factory UserSearchResult.fromEntity(UserSearchResultEntity entity) {
     return UserSearchResult._(
-      userID: entity.userID,
+      userID: entity.userid,
       name: entity.name,
-      imageURL: entity.imageURL,
+      imageURL: entity.imageurl,
       intro: entity.intro,
     );
   }

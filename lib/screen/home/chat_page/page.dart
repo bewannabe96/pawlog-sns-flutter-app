@@ -47,63 +47,39 @@ class ChatPage extends StatelessWidget with HomeScreenPage {
   }
 
   Widget _buildChatItem(BuildContext context, ChatHeader chat) {
-    return InkWell(
+    return ListTile(
       onTap: () => Navigator.of(context).pushNamed(ChatScreen.routeName),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        child: Row(
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundColor: Colors.black26,
+        backgroundImage:
+            chat.userImageURL == null ? null : NetworkImage(chat.userImageURL),
+      ),
+      title: Text(
+        chat.userName,
+        style: const TextStyle(
+          fontSize: 15,
+        ),
+      ),
+      subtitle: Text(
+        chat.lastMessage,
+        style: TextStyle(
+          fontSize: 13,
+          color: Colors.grey[500],
+        ),
+      ),
+      trailing: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.black26,
-              backgroundImage: chat.userImageURL == null
-                  ? null
-                  : NetworkImage(chat.userImageURL),
-            ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      chat.userName,
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Text(
-                        chat.lastMessage,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+            Text(
+              chat.lastTime,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey[500],
               ),
             ),
-            Container(
-              height: 50,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    chat.lastTime,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

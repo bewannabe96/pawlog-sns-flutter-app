@@ -36,16 +36,16 @@ class Story extends Equatable {
 
   factory Story.fromEntity(StoryEntity entity) {
     return Story._(
-      storyID: entity.storyID,
-      profileImageURL: entity.profileImageURL,
-      profileName: entity.profileName,
+      storyID: entity.storyid,
+      profileImageURL: entity.profile,
+      profileName: entity.owner,
       content: entity.content,
       images: entity.images,
       created: DateTime.parse(entity.created),
       updated: DateTime.parse(entity.updated),
       likes: entity.likes,
       comments: entity.comments,
-      userLiked: entity.userLiked,
+      userLiked: entity.userliked,
     );
   }
 
@@ -92,7 +92,7 @@ class Comment {
   factory Comment.fromEntity(CommentEntity entity) {
     return Comment._(
       name: entity.name,
-      imageURL: entity.imageURL,
+      imageURL: entity.imageurl,
       content: entity.content,
       created: DateTime.parse(entity.created),
     );

@@ -1,16 +1,17 @@
-class BreedTypeEntity {
-  final int breedID;
-  final String title;
+import 'package:json_annotation/json_annotation.dart';
 
-  const BreedTypeEntity._({
-    this.breedID,
-    this.title,
+part 'config.g.dart';
+
+@JsonSerializable()
+class BreedTypeEntity {
+  final int breedid;
+  final String breedname;
+
+  const BreedTypeEntity({
+    this.breedid,
+    this.breedname,
   });
 
-  factory BreedTypeEntity.fromJson(Map<String, dynamic> json) {
-    return BreedTypeEntity._(
-      breedID: json['breedid'],
-      title: json['breedname'],
-    );
-  }
+  factory BreedTypeEntity.fromJson(Map<String, dynamic> json) =>
+      _$BreedTypeEntityFromJson(json);
 }

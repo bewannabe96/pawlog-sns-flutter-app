@@ -22,19 +22,10 @@ class Pet {
 
   factory Pet.fromEntity(PetEntity entity) {
     return Pet(
-      petID: entity.petID,
+      petID: entity.petid,
       name: entity.name,
       breed: entity.breed,
-      imageURL: entity.imageURL,
-    );
-  }
-
-  PetEntity toEntity() {
-    return PetEntity(
-      petID: petID,
-      name: name,
-      breed: breed,
-      imageURL: imageURL,
+      imageURL: entity.imageurl,
     );
   }
 }

@@ -1,86 +1,43 @@
-import 'package:amazon_cognito_identity_dart/cognito.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class CognitoUserEntity {
-  final String hash;
+part 'user.g.dart';
 
-  // TODO: Change constructor to private
-  const CognitoUserEntity({
-    this.hash,
-  });
-
-  factory CognitoUserEntity.fromCognitoUserAttrs(
-      List<CognitoUserAttribute> attrs) {
-    var _hash;
-
-    attrs.forEach((attr) {
-      if (attr.name == 'sub') {
-        _hash = attr.value;
-      }
-    });
-
-    return CognitoUserEntity(
-      hash: _hash,
-    );
-  }
-}
-
+@JsonSerializable()
 class UserEntity {
-  final int userID;
+  final int userid;
   final String email;
   final String name;
-  final String imageURL;
+  final String imageurl;
   final String intro;
 
-  const UserEntity._({
-    this.userID,
+  const UserEntity({
+    this.userid,
     this.email,
     this.name,
-    this.imageURL,
+    this.imageurl,
     this.intro,
   });
 
-  factory UserEntity.fromJson(Map<String, dynamic> json) {
-    return UserEntity._(
-      userID: json['userid'],
-      email: json['email'],
-      name: json['name'],
-      imageURL: json['imageurl'],
-      intro: json['intro'],
-    );
-  }
+  factory UserEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserEntityFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['userid'] = userID;
-    json['email'] = email;
-    json['name'] = name;
-    json['imageurl'] = imageURL;
-    json['intro'] = intro;
-
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$UserEntityToJson(this);
 }
 
+@JsonSerializable()
 class UserSearchResultEntity {
-  final int userID;
-  final String imageURL;
+  final int userid;
+  final String imageurl;
   final String name;
   final String intro;
 
-  const UserSearchResultEntity._({
-    this.userID,
-    this.imageURL,
+  const UserSearchResultEntity({
+    this.userid,
+    this.imageurl,
     this.name,
     this.intro,
   });
 
-  factory UserSearchResultEntity.fromJson(Map<String, dynamic> json) {
-    return UserSearchResultEntity._(
-      userID: json['userid'],
-      imageURL: json['imageurl'],
-      name: json['name'],
-      intro: json['intro'],
-    );
-  }
+  factory UserSearchResultEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserSearchResultEntityFromJson(json);
 }

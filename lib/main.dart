@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
+import 'package:bloc_manager_cluster/bloc_manager_cluster.dart';
 
-import 'package:pawlog/bloc/bloc.dart';
-import 'package:pawlog/repository/repository.dart';
+import 'package:pawlog/manager/manager.dart';
 
-import 'package:pawlog/route/generator.dart';
+import 'package:pawlog/rx_route/generator.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -18,15 +18,7 @@ class SimpleBlocDelegate extends BlocDelegate {
 
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
-  runApp(RepositoryProvider(
-    create: (context) => UserRepository(),
-    child: BlocProvider<AuthenticationBloc>(
-      create: (BuildContext context) => AuthenticationBloc(
-        userRepository: RepositoryProvider.of<UserRepository>(context),
-      )..add(AppStarted()),
-      child: PawlogApp(),
-    ),
-  ));
+  runApp(PawlogApp());
 }
 
 // void main() => runApp(PawlogApp());
@@ -39,29 +31,39 @@ class PawlogApp extends StatelessWidget {
         statusBarColor: Colors.transparent,
       ),
     );
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<SyncConfigBloc>(
-          create: (BuildContext context) =>
-              SyncConfigBloc()..add(LoadSyncConfigEvent()),
-        ),
-        BlocProvider<FamilyBloc>(
-          create: (BuildContext context) => FamilyBloc(
-            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-          ),
-        ),
+    return BlocManagerClusterProvider(
+      managers: [
+        AuthenticationManager(),
+        LoginManager(),
+        FeedManager(),
+        FriendManager(),
       ],
-      child: _buildAppWidget(),
+      child: MaterialApp(
+        title: 'Pawlog',
+        theme: _createTheme(),
+        initialRoute: RouteGenerator.initialRoute,
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
     );
-  }
 
-  MaterialApp _buildAppWidget() {
-    return MaterialApp(
-      title: 'Pawlog',
-      theme: _createTheme(),
-      initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: RouteGenerator.generateMainRoute,
-    );
+    // return MultiBlocProvider(
+    //   providers: [
+    //     BlocProvider<AuthenticationBloc>(
+    //       create: (BuildContext context) =>
+    //           AuthenticationBloc()..add(AppStarted()),
+    //     ),
+    //     BlocProvider<SyncConfigBloc>(
+    //       create: (BuildContext context) =>
+    //           SyncConfigBloc()..add(LoadSyncConfigEvent()),
+    //     ),
+    //     BlocProvider<FamilyBloc>(
+    //       create: (BuildContext context) => FamilyBloc(
+    //         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+    //       ),
+    //     ),
+    //   ],
+    //   child: _buildAppWidget(),
+    // );
   }
 
   ThemeData _createTheme() {

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
 
@@ -9,12 +8,6 @@ import './bloc.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository _userRepository;
-
-  AuthenticationBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository;
-
   @override
   AuthenticationState get initialState => Uninitialized();
 
@@ -33,7 +26,7 @@ class AuthenticationBloc
     try {
       final userHash = await AuthRepository.checkAuthentication();
       if (userHash != null) {
-        final user = await _userRepository.fetchUserInfo(userHash);
+        final user = await UserRepository.fetchUserInfo(userHash);
         yield Authenticated(user);
       } else {
         yield Unauthenticated();
@@ -45,7 +38,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapLoggedInToState(LoggedIn event) async* {
     try {
-      final user = await _userRepository.fetchUserInfo(event.hash);
+      final user = await UserRepository.fetchUserInfo(event.hash);
       yield Authenticated(user);
     } catch (_) {
       yield Unauthenticated();

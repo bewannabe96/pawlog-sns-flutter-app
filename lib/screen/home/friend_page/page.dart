@@ -74,48 +74,29 @@ class FriendPage extends StatelessWidget with HomeScreenPage {
   }
 
   Widget _buildFriendBuild(BuildContext context, Friend friend) {
-    return InkWell(
+    return ListTile(
       onTap: () => Navigator.of(context).pushNamed(
         UserProfileScreen.routeName,
         arguments: UserProfileScreenArgs(friend.userID),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        child: Row(
-          children: <Widget>[
-            CircleAvatar(
-              radius: 27,
-              backgroundColor: Colors.black26,
-              backgroundImage: friend.imageURL == null
-                  ? AssetImage('res/asset/user_avatar.png')
-                  : NetworkImage(friend.imageURL),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    friend.name,
-                    style: const TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3),
-                    child: Text(
-                      friend.email,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black45,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+      leading: CircleAvatar(
+        radius: 27,
+        backgroundColor: Colors.black26,
+        backgroundImage: friend.imageURL == null
+            ? AssetImage('res/asset/user_avatar.png')
+            : NetworkImage(friend.imageURL),
+      ),
+      title: Text(
+        friend.name,
+        style: const TextStyle(
+          fontSize: 15,
+        ),
+      ),
+      subtitle: Text(
+        friend.email,
+        style: TextStyle(
+          fontSize: 13,
+          color: Colors.black45,
         ),
       ),
     );

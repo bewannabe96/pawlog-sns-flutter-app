@@ -1,39 +1,33 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'profile.g.dart';
+
+@JsonSerializable()
 class ProfileEntity {
-  final int userID;
+  final int userid;
   final String email;
   final String name;
-  final String imageURL;
+  final String imageurl;
   final String intro;
 
   final int stories;
   final int followers;
   final int followings;
 
-  final int isFollowing;
+  final int isfollowing;
 
   const ProfileEntity({
-    this.userID,
+    this.userid,
     this.email,
     this.name,
-    this.imageURL,
+    this.imageurl,
     this.intro,
     this.stories,
     this.followers,
     this.followings,
-    this.isFollowing,
+    this.isfollowing,
   });
 
-  factory ProfileEntity.fromJson(Map<String, dynamic> json) {
-    return ProfileEntity(
-      userID: json['userid'],
-      email: json['email'],
-      name: json['name'],
-      imageURL: json['imageurl'],
-      intro: json['intro'],
-      stories: json['stories'],
-      followers: json['followers'],
-      followings: json['followings'],
-      isFollowing: json['isfollowing'],
-    );
-  }
+  factory ProfileEntity.fromJson(Map<String, dynamic> json) =>
+      _$ProfileEntityFromJson(json);
 }

@@ -1,22 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'friend.g.dart';
+
+@JsonSerializable()
 class FriendEntity {
-  final int userID;
+  final int userid;
   final String email;
   final String name;
-  final String imageURL;
+  final String imageurl;
 
   const FriendEntity({
-    this.userID,
+    this.userid,
     this.email,
     this.name,
-    this.imageURL,
+    this.imageurl,
   });
 
-  factory FriendEntity.fromJson(Map<String, dynamic> json) {
-    return FriendEntity(
-      userID: json['userid'],
-      email: json['email'],
-      name: json['name'],
-      imageURL: json['imageurl'],
-    );
-  }
+  factory FriendEntity.fromJson(Map<String, dynamic> json) =>
+      _$FriendEntityFromJson(json);
 }

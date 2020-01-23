@@ -21,10 +21,10 @@ class Friend extends Equatable {
 
   factory Friend.fromEntity(FriendEntity entity) {
     return Friend._(
-      userID: entity.userID,
+      userID: entity.userid,
       name: entity.name,
       email: entity.email,
-      imageURL: entity.imageURL,
+      imageURL: entity.imageurl,
     );
   }
 }
