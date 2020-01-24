@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:pawlog/bloc/bloc.dart';
+
 import './bloc/bloc.dart';
 
 import './page.dart';
 
-import 'package:pawlog/bloc/bloc.dart';
-
 class UserProfileScreenArgs {
   final int userID;
 
-  const UserProfileScreenArgs(this.userID);
+  const UserProfileScreenArgs({
+    @required this.userID,
+  });
 }
 
 class UserProfileScreen extends StatelessWidget {
@@ -18,7 +20,9 @@ class UserProfileScreen extends StatelessWidget {
 
   final int userID;
 
-  const UserProfileScreen(this.userID, {Key key}) : super(key: key);
+  UserProfileScreen(UserProfileScreenArgs args, {Key key})
+      : userID = args.userID,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,6 @@ class UserProfileScreen extends StatelessWidget {
           create: (context) => UserProfileBloc(
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
           )..add(UserProfilePageLoaded(userID: userID)),
-          child: UserProfilePage(),
         ),
         BlocProvider<UserFollowBloc>(
           create: (context) => UserFollowBloc(

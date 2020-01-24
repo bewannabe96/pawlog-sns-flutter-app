@@ -1,65 +1,42 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'family.g.dart';
+
+@JsonSerializable()
 class PetEntity {
-  final int petID;
+  final int petid;
   final String name;
   final int breed;
-  final String imageURL;
+  final String imageurl;
 
   const PetEntity({
-    this.petID,
+    this.petid,
     this.name,
     this.breed,
-    this.imageURL,
+    this.imageurl,
   });
 
-  factory PetEntity.fromJson(Map<String, dynamic> json) {
-    return PetEntity(
-      petID: json['petid'],
-      name: json['name'],
-      breed: json['breed'],
-      imageURL: json['imageurl'],
-    );
-  }
+  factory PetEntity.fromJson(Map<String, dynamic> json) =>
+      _$PetEntityFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['petid'] = petID;
-    json['name'] = name;
-    json['breed'] = breed;
-    json['imageurl'] = imageURL;
-
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$PetEntityToJson(this);
 }
 
+@JsonSerializable()
 class FamilyEntity {
-  final int familyID;
+  final int familyid;
   final String name;
 
   final List<PetEntity> pets;
 
-  const FamilyEntity._({
-    this.familyID,
+  const FamilyEntity({
+    this.familyid,
     this.name,
     this.pets = const [],
   });
 
-  factory FamilyEntity.fromJson(Map<String, dynamic> json) {
-    return FamilyEntity._(
-      familyID: json['familyid'],
-      name: json['name'],
-      pets: (json['pets'] as List)
-          .map((value) => PetEntity.fromJson(value))
-          .toList(),
-    );
-  }
+  factory FamilyEntity.fromJson(Map<String, dynamic> json) =>
+      _$FamilyEntityFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-
-    json['name'] = name;
-    json['pets'] = pets.map((value) => value.toJson()).toList();
-
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$FamilyEntityToJson(this);
 }

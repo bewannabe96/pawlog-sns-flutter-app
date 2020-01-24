@@ -62,6 +62,7 @@ class _FeedPageState extends State<FeedPage> {
           _reloadCompleter?.complete();
         }
       },
+      buildWhen: (prev, state) => state is! StoriesLoadProgress,
       builder: (context, state) {
         if (state is StoriesLoadSuccess) {
           return _buildPage(

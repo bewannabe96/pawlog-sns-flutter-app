@@ -1,25 +1,23 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'chat.g.dart';
+
+@JsonSerializable()
 class ChatHeaderEntity {
-  final int chatID;
-  final String userName;
-  final String userImageURL;
-  final String lastMessage;
-  final String lastTime;
+  final int chatid;
+  final String username;
+  final String userimageurl;
+  final String lastmessage;
+  final String lasttime;
 
   const ChatHeaderEntity({
-    this.chatID,
-    this.userName,
-    this.userImageURL,
-    this.lastMessage,
-    this.lastTime,
+    this.chatid,
+    this.username,
+    this.userimageurl,
+    this.lastmessage,
+    this.lasttime,
   });
 
-  factory ChatHeaderEntity.fromJson(Map<String, dynamic> json) {
-    return ChatHeaderEntity(
-      chatID: json['chatid'],
-      userName: json['username'],
-      userImageURL: json['userimageurl'],
-      lastMessage: json['lastmessage'],
-      lastTime: json['lasttime'],
-    );
-  }
+  factory ChatHeaderEntity.fromJson(Map<String, dynamic> json) =>
+      _$ChatHeaderEntityFromJson(json);
 }

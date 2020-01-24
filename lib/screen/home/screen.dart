@@ -47,11 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
           )..add(FeedPageLoaded()),
         ),
-        BlocProvider<FriendBloc>(
-          create: (BuildContext context) => FriendBloc(
-            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-          )..add(FriendPageLoaded()),
-        ),
         BlocProvider<ChatBloc>(
           create: (BuildContext context) => ChatBloc(
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),

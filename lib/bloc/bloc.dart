@@ -1,6 +1,9 @@
 export 'family_bloc.dart';
 export 'family_event.dart';
 export 'family_state.dart';
+export 'friend_bloc.dart';
+export 'friend_event.dart';
+export 'friend_state.dart';
 export 'sync_config_bloc.dart';
 export 'sync_config_event.dart';
 export 'sync_config_state.dart';

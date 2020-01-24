@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:pawlog/bloc/bloc.dart';
+
 import 'package:pawlog/screen/user_profile/follow_action_modal.dart';
 
 import './bloc/bloc.dart';
@@ -14,6 +17,12 @@ class FollowStatus extends StatelessWidget {
     return BlocListener<UserFollowBloc, UserFollowState>(
       listener: (context, state) {
         if (state is UserFollowActionSuccess) {
+          BlocProvider.of<FriendBloc>(context).add(
+            FriendUpdated(
+              friend: state.friend,
+              add: state.follow,
+            ),
+          );
           BlocProvider.of<UserProfileBloc>(context).add(
             UserFollowStatusChanged(
               follow: state.follow,

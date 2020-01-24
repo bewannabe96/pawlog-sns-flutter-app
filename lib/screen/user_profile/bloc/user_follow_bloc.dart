@@ -38,12 +38,16 @@ class UserFollowBloc extends Bloc<UserFollowEvent, UserFollowState> {
       try {
         yield UserFollowActionProgress();
 
-        UserRepository.followUser(
+        final friend = await UserRepository.followUser(
           authState.user.userID,
           event.targetUserID,
           event.follow,
         );
-        yield UserFollowActionSuccess(follow: event.follow);
+
+        yield UserFollowActionSuccess(
+          follow: event.follow,
+          friend: friend,
+        );
       } catch (_) {
         yield UserFollowActionFailure();
       }

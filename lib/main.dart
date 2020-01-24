@@ -45,6 +45,11 @@ class PawlogApp extends StatelessWidget {
           create: (BuildContext context) =>
               SyncConfigBloc()..add(LoadSyncConfigEvent()),
         ),
+        BlocProvider<FriendBloc>(
+          create: (BuildContext context) => FriendBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          )..add(FriendPageLoaded()),
+        ),
         BlocProvider<FamilyBloc>(
           create: (BuildContext context) => FamilyBloc(
             authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),

@@ -32,15 +32,15 @@ class Profile extends Equatable {
 
   factory Profile.fromEntity(ProfileEntity entity) {
     return Profile._(
-      userID: entity.userID,
+      userID: entity.userid,
       email: entity.email,
       name: entity.name,
-      imageURL: entity.imageURL,
+      imageURL: entity.imageurl,
       intro: entity.intro,
       stories: entity.stories,
       followers: entity.followers,
       followings: entity.followings,
-      isFollowing: entity.isFollowing ?? -1,
+      isFollowing: entity.isfollowing ?? -1,
     );
   }
 

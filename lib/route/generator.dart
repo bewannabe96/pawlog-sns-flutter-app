@@ -60,8 +60,7 @@ class RouteGenerator {
         break;
 
       case UserProfileScreen.routeName:
-        final UserProfileScreenArgs args = settings.arguments;
-        builder = (_) => UserProfileScreen(args.userID);
+        builder = (_) => UserProfileScreen(settings.arguments);
         break;
       case ChatScreen.routeName:
         builder = (_) => ChatScreen();

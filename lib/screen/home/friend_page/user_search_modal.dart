@@ -6,7 +6,7 @@ import './bloc/bloc.dart';
 import './user_search_box.dart';
 import './user_search_result.dart';
 
-class UserSearchModal extends ModalRoute<void> {
+class UserSearchModal extends ModalRoute<int> {
   @override
   Duration get transitionDuration => Duration(milliseconds: 350);
 

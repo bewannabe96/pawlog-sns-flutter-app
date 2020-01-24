@@ -69,7 +69,9 @@ class UserSearchResultArea extends StatelessWidget {
               FlatButton(
                 onPressed: () => Navigator.of(context).pushReplacementNamed(
                   UserProfileScreen.routeName,
-                  arguments: UserProfileScreenArgs(result.userID),
+                  arguments: UserProfileScreenArgs(
+                    userID: result.userID,
+                  ),
                 ),
                 color: Theme.of(context).colorScheme.primary,
                 splashColor: Colors.white10,

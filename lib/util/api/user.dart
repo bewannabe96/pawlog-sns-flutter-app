@@ -138,7 +138,7 @@ class UserAPIClient extends PawlogAPIClient {
     }
   }
 
-  static Future<void> followUser(
+  static Future<FriendEntity> followUser(
     int actionUserID,
     int targetUserID,
     bool follow,
@@ -151,8 +151,9 @@ class UserAPIClient extends PawlogAPIClient {
         : await PawlogAPIClient.client.delete(path);
 
     switch (response.statusCode) {
-      case HttpStatus.noContent:
-        return;
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return FriendEntity.fromJson(json);
       default:
         throw ('');
     }

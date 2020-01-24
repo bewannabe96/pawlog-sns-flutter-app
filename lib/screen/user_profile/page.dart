@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import './bloc/bloc.dart';
-
-import './follow_status.dart';
-import './profile_story_timeline.dart';
-
 import 'package:pawlog/bloc/bloc.dart';
 import 'package:pawlog/model/model.dart';
 
@@ -14,6 +9,11 @@ import 'package:pawlog/widget/profile_family_list.dart';
 
 import 'package:pawlog/ui/component/pl_error.dart';
 import 'package:pawlog/ui/component/pl_loading.dart';
+
+import './bloc/bloc.dart';
+
+import './follow_status.dart';
+import './profile_story_timeline.dart';
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({Key key}) : super(key: key);

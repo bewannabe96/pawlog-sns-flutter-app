@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
-import './bloc.dart';
-
 import 'package:pawlog/bloc/bloc.dart';
 import 'package:pawlog/repository/repository.dart';
+
+import './bloc.dart';
 
 class FriendBloc extends Bloc<FriendEvent, FriendState> {
   final AuthenticationBloc _authenticationBloc;
@@ -25,6 +25,8 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
   ) async* {
     if (event is FriendPageLoaded) {
       yield* _mapFriendPageLoadedToState(event);
+    } else if (event is FriendUpdated) {
+      yield* _mapFriendUpdatedToState(event);
     }
   }
 
@@ -43,6 +45,18 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
       } catch (e) {
         yield FriendsLoadFailure();
       }
+    }
+  }
+
+  Stream<FriendState> _mapFriendUpdatedToState(
+    FriendUpdated event,
+  ) async* {
+    final currentState = state;
+
+    if (currentState is FriendsLoadSuccess) {
+      final friends = currentState.friends;
+      event.add ? friends.add(event.friend) : friends.remove(event.friend);
+      yield FriendsLoadSuccess(friends: friends);
     }
   }
 }

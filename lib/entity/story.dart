@@ -1,8 +1,13 @@
-class StoryEntity {
-  final int storyID;
+import 'package:json_annotation/json_annotation.dart';
 
-  final String profileImageURL;
-  final String profileName;
+part 'story.g.dart';
+
+@JsonSerializable()
+class StoryEntity {
+  final int storyid;
+
+  final String profile;
+  final String owner;
 
   final String content;
   final List<String> images;
@@ -12,56 +17,39 @@ class StoryEntity {
   final int likes;
   final int comments;
 
-  final bool userLiked;
+  final bool userliked;
 
-  const StoryEntity._({
-    this.storyID,
-    this.profileImageURL,
-    this.profileName,
+  const StoryEntity({
+    this.storyid,
+    this.profile,
+    this.owner,
     this.content,
     this.images,
     this.created,
     this.updated,
     this.likes,
     this.comments,
-    this.userLiked,
+    this.userliked,
   });
 
-  factory StoryEntity.fromJson(Map<String, dynamic> json) {
-    return StoryEntity._(
-      storyID: json['storyid'],
-      profileImageURL: json['profile'],
-      profileName: json['owner'],
-      content: json['content'],
-      images: (json['images'] as List).map((image) => image as String).toList(),
-      created: json['created'],
-      updated: json['updated'],
-      likes: json['likes'],
-      comments: json['comments'],
-      userLiked: json['userliked'],
-    );
-  }
+  factory StoryEntity.fromJson(Map<String, dynamic> json) =>
+      _$StoryEntityFromJson(json);
 }
 
+@JsonSerializable()
 class CommentEntity {
   final String name;
-  final String imageURL;
+  final String imageurl;
   final String content;
   final String created;
 
-  const CommentEntity._({
+  const CommentEntity({
     this.name,
-    this.imageURL,
+    this.imageurl,
     this.content,
     this.created,
   });
 
-  factory CommentEntity.fromJson(Map<String, dynamic> json) {
-    return CommentEntity._(
-      name: json['name'],
-      imageURL: json['imageurl'],
-      content: json['content'],
-      created: json['created'],
-    );
-  }
+  factory CommentEntity.fromJson(Map<String, dynamic> json) =>
+      _$CommentEntityFromJson(json);
 }

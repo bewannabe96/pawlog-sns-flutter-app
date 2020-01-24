@@ -22,11 +22,11 @@ class ChatHeader extends Equatable {
 
   factory ChatHeader.fromEntity(ChatHeaderEntity entity) {
     return ChatHeader._(
-      chatID: entity.chatID,
-      userName: entity.userName,
-      userImageURL: entity.userImageURL,
-      lastMessage: entity.lastMessage,
-      lastTime: entity.lastTime,
+      chatID: entity.chatid,
+      userName: entity.username,
+      userImageURL: entity.userimageurl,
+      lastMessage: entity.lastmessage,
+      lastTime: entity.lasttime,
     );
   }
 }
