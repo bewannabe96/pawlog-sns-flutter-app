@@ -1,0 +1,47 @@
+{
+	"stories": [
+		{
+			"storyid": 1,
+			"profile": null,
+			"owner": "Sookhyun",
+			"content": "This is contents",
+			"created": "2020-01-15T06:29:10.000Z",
+			"updated": "2020-01-15T06:29:10.000Z",
+			"likes": 1,
+			"comments": 22,
+			"images": [
+				"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+			],
+			"userliked": true
+		},
+		{
+			"storyid": 2,
+			"profile": null,
+			"owner": "Sookhyun",
+			"content": "This is contents",
+			"created": "2020-01-15T06:29:10.000Z",
+			"updated": "2020-01-15T06:29:10.000Z",
+			"likes": 1,
+			"comments": 22,
+			"images": [
+				"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+				"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+			],
+			"userliked": true
+		},
+		{
+			"storyid": 3,
+			"profile": null,
+			"owner": "Sookhyun",
+			"content": "This is contents",
+			"created": "2020-01-15T06:29:10.000Z",
+			"updated": "2020-01-15T06:29:10.000Z",
+			"likes": 1,
+			"comments": 22,
+			"images": [
+				"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+			],
+			"userliked": true
+		}
+	]
+}
