@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
+import 'package:pawlog/src/screen/chat_screen.dart';
+
+import 'package:pawlog/src/modal/action_modal.dart';
+
 class FollowStatus extends StatelessWidget {
   final int isFollowing;
 
@@ -10,23 +14,28 @@ class FollowStatus extends StatelessWidget {
     @required this.isFollowing,
   }) : super(key: key);
 
-  void _navigateToChat() {
-    // TODO: needs implementation
-    print('navigate to chat');
+  void _navigateToChat(BuildContext context) {
+    Navigator.of(context).pushNamed(ChatScreen.routeName);
   }
 
   void _followUser() {
-    // TODO: needs implementation
+    // TODO: implement followUser
     print('follow user');
   }
 
-  void _unfollowUser() async {
+  void _unfollowUser() {
+    // TODO: implement unfollowUser
     print('unfollow user');
-    // switch (await Navigator.of(context).push(FollowActionModal())) {
-    //   case 1:
-    //     // TODO: needs implementation
-    //     break;
-    // }
+  }
+
+  void _showFollowActionModal(BuildContext context) {
+    Navigator.of(context).push(
+      ActionModal(
+        actions: {
+          'Unfollow': _unfollowUser,
+        },
+      ),
+    );
   }
 
   @override
@@ -34,18 +43,18 @@ class FollowStatus extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       height: 32.0,
-      child: isFollowing != -1 ? _buildFollowing() : _buildNotFollowing(),
+      child: isFollowing == 1 ? _buildFollowing(context) : _buildNotFollowing(),
     );
   }
 
-  Widget _buildFollowing() {
+  Widget _buildFollowing(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Expanded(
           child: _FollowButton(
             text: 'Message',
-            onPressed: _navigateToChat,
+            onPressed: () => _navigateToChat(context),
             color: primaryColor,
           ),
         ),
@@ -54,7 +63,7 @@ class FollowStatus extends StatelessWidget {
           width: 100,
           child: _FollowButton(
             text: 'Following',
-            onPressed: _unfollowUser,
+            onPressed: () => _showFollowActionModal(context),
             color: primaryColor,
             outlined: false,
           ),

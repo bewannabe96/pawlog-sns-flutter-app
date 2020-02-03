@@ -7,9 +7,16 @@ import 'package:pawlog/src/screen/forgot_password_screen.dart';
 
 import 'package:pawlog/src/screen/home_screen.dart';
 
+import 'package:pawlog/src/screen/settings_screen.dart';
+import 'package:pawlog/src/screen/edit_family_screen.dart';
+import 'package:pawlog/src/screen/create_family_screen.dart';
+
 import 'package:pawlog/src/screen/story_detail_screen.dart';
+import 'package:pawlog/src/screen/new_story_screen.dart';
 
 import 'package:pawlog/src/screen/user_profile_screen.dart';
+
+import 'package:pawlog/src/screen/chat_screen.dart';
 
 class RouteGenerator {
   static const initialRoute = '/';
@@ -35,12 +42,29 @@ class RouteGenerator {
         builder = (_) => HomeScreen();
         break;
 
+      case SettingsScreen.routeName:
+        builder = (_) => SettingsScreen();
+        break;
+      case EditFamilyScreen.routeName:
+        builder = (_) => EditFamilyScreen();
+        break;
+      case CreateFamilyScreen.routeName:
+        builder = (_) => CreateFamilyScreen();
+        break;
+
       case StoryDetailScreen.routeName:
         builder = (_) => StoryDetailScreen(settings.arguments);
+        break;
+      case NewStoryScreen.routeName:
+        builder = (_) => NewStoryScreen();
         break;
 
       case UserProfileScreen.routeName:
         builder = (_) => UserProfileScreen();
+        break;
+
+      case ChatScreen.routeName:
+        builder = (_) => ChatScreen();
         break;
     }
 

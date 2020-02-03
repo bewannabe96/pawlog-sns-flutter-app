@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FollowActionModal extends ModalRoute {
+class ActionModal extends ModalRoute {
+  final Map<String, Function()> actions;
+
+  ActionModal({@required this.actions});
+
   @override
   Duration get transitionDuration => Duration(milliseconds: 150);
 
@@ -36,33 +40,37 @@ class FollowActionModal extends ModalRoute {
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.0),
             ),
-            padding: const EdgeInsets.all(10.0),
-            child: _buildMenu(context),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: actions.keys
+                  .map((label) => _buildActionItem(
+                        context,
+                        label,
+                        actions[label],
+                      ))
+                  .toList(),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildMenu(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        _buildMenuButton('Unfollow', () => Navigator.of(context).pop(1)),
-      ],
-    );
-  }
-
-  Widget _buildMenuButton(String text, Function() onPressed) {
+  Widget _buildActionItem(
+    BuildContext context,
+    String label,
+    Function() action,
+  ) {
     return FlatButton(
-      onPressed: onPressed,
-      child: Row(
-        children: <Widget>[
-          Text(
-            text,
-            style: TextStyle(fontSize: 15.0),
-          ),
-        ],
+      onPressed: () {
+        action();
+        Navigator.of(context).pop();
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Text(label, style: TextStyle(fontSize: 15.0)),
       ),
     );
   }

@@ -58,6 +58,7 @@ class _ChatInputFormState extends State<ChatInputForm> {
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 4,
+                cursorColor: accentColor,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   border: InputBorder.none,

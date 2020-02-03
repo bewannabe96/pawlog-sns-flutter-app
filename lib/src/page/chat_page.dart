@@ -10,6 +10,7 @@ import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/screen/home_screen.dart';
+import 'package:pawlog/src/screen/chat_screen.dart';
 
 class ChatPage extends StatefulWidget with HomeScreenPage {
   ChatPage({Key key}) : super(key: key);
@@ -51,7 +52,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _navigateToChat() {
-    // TODO: needs implementation
+    Navigator.of(context).pushNamed(ChatScreen.routeName);
   }
 
   @override

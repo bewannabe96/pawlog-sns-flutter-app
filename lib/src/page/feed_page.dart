@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pawlog/src/screen/story_detail_screen.dart';
 
 import 'package:pawlog/src/style.dart';
 
@@ -12,6 +11,8 @@ import 'package:pawlog/model/model.dart';
 import 'package:pawlog/entity/entity.dart';
 
 import 'package:pawlog/src/screen/home_screen.dart';
+import 'package:pawlog/src/screen/new_story_screen.dart';
+import 'package:pawlog/src/screen/story_detail_screen.dart';
 
 import 'package:pawlog/src/widget/loading_indicator.dart';
 import 'package:pawlog/src/widget/story_item.dart';
@@ -28,7 +29,8 @@ class FeedPage extends StatefulWidget with HomeScreenPage {
   @override
   List<Widget> actionWidgets(BuildContext context) => <Widget>[
         IconButton(
-          onPressed: () => {},
+          onPressed: () =>
+              Navigator.of(context).pushNamed(NewStoryScreen.routeName),
           icon: const Icon(FontAwesomeIcons.solidEdit),
         ),
       ];

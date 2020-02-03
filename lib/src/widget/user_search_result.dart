@@ -4,11 +4,13 @@ import 'package:pawlog/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
+import 'package:pawlog/src/screen/user_profile_screen.dart';
+
 class UserSearchResultArea extends StatelessWidget {
   const UserSearchResultArea({Key key}) : super(key: key);
 
-  void _navigateToUserProfile() {
-    // TODO: needs implementation
+  void _navigateToUserProfile(BuildContext context) {
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
   }
 
   @override
@@ -56,7 +58,7 @@ class UserSearchResultArea extends StatelessWidget {
                 ),
               ),
               FlatButton(
-                onPressed: _navigateToUserProfile,
+                onPressed: () => _navigateToUserProfile(context),
                 color: primaryColor,
                 splashColor: Colors.white10,
                 shape: RoundedRectangleBorder(

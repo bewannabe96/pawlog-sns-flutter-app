@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:pawlog/ui/screen/settings/edit_family/edit_family_screen.dart';
+import 'package:pawlog/src/screen/edit_family_screen.dart';
+import 'package:pawlog/src/style.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
 
   SettingsScreen({Key key}) : super(key: key);
+
+  void _navigateToEditProfile(BuildContext context) {
+    // TODO: implement navigateToEditProfile
+  }
+
+  void _navigateToEditFamily(BuildContext context) {
+    Navigator.of(context).pushNamed(EditFamilyScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +32,11 @@ class SettingsScreen extends StatelessWidget {
         children: <Widget>[
           _MenuRow(
             title: 'Edit Profile',
-            onTap: () {},
+            onTap: () => _navigateToEditProfile(context),
           ),
           _MenuRow(
             title: 'Edit Family',
-            onTap: () =>
-                Navigator.of(context).pushNamed(EditFamilyScreen.routeName),
+            onTap: () => _navigateToEditFamily(context),
           ),
           _InfoRow(title: 'Current version', value: '1.0.0'),
         ],
@@ -56,12 +63,7 @@ class _MenuRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-            ),
+            Text(title, style: const TextStyle(fontSize: 18)),
             const Icon(FontAwesomeIcons.angleRight),
           ],
         ),
@@ -86,18 +88,10 @@ class _InfoRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-            ),
-          ),
+          Text(title, style: const TextStyle(fontSize: 18)),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(fontSize: 18, color: darkSecondaryColor),
           ),
         ],
       ),

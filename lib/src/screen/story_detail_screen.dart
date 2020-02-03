@@ -140,7 +140,7 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
 
   Widget _buildCommentItem(BuildContext context, Comment comment) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 14.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -10,11 +10,11 @@ import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/screen/home_screen.dart';
+import 'package:pawlog/src/screen/settings_screen.dart';
+
 import 'package:pawlog/src/widget/profile_family_list.dart';
 import 'package:pawlog/src/widget/profile_story_timeline.dart';
-
 import 'package:pawlog/src/widget/profile_title.dart';
-import 'package:pawlog/src/widget/story_item.dart';
 
 class ProfilePage extends StatefulWidget with HomeScreenPage {
   ProfilePage({Key key}) : super(key: key);
@@ -31,7 +31,8 @@ class ProfilePage extends StatefulWidget with HomeScreenPage {
   @override
   List<Widget> actionWidgets(BuildContext context) => <Widget>[
         IconButton(
-          onPressed: () => {},
+          onPressed: () =>
+              Navigator.of(context).pushNamed(SettingsScreen.routeName),
           icon: const Icon(FontAwesomeIcons.cog),
         ),
       ];

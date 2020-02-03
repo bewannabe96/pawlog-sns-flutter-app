@@ -6,25 +6,28 @@ class PLFilledButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
+  final bool wrapContent;
+
   const PLFilledButton({
     Key key,
     @required this.label,
     this.onPressed,
+    this.wrapContent = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: double.infinity),
+      width: wrapContent ? null : double.infinity,
       child: FlatButton(
         onPressed: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(
             label,
             style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),

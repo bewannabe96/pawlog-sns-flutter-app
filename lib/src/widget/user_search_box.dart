@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
+import 'package:pawlog/src/widget/text_field.dart';
+
 class UserSearchBox extends StatefulWidget {
   const UserSearchBox({Key key}) : super(key: key);
 
@@ -40,22 +42,12 @@ class _UserSearchBoxState extends State<UserSearchBox> {
   }
 
   Widget _buildInputArea(BuildContext context) {
-    final underlineBorder = const UnderlineInputBorder(
-      borderSide: BorderSide(color: primaryColor, width: 1.5),
-    );
-
     return Padding(
       padding: const EdgeInsets.only(
           left: 20.0, top: 10.0, right: 20.0, bottom: 40.0),
-      child: TextFormField(
+      child: PLTextField(
         controller: _searchController,
-        decoration: InputDecoration(
-          labelText: 'User Email Address',
-          labelStyle: const TextStyle(color: darkSecondaryColor),
-          enabledBorder: underlineBorder,
-          focusedBorder: underlineBorder,
-        ),
-        cursorColor: accentColor,
+        label: 'User Email Address',
       ),
     );
   }

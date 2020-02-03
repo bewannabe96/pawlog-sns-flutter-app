@@ -40,7 +40,7 @@ class Profile extends Equatable {
       stories: entity.stories,
       followers: entity.followers,
       followings: entity.followings,
-      isFollowing: entity.isfollowing ?? -1,
+      isFollowing: entity.isfollowing ?? 0,
     );
   }
 
