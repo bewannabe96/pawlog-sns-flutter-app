@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:pawlog/model/model.dart';
-import 'package:pawlog/entity/entity.dart';
+import 'package:pawlog/src/model/model.dart';
+import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/widget/profile_story_timeline.dart';
 import 'package:pawlog/src/widget/profile_title.dart';

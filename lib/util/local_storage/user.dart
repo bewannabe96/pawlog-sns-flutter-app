@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:pawlog/entity/entity.dart';
+import 'package:pawlog/src/entity/entity.dart';
 
 class UserLocalStorage {
   static const _storageKey = 'user:';

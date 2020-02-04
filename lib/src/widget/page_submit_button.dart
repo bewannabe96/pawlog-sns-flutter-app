@@ -14,22 +14,25 @@ class PageSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: onPressed,
-      child: SafeArea(
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
+    return SizedBox(
+      width: double.infinity,
+      child: FlatButton(
+        onPressed: onPressed,
+        child: SafeArea(
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+            ),
           ),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        shape: const BeveledRectangleBorder(),
+        color: primaryColor,
+        disabledColor: disabledColor,
       ),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      shape: const BeveledRectangleBorder(),
-      color: primaryColor,
-      disabledColor: disabledColor,
     );
   }
 }

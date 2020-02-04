@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import 'package:pawlog/model/model.dart';
-import 'package:pawlog/entity/entity.dart';
+import 'package:pawlog/src/model/model.dart';
+import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/style.dart';
 

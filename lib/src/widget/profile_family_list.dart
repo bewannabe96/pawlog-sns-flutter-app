@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/model/model.dart';
+import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/ui/modal/pet_info_modal.dart';
-import 'package:pawlog/ui/widget/pet_item.dart';
+import 'package:pawlog/src/widget/pet_item.dart';
 
 class ProfileFamilyList extends StatelessWidget {
   final Family family;
@@ -57,10 +56,10 @@ class ProfileFamilyList extends StatelessWidget {
 
   Widget _buildFamilyItem(BuildContext context, Pet pet) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(PetInfoModal(pet)),
+      onTap: () => {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: PetItem(pet),
+        child: PetItem(pet: pet),
       ),
     );
   }

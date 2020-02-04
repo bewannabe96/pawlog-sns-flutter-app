@@ -5,7 +5,7 @@ import 'package:bloc/bloc.dart';
 
 import './bloc.dart';
 
-import 'package:pawlog/repository/repository.dart';
+import 'package:pawlog/src/repository/repository.dart';
 
 class FamilyBloc extends Bloc<FamilyEvent, FamilyState> {
   final AuthenticationBloc _authenticationBloc;

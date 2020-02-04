@@ -17,7 +17,7 @@ class PLFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: wrapContent ? null : double.infinity,
       child: FlatButton(
         onPressed: onPressed,

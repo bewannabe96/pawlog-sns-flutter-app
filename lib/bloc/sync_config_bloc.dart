@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import 'package:pawlog/repository/repository.dart';
+import 'package:pawlog/src/repository/repository.dart';
 
 import './bloc.dart';
 

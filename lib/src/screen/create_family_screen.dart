@@ -52,7 +52,6 @@ class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20),

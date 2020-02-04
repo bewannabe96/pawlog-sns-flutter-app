@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/util/api/api.dart';
 
-class ConfigAPIClient extends PawlogAPIClient {
+import 'package:pawlog/src/entity/entity.dart';
+
+class ConfigAPIClient {
   static Future<List<BreedTypeEntity>> loadBreedTypes() async {
     final path = PawlogAPIClient.apiServerHost + '/config/breedTypes';
 

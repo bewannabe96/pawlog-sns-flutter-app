@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
 import 'package:pawlog/bloc/bloc.dart';
-import 'package:pawlog/repository/repository.dart';
+import 'package:pawlog/src/repository/repository.dart';
 
 import './bloc.dart';
 

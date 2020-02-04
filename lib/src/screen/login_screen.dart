@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:provider/provider.dart';
 
-import 'package:pawlog/src/screen/home_screen.dart';
+import 'package:pawlog/src/store/store.dart';
+
 import 'package:pawlog/src/screen/register_confirm_screen.dart';
 import 'package:pawlog/src/screen/register_screen.dart';
 import 'package:pawlog/src/screen/forgot_password_screen.dart';
@@ -11,7 +13,7 @@ import 'package:pawlog/src/widget/auth_text_button.dart';
 import 'package:pawlog/src/widget/filled_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/login';
 
   const LoginScreen({Key key}) : super(key: key);
 
@@ -56,9 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _logIn() {
-    // TODO: needs implementation
-    print('login');
-    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    Provider.of<AuthenticationStore>(context, listen: false).attemptSignIn(
+      _emailController.text,
+      _passwordController.text,
+    );
   }
 
   void _navigateToRegisterConfirm() {

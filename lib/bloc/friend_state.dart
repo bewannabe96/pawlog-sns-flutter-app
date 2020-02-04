@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import 'package:pawlog/model/model.dart';
+import 'package:pawlog/src/model/model.dart';
 
 abstract class FriendState extends Equatable {
   const FriendState();

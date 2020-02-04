@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/util/api/api.dart';
 
-class StoryAPIClient extends PawlogAPIClient {
+import 'package:pawlog/src/entity/entity.dart';
+
+class StoryAPIClient {
   static Future<List<StoryEntity>> loadStories(int page, int userID) async {
     final path = PawlogAPIClient.apiServerHost +
         '/story?page=$page&requestingUserID=$userID';

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:pawlog/src/style.dart';
+import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/model/model.dart';
+import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/widget/story_images_page_view.dart';
 
@@ -73,7 +73,7 @@ class _StoryContent extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundImage: story.profileImageURL == null
-                ? AssetImage('res/asset/user_avatar.png')
+                ? const AssetImage('res/asset/user_avatar.png')
                 : NetworkImage(story.profileImageURL),
           ),
           title: Text(

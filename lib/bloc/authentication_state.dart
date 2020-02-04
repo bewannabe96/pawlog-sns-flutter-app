@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:pawlog/model/model.dart';
+import 'package:pawlog/src/model/model.dart';
 
 abstract class AuthenticationState extends Equatable {
   const AuthenticationState();

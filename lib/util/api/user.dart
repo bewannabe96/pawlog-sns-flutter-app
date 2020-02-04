@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:pawlog/entity/entity.dart';
 import 'package:pawlog/util/api/api.dart';
 
-class UserAPIClient extends PawlogAPIClient {
+import 'package:pawlog/src/entity/entity.dart';
+
+class UserAPIClient {
   static Future<UserEntity> fetchUserInfo(String userHash) async {
     final path = PawlogAPIClient.apiServerHost + '/user?userHash=$userHash';
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      return null;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return UserEntity.fromJson(jsonDecode(response.body));
+      default:
+        throw ('');
     }
-
-    return UserEntity.fromJson(jsonDecode(response.body));
   }
 
   static Future<FamilyEntity> fetchFamily(int userID) async {

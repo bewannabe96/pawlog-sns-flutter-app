@@ -97,7 +97,6 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
 
   Widget _buildPage() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         ListTile(
           leading: CircleAvatar(
@@ -152,31 +151,31 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
   Widget _buildPreviewImage(File image) {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
-      child: Stack(
-        alignment: AlignmentDirectional.topEnd,
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: ShaderMask(
-              blendMode: BlendMode.multiply,
-              shaderCallback: (rect) => RadialGradient(
-                colors: [Colors.white, Colors.grey[200]],
-              ).createShader(
-                Rect.fromLTRB(0, 0, rect.width, rect.height),
-              ),
-              child: Image(
-                fit: BoxFit.cover,
-                width: 140,
-                height: 140,
-                image: FileImage(image),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          alignment: AlignmentDirectional.topEnd,
+          children: <Widget>[
+            Image(
+              fit: BoxFit.cover,
+              width: 140,
+              height: 140,
+              image: FileImage(image),
+            ),
+            Container(
+              width: 140,
+              height: 140,
+              color: imageOverlayColor,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6),
+              child: const Icon(
+                FontAwesomeIcons.times,
+                color: Colors.white,
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6),
-            child: const Icon(FontAwesomeIcons.times, color: Colors.white),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -187,14 +186,14 @@ class _NewStoryScreenState extends State<NewStoryScreen> {
       height: 130,
       margin: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: lightSecondaryColor.withOpacity(0.6),
+        color: placeholderColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
         onTap: _getImage,
         child: const Icon(
           FontAwesomeIcons.plus,
-          color: darkSecondaryColor,
+          color: placeholderAccentColor,
         ),
       ),
     );

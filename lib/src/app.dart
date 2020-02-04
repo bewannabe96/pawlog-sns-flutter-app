@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:pawlog/src/route_generator.dart';
+
+import 'package:pawlog/src/store/store.dart';
 
 class PawlogApp extends StatelessWidget {
   @override
@@ -12,11 +15,17 @@ class PawlogApp extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: 'Pawlog',
-      theme: _createTheme(),
-      initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: RouteGenerator.generateMainRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthenticationStore>(
+            create: (_) => AuthenticationStore()),
+      ],
+      child: MaterialApp(
+        title: 'Pawlog',
+        theme: _createTheme(),
+        initialRoute: RouteGenerator.initialRoute,
+        onGenerateRoute: RouteGenerator.generateMainRoute,
+      ),
     );
   }
 
