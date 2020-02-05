@@ -22,7 +22,6 @@ class AuthenticationState with ChangeNotifier {
     notifyListeners();
 
     try {
-      throw ('NotAuthorizedException');
       final userHash = await AuthRepository.authenticate(email, password);
       if (userHash != null) {
         _user = await UserRepository.fetchUserInfo(userHash);
