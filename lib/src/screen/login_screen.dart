@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-import 'package:provider/provider.dart';
-
-import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/screen/register_confirm_screen.dart';
 import 'package:pawlog/src/screen/register_screen.dart';

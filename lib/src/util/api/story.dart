@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:pawlog/util/api/api.dart';
+import 'package:pawlog/src/util/api/api.dart';
 
 import 'package:pawlog/src/entity/entity.dart';
 

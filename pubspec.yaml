@@ -24,12 +24,8 @@ dependencies:
   amazon_cognito_identity_dart: 0.0.22
   # Architecture
   http: 0.12.0+2
-  bloc: ^3.0.0
-  flutter_bloc: ^3.1.0
   equatable: ^1.0.0
   shared_preferences: 0.5.6+1
-  connectivity: 0.4.6+1
-  provider: 4.0.2
   # UI
   cupertino_icons: ^0.1.2
   font_awesome_flutter: 8.5.0

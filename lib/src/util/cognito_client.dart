@@ -1,6 +1,6 @@
 import 'package:amazon_cognito_identity_dart/cognito.dart';
 
-import 'package:pawlog/util/local_storage/local_storage.dart';
+import 'package:pawlog/src/util/local_storage/local_storage.dart';
 
 import 'package:pawlog/src/entity/entity.dart';
 
