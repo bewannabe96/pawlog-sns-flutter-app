@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
-import 'package:pawlog/src/store/store.dart';
+import 'package:pawlog/src/style.dart';
+
+import 'package:pawlog/src/state/state.dart';
 
 import 'package:pawlog/src/screen/register_confirm_screen.dart';
 import 'package:pawlog/src/screen/register_screen.dart';
@@ -28,9 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _submitButtonEnabled = false;
   bool _keyboardVisible = false;
 
-  String _emailErrorMessage;
-  String _passwordErrorMessage;
-
   @override
   void initState() {
     super.initState();
@@ -45,20 +44,18 @@ class _LoginScreenState extends State<LoginScreen> {
       () => setState(() {
         _submitButtonEnabled = _emailController.text.length > 0 &&
             _passwordController.text.length > 0;
-        _emailErrorMessage = null;
       }),
     );
     _passwordController.addListener(
       () => setState(() {
         _submitButtonEnabled = _emailController.text.length > 0 &&
             _passwordController.text.length > 0;
-        _emailErrorMessage = null;
       }),
     );
   }
 
   void _logIn() {
-    Provider.of<AuthenticationStore>(context, listen: false).attemptSignIn(
+    Provider.of<AuthenticationState>(context, listen: false).attemptSignIn(
       _emailController.text,
       _passwordController.text,
     );
@@ -106,23 +103,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     AuthTextField(
                       label: 'Email',
                       controller: _emailController,
-                      errorText: _emailErrorMessage,
                     ),
                     AuthTextField(
                       label: 'Password',
                       isPassword: true,
                       controller: _passwordController,
-                      errorText: _passwordErrorMessage,
                     ),
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: PLFilledButton(
-                  label: 'Login',
-                  onPressed: _submitButtonEnabled ? _logIn : null,
-                ),
+                child: _buildLoginButton(),
               ),
               Visibility(
                 visible: !_keyboardVisible,
@@ -146,6 +138,30 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Consumer<AuthenticationState>(
+      builder: (context, state, _) {
+        if (state.status == AuthStatus.Failed) {
+          Future.microtask(() {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: errorColor,
+                ),
+              );
+          });
+        }
+
+        return PLFilledButton(
+          label: 'Login',
+          onPressed: _submitButtonEnabled ? _logIn : null,
+        );
+      },
     );
   }
 }

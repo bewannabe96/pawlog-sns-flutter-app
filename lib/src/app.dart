@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 
 import 'package:pawlog/src/route_generator.dart';
 
-import 'package:pawlog/src/store/store.dart';
+import 'package:pawlog/src/state/state.dart';
 
 class PawlogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    RootState _rootState = RootState();
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
@@ -16,10 +18,7 @@ class PawlogApp extends StatelessWidget {
     );
 
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthenticationStore>(
-            create: (_) => AuthenticationStore()),
-      ],
+      providers: _rootState.toProviders(),
       child: MaterialApp(
         title: 'Pawlog',
         theme: _createTheme(),
