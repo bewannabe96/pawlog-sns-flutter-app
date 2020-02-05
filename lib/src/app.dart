@@ -4,27 +4,20 @@ import 'package:provider/provider.dart';
 
 import 'package:pawlog/src/route_generator.dart';
 
-import 'package:pawlog/src/state/state.dart';
-
 class PawlogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    RootState _rootState = RootState();
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
       ),
     );
 
-    return MultiProvider(
-      providers: _rootState.toProviders(),
-      child: MaterialApp(
-        title: 'Pawlog',
-        theme: _createTheme(),
-        initialRoute: RouteGenerator.initialRoute,
-        onGenerateRoute: RouteGenerator.generateMainRoute,
-      ),
+    return MaterialApp(
+      title: 'Pawlog',
+      theme: _createTheme(),
+      initialRoute: RouteGenerator.initialRoute,
+      onGenerateRoute: RouteGenerator.generateMainRoute,
     );
   }
 

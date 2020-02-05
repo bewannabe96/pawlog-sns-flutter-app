@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/state/state.dart';
-
 import 'package:pawlog/src/screen/register_confirm_screen.dart';
 import 'package:pawlog/src/screen/register_screen.dart';
 import 'package:pawlog/src/screen/forgot_password_screen.dart';
@@ -55,10 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _logIn() {
-    Provider.of<AuthenticationState>(context, listen: false).attemptSignIn(
-      _emailController.text,
-      _passwordController.text,
-    );
+    // TODO: implement logIn
   }
 
   void _navigateToRegisterConfirm() {
@@ -114,7 +109,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: _buildLoginButton(),
+                child: PLFilledButton(
+                  label: 'Login',
+                  onPressed: _submitButtonEnabled ? _logIn : null,
+                ),
               ),
               Visibility(
                 visible: !_keyboardVisible,
@@ -138,30 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildLoginButton() {
-    return Consumer<AuthenticationState>(
-      builder: (context, state, _) {
-        if (state.status == AuthStatus.Failed) {
-          Future.microtask(() {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: errorColor,
-                ),
-              );
-          });
-        }
-
-        return PLFilledButton(
-          label: 'Login',
-          onPressed: _submitButtonEnabled ? _logIn : null,
-        );
-      },
     );
   }
 }
