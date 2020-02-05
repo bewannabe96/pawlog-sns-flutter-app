@@ -1,28 +1,23 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:pawlog/src/model/model.dart';
+import 'package:pawlog/src/entity/entity.dart';
+
+import 'package:pawlog/src/app.dart';
+
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Stories list test', (WidgetTester tester) async {
+    var jsonstring = await rootBundle.loadString('res/sample/stories.json');
+    final json = jsonDecode(jsonstring);
+
+    final entities =
+        (json['stories'] as List).map((j) => StoryEntity.fromJson(j)).toList();
+    final stories = entities.map((entity) => Story.fromEntity(entity)).toList();
+
     // Build our app and trigger a frame.
-    // await tester.pumpWidget(PawlogApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.pumpWidget(PawlogApp());
   });
 }
