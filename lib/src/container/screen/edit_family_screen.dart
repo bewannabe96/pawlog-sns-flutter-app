@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/screen/create_family_screen.dart';
-import 'package:pawlog/src/screen/new_pet_screen.dart';
+import 'package:pawlog/src/container/screen/create_family_screen.dart';
 
-import 'package:pawlog/src/widget/filled_button.dart';
+import 'package:pawlog/src/container/widget/filled_button.dart';
 
 class EditFamilyScreen extends StatelessWidget {
   static const routeName = '/edit-family';
@@ -13,8 +12,7 @@ class EditFamilyScreen extends StatelessWidget {
   EditFamilyScreen({Key key}) : super(key: key);
 
   void _navigateToCreateFamily(BuildContext context) {
-    Navigator.of(context).pushNamed(NewPetScreen.routeName);
-    // Navigator.of(context).pushNamed(CreateFamilyScreen.routeName);
+    Navigator.of(context).pushNamed(CreateFamilyScreen.routeName);
   }
 
   @override

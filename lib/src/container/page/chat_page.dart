@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:pawlog/src/style.dart';
+
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/style.dart';
-
-import 'package:pawlog/src/screen/home_screen.dart';
-import 'package:pawlog/src/screen/chat_screen.dart';
+import 'package:pawlog/src/container/screen/home_screen.dart';
+import 'package:pawlog/src/container/screen/chat_screen.dart';
 
 class ChatPage extends StatefulWidget with HomeScreenPage {
   ChatPage({Key key}) : super(key: key);

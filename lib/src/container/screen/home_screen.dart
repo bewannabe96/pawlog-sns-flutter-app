@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/page/feed_page.dart';
-import 'package:pawlog/src/page/friend_page.dart';
-import 'package:pawlog/src/page/chat_page.dart';
-import 'package:pawlog/src/page/profile_page.dart';
+import 'package:pawlog/src/container/page/feed_page.dart';
+import 'package:pawlog/src/container/page/friend_page.dart';
+import 'package:pawlog/src/container/page/chat_page.dart';
+import 'package:pawlog/src/container/page/profile_page.dart';
 
 mixin HomeScreenPage on Widget {
   IconData icon();

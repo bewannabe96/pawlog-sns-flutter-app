@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import 'package:pawlog/src/style.dart';
+
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/style.dart';
-
-import 'package:pawlog/src/widget/story_item.dart';
-import 'package:pawlog/src/widget/chat_input_form.dart';
+import 'package:pawlog/src/container/widget/story_item.dart';
+import 'package:pawlog/src/container/widget/chat_input_form.dart';
 
 class StoryDetailScreenArgs {
   final Story story;

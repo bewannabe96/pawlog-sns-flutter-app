@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/src/screen/home_screen.dart';
-import 'package:pawlog/src/screen/login_screen.dart';
+import 'package:pawlog/src/container/screen/home_screen.dart';
+import 'package:pawlog/src/container/screen/login_screen.dart';
 
 class AuthSwitch extends StatelessWidget {
   static const routeName = '/';

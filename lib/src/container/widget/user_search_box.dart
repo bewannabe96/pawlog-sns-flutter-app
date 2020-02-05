@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/widget/text_field.dart';
+import 'package:pawlog/src/container/widget/text_field.dart';
 
 class UserSearchBox extends StatefulWidget {
   const UserSearchBox({Key key}) : super(key: key);

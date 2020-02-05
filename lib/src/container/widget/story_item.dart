@@ -6,7 +6,7 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/widget/story_images_page_view.dart';
+import 'package:pawlog/src/container/widget/story_images_page_view.dart';
 
 class StoryItem extends StatelessWidget {
   final Story story;

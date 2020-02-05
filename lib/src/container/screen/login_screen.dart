@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
-import 'package:pawlog/src/screen/register_confirm_screen.dart';
-import 'package:pawlog/src/screen/register_screen.dart';
-import 'package:pawlog/src/screen/forgot_password_screen.dart';
+import 'package:pawlog/src/container/screen/register_confirm_screen.dart';
+import 'package:pawlog/src/container/screen/register_screen.dart';
+import 'package:pawlog/src/container/screen/forgot_password_screen.dart';
 
-import 'package:pawlog/src/widget/auth_text_field.dart';
-import 'package:pawlog/src/widget/auth_text_button.dart';
-import 'package:pawlog/src/widget/filled_button.dart';
+import 'package:pawlog/src/container/widget/auth_text_field.dart';
+import 'package:pawlog/src/container/widget/auth_text_button.dart';
+import 'package:pawlog/src/container/widget/filled_button.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';

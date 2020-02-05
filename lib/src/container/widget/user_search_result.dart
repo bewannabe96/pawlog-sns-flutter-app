@@ -4,7 +4,7 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/screen/user_profile_screen.dart';
+import 'package:pawlog/src/container/screen/user_profile_screen.dart';
 
 class UserSearchResultArea extends StatelessWidget {
   const UserSearchResultArea({Key key}) : super(key: key);

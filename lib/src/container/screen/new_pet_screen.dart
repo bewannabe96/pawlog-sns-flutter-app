@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:pawlog/src/model/model.dart';
-
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/widget/page_submit_button.dart';
-import 'package:pawlog/src/widget/text_field.dart';
+import 'package:pawlog/src/model/model.dart';
+
+import 'package:pawlog/src/container/widget/page_submit_button.dart';
+import 'package:pawlog/src/container/widget/text_field.dart';
 
 class NewPetScreen extends StatefulWidget {
   static const routeName = '/new-pet';

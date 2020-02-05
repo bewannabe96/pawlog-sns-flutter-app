@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/widget/profile_story_timeline.dart';
-import 'package:pawlog/src/widget/profile_title.dart';
-import 'package:pawlog/src/widget/follow_status.dart';
-import 'package:pawlog/src/widget/profile_family_list.dart';
+import 'package:pawlog/src/container/widget/profile_story_timeline.dart';
+import 'package:pawlog/src/container/widget/profile_title.dart';
+import 'package:pawlog/src/container/widget/follow_status.dart';
+import 'package:pawlog/src/container/widget/profile_family_list.dart';
 
 class UserProfileScreen extends StatefulWidget {
   static const routeName = '/user-profile';

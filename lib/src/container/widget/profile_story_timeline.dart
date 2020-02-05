@@ -4,9 +4,9 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/screen/story_detail_screen.dart';
+import 'package:pawlog/src/container/screen/story_detail_screen.dart';
 
-import 'package:pawlog/src/widget/story_item.dart';
+import 'package:pawlog/src/container/widget/story_item.dart';
 
 class ProfileStoryTimeline extends StatelessWidget {
   final List<Story> stories;

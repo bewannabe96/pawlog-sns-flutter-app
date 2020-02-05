@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pawlog/src/widget/page_submit_button.dart';
-import 'package:pawlog/src/widget/text_field.dart';
+
+import 'package:pawlog/src/container/widget/page_submit_button.dart';
+import 'package:pawlog/src/container/widget/text_field.dart';
 
 class CreateFamilyScreen extends StatefulWidget {
   static const routeName = '/create-family';

@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:pawlog/src/style.dart';
+
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/style.dart';
+import 'package:pawlog/src/container/screen/home_screen.dart';
+import 'package:pawlog/src/container/screen/user_profile_screen.dart';
 
-import 'package:pawlog/src/screen/home_screen.dart';
-import 'package:pawlog/src/screen/user_profile_screen.dart';
-
-import 'package:pawlog/src/widget/user_search_box.dart';
-import 'package:pawlog/src/widget/user_search_result.dart';
+import 'package:pawlog/src/container/widget/user_search_box.dart';
+import 'package:pawlog/src/container/widget/user_search_result.dart';
 
 class FriendPage extends StatefulWidget with HomeScreenPage {
   FriendPage({Key key}) : super(key: key);

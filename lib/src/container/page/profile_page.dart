@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:pawlog/src/style.dart';
+
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/style.dart';
+import 'package:pawlog/src/container/screen/home_screen.dart';
+import 'package:pawlog/src/container/screen/settings_screen.dart';
 
-import 'package:pawlog/src/screen/home_screen.dart';
-import 'package:pawlog/src/screen/settings_screen.dart';
-
-import 'package:pawlog/src/widget/profile_family_list.dart';
-import 'package:pawlog/src/widget/profile_story_timeline.dart';
-import 'package:pawlog/src/widget/profile_title.dart';
+import 'package:pawlog/src/container/widget/profile_family_list.dart';
+import 'package:pawlog/src/container/widget/profile_story_timeline.dart';
+import 'package:pawlog/src/container/widget/profile_title.dart';
 
 class ProfilePage extends StatefulWidget with HomeScreenPage {
   ProfilePage({Key key}) : super(key: key);
