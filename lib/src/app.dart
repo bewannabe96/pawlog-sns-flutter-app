@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:pawlog/src/reducer/app_state_reducer.dart';
+import 'package:redux/redux.dart';
+
+import 'package:pawlog/src/state/app_state.dart';
 
 import 'package:pawlog/src/route_generator.dart';
 
 class PawlogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Store<AppState> _store = Store<AppState>(
+      appReducer,
+      initialState: AppState.initialState(),
+    );
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
       ),
     );
 
-    return MaterialApp(
-      title: 'Pawlog',
-      theme: _createTheme(),
-      initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: RouteGenerator.generateMainRoute,
+    return StoreProvider(
+      store: _store,
+      child: MaterialApp(
+        title: 'Pawlog',
+        theme: _createTheme(),
+        initialRoute: RouteGenerator.initialRoute,
+        onGenerateRoute: RouteGenerator.generateMainRoute,
+      ),
     );
   }
 
