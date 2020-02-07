@@ -1,12 +1,9 @@
-class SignInAction {
-  String email;
-  String password;
-
-  SignInAction({
-    this.email,
-    this.password,
-  });
-
+class AuthenticationStartAction {
   @override
-  String toString() => 'SignInAction{email: $email, password: $password}';
+  String toString() => 'AuthenticateStartAction';
+}
+
+class AuthenticationFinishAction {
+  @override
+  String toString() => 'AuthenticationFinishAction';
 }

@@ -1,22 +1,38 @@
 import 'package:equatable/equatable.dart';
 
+import 'package:pawlog/src/model/model.dart';
+
 class AuthState extends Equatable {
-  final bool isSignedIn;
+  final User user;
+  final bool processing;
+  final String error;
+
+  bool get isAuthorized => user != null;
 
   AuthState({
-    this.isSignedIn,
+    this.user,
+    this.processing = false,
+    this.error,
   });
 
   @override
-  List<Object> get props => [isSignedIn];
+  List<Object> get props => [user.userID];
 
   AuthState copyWith({
-    bool isSignedIn,
+    User user,
+    bool processing,
+    String error,
   }) {
     return AuthState(
-      isSignedIn: isSignedIn ?? this.isSignedIn,
+      user: user ?? this.user,
+      processing: processing ?? this.processing,
+      error: error ?? this.error,
     );
   }
 
-  AuthState.initialState() : isSignedIn = false;
+  factory AuthState.initialState() => AuthState(
+        user: null,
+        processing: false,
+        error: null,
+      );
 }

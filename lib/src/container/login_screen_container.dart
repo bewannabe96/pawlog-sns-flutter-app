@@ -6,12 +6,10 @@ import 'package:pawlog/src/presentation/screen/login_screen.dart';
 
 import 'package:pawlog/src/state/app_state.dart';
 
-import 'package:pawlog/src/action/auth_action.dart';
+import 'package:pawlog/src/thunk_action/auth_thunk_action.dart';
 
 class LoginScreenContainer extends StatelessWidget {
   static const routeName = LoginScreen.routeName;
-
-  const LoginScreenContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +17,7 @@ class LoginScreenContainer extends StatelessWidget {
       converter: (store) => _ViewModel.create(store),
       builder: (context, viewmodel) => LoginScreen(
         props: LoginScreenProps(
+          authenticating: viewmodel.authenticating,
           signIn: viewmodel.onSignIn,
         ),
       ),
@@ -27,19 +26,20 @@ class LoginScreenContainer extends StatelessWidget {
 }
 
 class _ViewModel {
+  final bool authenticating;
+
   final Function onSignIn;
 
-  _ViewModel({
+  _ViewModel._({
+    this.authenticating,
     this.onSignIn,
   });
 
   factory _ViewModel.create(Store<AppState> store) {
-    _onSignIn(String email, String password) {
-      store.dispatch(SignInAction(email: email, password: password));
-    }
-
-    return _ViewModel(
-      onSignIn: _onSignIn,
+    return _ViewModel._(
+      authenticating: store.state.authState.processing,
+      onSignIn: (String email, String password) =>
+          store.dispatch(authenticateUser(email, password)),
     );
   }
 }

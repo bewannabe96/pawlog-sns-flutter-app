@@ -9,8 +9,10 @@ class AppState extends Equatable {
     this.authState,
   });
 
-  AppState.initialState() : authState = AuthState.initialState();
-
   @override
   List<Object> get props => [authState];
+
+  factory AppState.initialState() => AppState(
+        authState: AuthState.initialState(),
+      );
 }

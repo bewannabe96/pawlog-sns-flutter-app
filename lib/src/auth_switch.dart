@@ -17,21 +17,21 @@ class AuthSwitch extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel.create(store),
       builder: (context, viewmodel) =>
-          viewmodel.isSignedIn ? HomeScreen() : LoginScreenContainer(),
+          viewmodel.isAuthorized ? HomeScreen() : LoginScreenContainer(),
     );
   }
 }
 
 class _ViewModel {
-  final bool isSignedIn;
+  final bool isAuthorized;
 
   _ViewModel({
-    this.isSignedIn,
+    this.isAuthorized,
   });
 
   factory _ViewModel.create(Store<AppState> store) {
     return _ViewModel(
-      isSignedIn: store.state.authState.isSignedIn,
+      isAuthorized: store.state.authState.isAuthorized,
     );
   }
 }

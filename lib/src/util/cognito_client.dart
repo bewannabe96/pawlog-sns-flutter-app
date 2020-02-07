@@ -37,17 +37,35 @@ class CognitoClient {
     // final cognitoUser = CognitoUser(
     //   email,
     //   _userPool,
-    //   storage: _cognitoStorage,
     // );
 
     // final authDetails =
     //     AuthenticationDetails(username: email, password: password);
 
-    // await cognitoUser.authenticateUser(authDetails);
+    // try {
+    //   await cognitoUser.authenticateUser(authDetails);
 
-    // return CognitoUserEntity.fromCognitoUserAttrs(
-    //   await cognitoUser.getUserAttributes(),
-    // );
+    //   return CognitoUserEntity.fromCognitoUserAttrs(
+    //     await cognitoUser.getUserAttributes(),
+    //   );
+    // } on CognitoClientException catch (e) {
+    //   switch (e.code) {
+    //     case 'UserNotFoundException':
+    //       throw ('UserNotFoundException');
+    //       break;
+    //     case 'NotAuthorizedException':
+    //       throw ('NotAuthorizedException');
+    //       break;
+    //     case 'UserNotConfirmedException':
+    //       throw ('UserNotConfirmedException');
+    //       break;
+    //     case 'NetworkError':
+    //       throw ('NetworkException');
+    //       break;
+    //     default:
+    //       throw ('UnknownException');
+    //   }
+    // }
     return CognitoUserEntity(hash: '0e5f8cbf-7c34-423f-bdb9-e0e823d08d23');
   }
 

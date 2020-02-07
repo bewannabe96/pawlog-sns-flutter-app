@@ -8,11 +8,14 @@ import 'package:pawlog/src/presentation/screen/forgot_password_screen.dart';
 import 'package:pawlog/src/presentation/widget/auth_text_field.dart';
 import 'package:pawlog/src/presentation/widget/auth_text_button.dart';
 import 'package:pawlog/src/presentation/widget/filled_button.dart';
+import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 
 class LoginScreenProps {
+  final bool authenticating;
   final Function(String, String) signIn;
 
   const LoginScreenProps({
+    @required this.authenticating,
     @required this.signIn,
   });
 }
@@ -119,10 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: PLFilledButton(
-                  label: 'Login',
-                  onPressed: _submitButtonEnabled ? _logIn : null,
-                ),
+                child: widget.props.authenticating
+                    ? LoadingIndicator()
+                    : PLFilledButton(
+                        label: 'Login',
+                        onPressed: _submitButtonEnabled ? _logIn : null,
+                      ),
               ),
               Visibility(
                 visible: !_keyboardVisible,

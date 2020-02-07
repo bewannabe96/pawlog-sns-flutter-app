@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:pawlog/src/reducer/app_state_reducer.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 import 'package:pawlog/src/state/app_state.dart';
+
+import 'package:pawlog/src/reducer/app_state_reducer.dart';
 
 import 'package:pawlog/src/route_generator.dart';
 
@@ -14,6 +16,7 @@ class PawlogApp extends StatelessWidget {
     final Store<AppState> _store = Store<AppState>(
       appReducer,
       initialState: AppState.initialState(),
+      middleware: [thunkMiddleware],
     );
 
     SystemChrome.setSystemUIOverlayStyle(
