@@ -2,24 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/presentation/screen/home_screen.dart';
 import 'package:pawlog/src/presentation/screen/chat_screen.dart';
 
-class ChatPage extends StatefulWidget with HomeScreenPage {
+class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
-
-  @override
-  IconData icon() => FontAwesomeIcons.solidComments;
-
-  @override
-  String title(BuildContext context) => 'Chat';
 
   @override
   _ChatPageState createState() => _ChatPageState();

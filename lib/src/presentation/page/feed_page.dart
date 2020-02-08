@@ -3,37 +3,19 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/presentation/screen/home_screen.dart';
-import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
 import 'package:pawlog/src/presentation/screen/story_detail_screen.dart';
 
 import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 import 'package:pawlog/src/presentation/widget/story_item.dart';
 
-class FeedPage extends StatefulWidget with HomeScreenPage {
+class FeedPage extends StatefulWidget {
   FeedPage({Key key}) : super(key: key);
-
-  @override
-  IconData icon() => FontAwesomeIcons.solidNewspaper;
-
-  @override
-  String title(BuildContext context) => 'Feed';
-
-  @override
-  List<Widget> actionWidgets(BuildContext context) => <Widget>[
-        IconButton(
-          onPressed: () =>
-              Navigator.of(context).pushNamed(NewStoryScreen.routeName),
-          icon: const Icon(FontAwesomeIcons.solidEdit),
-        ),
-      ];
 
   @override
   _FeedPageState createState() => _FeedPageState();

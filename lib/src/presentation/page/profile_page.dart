@@ -2,40 +2,20 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/presentation/screen/home_screen.dart';
-import 'package:pawlog/src/presentation/screen/settings_screen.dart';
-
 import 'package:pawlog/src/presentation/widget/profile_family_list.dart';
 import 'package:pawlog/src/presentation/widget/profile_story_timeline.dart';
 import 'package:pawlog/src/presentation/widget/profile_title.dart';
 
-class ProfilePage extends StatefulWidget with HomeScreenPage {
-  ProfilePage({Key key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  final User user;
 
-  @override
-  IconData icon() => FontAwesomeIcons.solidUserCircle;
-
-  @override
-  String title(BuildContext context) {
-    // TODO: needs implementation
-    return 'Sookhyun';
-  }
-
-  @override
-  List<Widget> actionWidgets(BuildContext context) => <Widget>[
-        IconButton(
-          onPressed: () =>
-              Navigator.of(context).pushNamed(SettingsScreen.routeName),
-          icon: const Icon(FontAwesomeIcons.cog),
-        ),
-      ];
+  ProfilePage({Key key, @required this.user}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();

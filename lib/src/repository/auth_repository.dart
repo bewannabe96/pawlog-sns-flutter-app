@@ -1,11 +1,10 @@
 import 'package:pawlog/src/util/cognito_client.dart';
 
 class AuthRepository {
-  Future<String> authenticate(String email, String password) async {
+  static Future<String> authenticate(String email, String password) async {
     try {
       final cognitoUserEntity =
           await CognitoClient.authenticate(email, password);
-
       return cognitoUserEntity.hash;
     } catch (e) {
       switch (e) {

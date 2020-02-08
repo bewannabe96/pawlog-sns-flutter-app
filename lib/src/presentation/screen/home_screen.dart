@@ -2,21 +2,29 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/page/feed_page.dart';
-import 'package:pawlog/src/presentation/page/friend_page.dart';
-import 'package:pawlog/src/presentation/page/chat_page.dart';
-import 'package:pawlog/src/presentation/page/profile_page.dart';
+class HomeScreenPageConfig {
+  Widget page;
+  IconData icon;
+  String title;
+  List<Widget> actions;
 
-mixin HomeScreenPage on Widget {
-  IconData icon();
-  String title(BuildContext context);
-  List<Widget> actionWidgets(BuildContext context) => const <Widget>[];
+  HomeScreenPageConfig({
+    @required this.page,
+    @required this.icon,
+    @required this.title,
+    this.actions = const [],
+  });
 }
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
 
-  const HomeScreen({Key key}) : super(key: key);
+  final Map<int, HomeScreenPageConfig> pages;
+
+  const HomeScreen({
+    Key key,
+    @required this.pages,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -25,27 +33,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
 
-  final Map<int, HomeScreenPage> _pages = {
-    0: FeedPage(),
-    1: FriendPage(),
-    2: ChatPage(),
-    3: ProfilePage(),
-  };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _pages[_pageIndex].title(context),
+          widget.pages[_pageIndex].title,
           style: Theme.of(context).textTheme.title,
         ),
         backgroundColor: Colors.white,
         centerTitle: false,
         elevation: 0,
-        actions: _pages[_pageIndex].actionWidgets(context),
+        actions: widget.pages[_pageIndex].actions,
       ),
-      body: _pages[_pageIndex],
+      body: widget.pages[_pageIndex].page,
       bottomNavigationBar: _buildBottomNavBar(),
     );
   }
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: Row(
-        children: _pages.keys
+        children: widget.pages.keys
             .map(
               (pageIndex) => Expanded(
                 child: IconButton(
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   icon: Icon(
-                    _pages[pageIndex].icon(),
+                    widget.pages[pageIndex].icon,
                     color: pageIndex == _pageIndex
                         ? primaryColor
                         : Colors.grey[400],
