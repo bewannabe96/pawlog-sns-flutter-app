@@ -12,14 +12,15 @@ class StoryAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return (json['stories'] as List)
+            .map((j) => StoryEntity.fromJson(j))
+            .toList();
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    var json = jsonDecode(response.body);
-    return (json['stories'] as List)
-        .map((j) => StoryEntity.fromJson(j))
-        .toList();
   }
 
   static Future<List<StoryEntity>> loadUserStories(
@@ -31,14 +32,15 @@ class StoryAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return (json['stories'] as List)
+            .map((j) => StoryEntity.fromJson(j))
+            .toList();
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    var json = jsonDecode(response.body);
-    return (json['stories'] as List)
-        .map((j) => StoryEntity.fromJson(j))
-        .toList();
   }
 
   static Future createStory(
@@ -57,8 +59,11 @@ class StoryAPIClient {
       }),
     );
 
-    if (response.statusCode != 201) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.created:
+        return;
+      default:
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -82,7 +87,7 @@ class StoryAPIClient {
         var json = jsonDecode(response.body);
         return CommentEntity.fromJson(json);
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -95,33 +100,48 @@ class StoryAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return (json['comments'] as List)
+            .map((j) => CommentEntity.fromJson(j))
+            .toList();
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    var json = jsonDecode(response.body);
-    return (json['comments'] as List)
-        .map((j) => CommentEntity.fromJson(j))
-        .toList();
   }
 
-  static Future likeUnlikeStory(
-    int storyID,
-    int userID,
-    bool like,
-  ) async {
+  static Future likeStory(int storyID, int userID) async {
     final path =
         PawlogAPIClient.apiServerHost + '/story/$storyID/like?userID=$userID';
 
     final response = await PawlogAPIClient.client.post(
       path,
-      body: jsonEncode({
-        'like': like,
-      }),
+      body: jsonEncode({'like': true}),
     );
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return;
+      default:
+        throw ('Unexpected Status Code');
+    }
+  }
+
+  static Future unlikeStory(int storyID, int userID) async {
+    final path =
+        PawlogAPIClient.apiServerHost + '/story/$storyID/like?userID=$userID';
+
+    final response = await PawlogAPIClient.client.post(
+      path,
+      body: jsonEncode({'like': false}),
+    );
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return;
+      default:
+        throw ('Unexpected Status Code');
     }
   }
 }

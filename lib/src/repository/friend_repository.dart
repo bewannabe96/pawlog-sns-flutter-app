@@ -6,9 +6,8 @@ import 'package:pawlog/src/model/model.dart';
 class FriendRepository {
   static Future<List<Friend>> fetchFriends(int userID) async {
     List<FriendEntity> friendEntities;
-    try {
-      friendEntities = await UserAPIClient.fetchFriends(userID);
-    } catch (_) {}
+
+    friendEntities = await UserAPIClient.fetchFriends(userID);
 
     return friendEntities.map((entity) => Friend.fromEntity(entity)).toList();
   }

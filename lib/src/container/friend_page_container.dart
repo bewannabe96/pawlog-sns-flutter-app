@@ -29,7 +29,7 @@ class _ViewModel {
 
   factory _ViewModel.create(Store<AppState> store) {
     return _ViewModel._(
-      friends: store.state.friendState.friends.data,
+      friends: store.state.friendState.friendsState.friends,
     );
   }
 }

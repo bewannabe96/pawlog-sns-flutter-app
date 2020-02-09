@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:pawlog/src/util/api/api.dart';
 
@@ -10,13 +11,14 @@ class ConfigAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return (json['breeds'] as List)
+            .map((j) => BreedTypeEntity.fromJson(j))
+            .toList();
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    var json = jsonDecode(response.body);
-    return (json['breeds'] as List)
-        .map((j) => BreedTypeEntity.fromJson(j))
-        .toList();
   }
 }

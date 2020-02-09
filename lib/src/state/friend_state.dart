@@ -3,56 +3,56 @@ import 'package:equatable/equatable.dart';
 import 'package:pawlog/src/model/model.dart';
 
 class FriendState extends Equatable {
-  final _FriendsState friends;
+  final _FriendsState friendsState;
 
   FriendState._({
-    this.friends,
+    this.friendsState,
   });
 
   @override
-  List<Object> get props => [friends];
+  List<Object> get props => [friendsState];
 
   FriendState copyWith({
-    _FriendsState friends,
+    _FriendsState friendsState,
   }) {
     return FriendState._(
-      friends: friends ?? this.friends,
+      friendsState: friendsState ?? this.friendsState,
     );
   }
 
   factory FriendState.initialState() => FriendState._(
-        friends: _FriendsState.initialState(),
+        friendsState: _FriendsState.initialState(),
       );
 }
 
 class _FriendsState extends Equatable {
-  final List<Friend> data;
+  final List<Friend> friends;
   final bool processing;
   final String error;
 
   const _FriendsState._({
-    this.data,
+    this.friends,
     this.processing,
     this.error,
   });
 
   @override
-  List<Object> get props => data.map((friend) => friend.userID).toList();
+  List<Object> get props => friends.map((friend) => friend.userID).toList();
 
   _FriendsState copyWith({
-    List<Friend> data,
+    List<Friend> friends,
     bool processing,
     String error,
   }) {
     return _FriendsState._(
-      data: data ?? this.data,
+      friends: friends ?? this.friends,
       processing: processing ?? this.processing,
       error: error ?? this.error,
     );
   }
 
   factory _FriendsState.initialState() => _FriendsState._(
-        data: const [],
+        friends: const [],
         processing: false,
         error: null,
       );

@@ -8,6 +8,7 @@ import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/state/app_state.dart';
 
 import 'package:pawlog/src/container/login_screen_container.dart';
+import 'package:pawlog/src/container/feed_page_container.dart';
 import 'package:pawlog/src/container/friend_page_container.dart';
 import 'package:pawlog/src/container/profile_page_container.dart';
 
@@ -18,7 +19,6 @@ import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
 import 'package:pawlog/src/presentation/modal/user_search_modal.dart';
 
 import 'package:pawlog/src/presentation/page/chat_page.dart';
-import 'package:pawlog/src/presentation/page/feed_page.dart';
 
 class AuthSwitch extends StatelessWidget {
   static const routeName = '/';
@@ -45,7 +45,7 @@ class AuthSwitch extends StatelessWidget {
           ? HomeScreen(
               pages: {
                 0: HomeScreenPageConfig(
-                  page: FeedPage(),
+                  page: FeedPageContainer(),
                   icon: FontAwesomeIcons.solidNewspaper,
                   title: 'Feed',
                   actions: <Widget>[

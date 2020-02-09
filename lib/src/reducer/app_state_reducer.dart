@@ -2,6 +2,7 @@ import 'package:pawlog/src/state/app_state.dart';
 
 import 'package:pawlog/src/reducer/auth_reducer.dart';
 import 'package:pawlog/src/reducer/friend_reducer.dart';
+import 'package:pawlog/src/reducer/story_reducer.dart';
 
 AppState appReducer(AppState state, action) {
   print(action);
@@ -9,5 +10,6 @@ AppState appReducer(AppState state, action) {
   return AppState(
     authState: authReducer(state.authState, action),
     friendState: friendReducer(state.friendState, action),
+    storyState: storyReducer(state.storyState, action),
   );
 }

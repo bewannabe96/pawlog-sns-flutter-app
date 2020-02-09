@@ -15,7 +15,7 @@ class UserAPIClient {
       case HttpStatus.ok:
         return UserEntity.fromJson(jsonDecode(response.body));
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -30,7 +30,7 @@ class UserAPIClient {
       case HttpStatus.notFound:
         return null;
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -47,11 +47,12 @@ class UserAPIClient {
       }),
     );
 
-    if (response.statusCode != 201) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.created:
+        return FamilyEntity.fromJson(jsonDecode(response.body));
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    return FamilyEntity.fromJson(jsonDecode(response.body));
   }
 
   static Future<PetEntity> registerPet(
@@ -70,11 +71,12 @@ class UserAPIClient {
       }),
     );
 
-    if (response.statusCode != 201) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.created:
+        return PetEntity.fromJson(jsonDecode(response.body));
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    return PetEntity.fromJson(jsonDecode(response.body));
   }
 
   static Future<List<FriendEntity>> fetchFriends(int userID) async {
@@ -89,7 +91,7 @@ class UserAPIClient {
             .map((j) => FriendEntity.fromJson(j))
             .toList();
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -98,14 +100,15 @@ class UserAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var json = jsonDecode(response.body);
+        return (json['chatheaders'] as List)
+            .map((j) => ChatHeaderEntity.fromJson(j))
+            .toList();
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    var json = jsonDecode(response.body);
-    return (json['chatheaders'] as List)
-        .map((j) => ChatHeaderEntity.fromJson(j))
-        .toList();
   }
 
   static Future<ProfileEntity> fetchUserProfile(
@@ -117,11 +120,12 @@ class UserAPIClient {
 
     final response = await PawlogAPIClient.client.get(path);
 
-    if (response.statusCode != 200) {
-      throw ('');
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return ProfileEntity.fromJson(jsonDecode(response.body));
+      default:
+        throw ('Unexpected Status Code');
     }
-
-    return ProfileEntity.fromJson(jsonDecode(response.body));
   }
 
   static Future<UserSearchResultEntity> searchUserByEmail(String email) async {
@@ -136,7 +140,7 @@ class UserAPIClient {
       case HttpStatus.notFound:
         return null;
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 
@@ -157,7 +161,7 @@ class UserAPIClient {
         var json = jsonDecode(response.body);
         return FriendEntity.fromJson(json);
       default:
-        throw ('');
+        throw ('Unexpected Status Code');
     }
   }
 }

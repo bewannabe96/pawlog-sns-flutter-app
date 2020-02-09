@@ -1,13 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
-import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/presentation/screen/story_detail_screen.dart';
 
@@ -15,7 +10,23 @@ import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 import 'package:pawlog/src/presentation/widget/story_item.dart';
 
 class FeedPage extends StatefulWidget {
-  FeedPage({Key key}) : super(key: key);
+  final List<Story> stories;
+  final bool loadingNext;
+  final bool reachedMax;
+
+  final Function loadNextStories;
+  final Function reloadStories;
+  final Function(Story) toggleStoryLike;
+
+  FeedPage({
+    Key key,
+    @required this.stories,
+    @required this.loadingNext,
+    @required this.reachedMax,
+    @required this.loadNextStories,
+    @required this.reloadStories,
+    @required this.toggleStoryLike,
+  }) : super(key: key);
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -26,16 +37,10 @@ class _FeedPageState extends State<FeedPage> {
 
   final ScrollController _scrollController = ScrollController();
 
-  bool _isLoadingNextStories = false;
-
-  // TODO: needs replacement
-  List<Story> _stories = [];
-
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _loadInitialStories();
   }
 
   void _onScroll() {
@@ -45,28 +50,8 @@ class _FeedPageState extends State<FeedPage> {
       _loadNextStories();
   }
 
-  void _loadInitialStories() async {
-    // TODO: needs implementation
-    var jsonstring = await rootBundle.loadString('res/sample/stories.json');
-    final json = jsonDecode(jsonstring);
-
-    final entities =
-        (json['stories'] as List).map((j) => StoryEntity.fromJson(j)).toList();
-    final stories = entities.map((entity) => Story.fromEntity(entity)).toList();
-
-    setState(() {
-      _stories = stories;
-    });
-  }
-
-  void _loadNextStories() async {
-    if (_isLoadingNextStories) return;
-    _isLoadingNextStories = true;
-    // TODO: needs implementation
-    print('load next stories');
-    await Future.delayed(Duration(seconds: 3));
-    print('load completed');
-    _isLoadingNextStories = false;
+  void _loadNextStories() {
+    if (!widget.loadingNext) widget.loadNextStories();
   }
 
   void _navigateToStoryDetail(Story story) {
@@ -76,14 +61,8 @@ class _FeedPageState extends State<FeedPage> {
     );
   }
 
-  void _likeStory(Story story) {
-    // TODO: needs implementation
-    print('like stories');
-  }
-
-  Future<void> _refreshStories() async {
-    // TODO: needs implementation
-    print('refresh stories');
+  Future<void> _refreshFeed() async {
+    widget.reloadStories();
   }
 
   @override
@@ -94,15 +73,11 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildPage(context, _stories, false);
+    return _buildPage(context);
   }
 
-  Widget _buildPage(
-    BuildContext context,
-    List<Story> stories,
-    bool hasReachedMax,
-  ) {
-    if (stories.isEmpty) {
+  Widget _buildPage(BuildContext context) {
+    if (widget.stories.isEmpty) {
       return const Center(
         child: const Text(
           'No story exists.',
@@ -112,18 +87,18 @@ class _FeedPageState extends State<FeedPage> {
     }
 
     return RefreshIndicator(
-      onRefresh: _refreshStories,
+      onRefresh: _refreshFeed,
       child: ListView.builder(
         controller: _scrollController,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return index < stories.length
+          return index < widget.stories.length
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: StoryItem(
-                    story: stories[index],
+                    story: widget.stories[index],
                     onCommentButtonPressed: _navigateToStoryDetail,
-                    onLikeButtonPressed: _likeStory,
+                    onLikeButtonPressed: widget.toggleStoryLike,
                   ),
                 )
               : Padding(
@@ -131,7 +106,9 @@ class _FeedPageState extends State<FeedPage> {
                   child: Center(child: LoadingIndicator()),
                 );
         },
-        itemCount: hasReachedMax ? stories.length : stories.length + 1,
+        itemCount: widget.reachedMax
+            ? widget.stories.length
+            : widget.stories.length + 1,
       ),
     );
   }

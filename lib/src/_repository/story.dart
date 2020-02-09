@@ -22,18 +22,6 @@ class StoryRepository {
     return commentEntities.map((entity) => Comment.fromEntity(entity)).toList();
   }
 
-  static Future<void> toggleStoryLike(
-    int storyID,
-    int userID,
-    bool userLiked,
-  ) async {
-    await StoryAPIClient.likeUnlikeStory(
-      storyID,
-      userID,
-      !userLiked,
-    );
-  }
-
   static Future<Comment> writeStoryComment(
     int storyID,
     int userID,
