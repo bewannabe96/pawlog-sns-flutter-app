@@ -11,7 +11,7 @@ import 'package:pawlog/src/presentation/screen/edit_family_screen.dart';
 import 'package:pawlog/src/presentation/screen/create_family_screen.dart';
 import 'package:pawlog/src/presentation/screen/new_pet_screen.dart';
 
-import 'package:pawlog/src/presentation/screen/story_detail_screen.dart';
+import 'package:pawlog/src/container/story_detail_screen_container.dart';
 import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
 
 import 'package:pawlog/src/presentation/screen/user_profile_screen.dart';
@@ -52,8 +52,8 @@ class RouteGenerator {
         builder = (_) => NewPetScreen();
         break;
 
-      case StoryDetailScreen.routeName:
-        builder = (_) => StoryDetailScreen(settings.arguments);
+      case StoryDetailScreenContainer.routeName:
+        builder = (_) => StoryDetailScreenContainer(settings.arguments);
         break;
       case NewStoryScreen.routeName:
         builder = (_) => NewStoryScreen();

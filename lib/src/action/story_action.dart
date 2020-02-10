@@ -10,28 +10,60 @@ class StartReloadingFeedAction {
   String toString() => 'StartReloadingFeedAction';
 }
 
-class FinishLoadingFeedAction {
+class UpdateFeedStoriesAction {
   final List<Story> stories;
   final int page;
   final bool reachedMax;
 
-  FinishLoadingFeedAction({
+  UpdateFeedStoriesAction(
     this.stories,
     this.page,
     this.reachedMax,
-  });
+  );
 
   @override
   String toString() =>
-      'FinishLoadingFeedAction {total: ${stories.length}, page: $page, max: $reachedMax}';
+      'UpdateFeedStoriesAction {total: ${stories.length}, page: $page, max: $reachedMax}';
+}
+
+class StartLoadingStoryDetailAction {
+  final Story story;
+
+  StartLoadingStoryDetailAction(
+    this.story,
+  );
+
+  @override
+  String toString() => 'StartLoadingStoryDetailAction {story: ${story.storyID}';
+}
+
+class StartLoadingNextStoryCommentsAction {
+  @override
+  String toString() => 'StartLoadingNextStoryCommentsAction ';
+}
+
+class UpdateStoryCommentsAction {
+  final List<Comment> comments;
+  final int page;
+  final bool reachedMax;
+
+  UpdateStoryCommentsAction(
+    this.comments,
+    this.page,
+    this.reachedMax,
+  );
+
+  @override
+  String toString() =>
+      'UpdateStoryCommentsAction {total: ${comments.length}, page: $page, max: $reachedMax}';
 }
 
 class UpdateStoryAction {
   final Story story;
 
-  UpdateStoryAction({
+  UpdateStoryAction(
     this.story,
-  });
+  );
 
   @override
   String toString() => 'UpdateStoryAction {storyID: ${story.storyID}}';

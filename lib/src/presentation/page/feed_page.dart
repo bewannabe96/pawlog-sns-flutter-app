@@ -14,8 +14,8 @@ class FeedPage extends StatefulWidget {
   final bool loadingNext;
   final bool reachedMax;
 
-  final Function loadNextStories;
-  final Function reloadStories;
+  final Function() loadNextStories;
+  final Function() reloadStories;
   final Function(Story) toggleStoryLike;
 
   FeedPage({

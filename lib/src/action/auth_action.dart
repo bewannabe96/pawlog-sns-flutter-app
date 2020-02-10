@@ -9,10 +9,10 @@ class FinishAuthenticationAction {
   final String userHash;
   final User user;
 
-  FinishAuthenticationAction({
+  FinishAuthenticationAction(
     this.userHash,
     this.user,
-  });
+  );
 
   @override
   String toString() => 'FinishAuthenticationAction {hash: $userHash}';

@@ -8,9 +8,9 @@ class StartLoadingFriendsListAction {
 class FinishLoadingFriendsListAction {
   final List<Friend> friends;
 
-  FinishLoadingFriendsListAction({
+  FinishLoadingFriendsListAction(
     this.friends,
-  });
+  );
 
   @override
   String toString() =>

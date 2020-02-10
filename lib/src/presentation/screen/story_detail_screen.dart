@@ -1,31 +1,50 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
-import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/presentation/widget/story_item.dart';
 import 'package:pawlog/src/presentation/widget/chat_input_form.dart';
+import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 
 class StoryDetailScreenArgs {
   final Story story;
 
-  const StoryDetailScreenArgs({this.story});
+  const StoryDetailScreenArgs({
+    @required this.story,
+  });
+}
+
+class StoryDetailScreenProps {
+  final Story story;
+  final List<Comment> comments;
+  final bool loadingStoryDetail;
+  final bool loadingNextComments;
+
+  final Function() loadNextComments;
+  final Function(String) writeComment;
+
+  const StoryDetailScreenProps({
+    @required this.story,
+    @required this.comments,
+    @required this.loadingStoryDetail,
+    @required this.loadingNextComments,
+    @required this.loadNextComments,
+    @required this.writeComment,
+  });
 }
 
 class StoryDetailScreen extends StatefulWidget {
   static const routeName = '/story-detail';
 
-  final Story story;
+  final StoryDetailScreenProps props;
 
-  StoryDetailScreen(StoryDetailScreenArgs args, {Key key})
-      : story = args.story,
-        super(key: key);
+  const StoryDetailScreen({
+    Key key,
+    @required this.props,
+  }) : super(key: key);
 
   @override
   _StoryDetailScreenState createState() => _StoryDetailScreenState();
@@ -36,16 +55,10 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
 
   final ScrollController _scrollController = ScrollController();
 
-  bool _isLoadingNextComments = false;
-
-  // TODO: needs replacement
-  List<Comment> _comments = [];
-
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _loadInitialComments();
   }
 
   void _onScroll() {
@@ -55,36 +68,8 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
       _loadNextComments();
   }
 
-  void _loadInitialComments() async {
-    // TODO: needs implementation
-    var jsonstring =
-        await rootBundle.loadString('res/sample/story-comments.json');
-    final json = jsonDecode(jsonstring);
-
-    final entities = (json['comments'] as List)
-        .map((j) => CommentEntity.fromJson(j))
-        .toList();
-    final comments =
-        entities.map((entity) => Comment.fromEntity(entity)).toList();
-
-    setState(() {
-      _comments = comments;
-    });
-  }
-
   void _loadNextComments() async {
-    if (_isLoadingNextComments) return;
-    _isLoadingNextComments = true;
-    // TODO: needs implementation
-    print('load next comments');
-    await Future.delayed(Duration(seconds: 3));
-    print('load completed');
-    _isLoadingNextComments = false;
-  }
-
-  void _writeComment(String comment) {
-    // TODO: needs implementation
-    print('write comment: $comment');
+    if (!widget.props.loadingNextComments) widget.props.loadNextComments();
   }
 
   @override
@@ -101,14 +86,13 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: _buildContent(context, _comments),
+      body: widget.props.loadingStoryDetail
+          ? Center(child: LoadingIndicator())
+          : _buildContent(),
     );
   }
 
-  Widget _buildContent(
-    BuildContext context,
-    List<Comment> comments,
-  ) {
+  Widget _buildContent() {
     return Column(
       children: <Widget>[
         Expanded(
@@ -116,22 +100,22 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
             controller: _scrollController,
             child: Column(
               children: <Widget>[
-                StoryItem(story: widget.story, displayActions: false),
-                _buildComments(context, comments),
+                StoryItem(story: widget.props.story, displayActions: false),
+                _buildComments(),
               ],
             ),
           ),
         ),
-        ChatInputForm(onEnter: _writeComment),
+        ChatInputForm(onEnter: widget.props.writeComment),
       ],
     );
   }
 
-  Widget _buildComments(BuildContext context, List<Comment> comments) {
+  Widget _buildComments() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
-        children: comments
+        children: widget.props.comments
             .map((comment) => _buildCommentItem(context, comment))
             .toList(),
       ),

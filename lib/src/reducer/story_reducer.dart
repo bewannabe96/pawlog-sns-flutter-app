@@ -7,7 +7,12 @@ import 'package:pawlog/src/action/story_action.dart';
 final storyReducer = combineReducers<StoryState>([
   TypedReducer<StoryState, StartLoadingNextFeedAction>(_startLoadingNextFeed),
   TypedReducer<StoryState, StartReloadingFeedAction>(_startReloadingFeed),
-  TypedReducer<StoryState, FinishLoadingFeedAction>(_finishLoadingNextFeed),
+  TypedReducer<StoryState, UpdateFeedStoriesAction>(_updateFeedStories),
+  TypedReducer<StoryState, StartLoadingStoryDetailAction>(
+      _startLoadingStoryDetail),
+  TypedReducer<StoryState, StartLoadingNextStoryCommentsAction>(
+      _startLoadingNextStoryComments),
+  TypedReducer<StoryState, UpdateStoryCommentsAction>(_updateStoryComments),
   TypedReducer<StoryState, UpdateStoryAction>(_updateStory),
 ]);
 
@@ -29,8 +34,8 @@ StoryState _startReloadingFeed(
   );
 }
 
-StoryState _finishLoadingNextFeed(
-    StoryState state, FinishLoadingFeedAction action) {
+StoryState _updateFeedStories(
+    StoryState state, UpdateFeedStoriesAction action) {
   return state.copyWith(
     feedState: state.feedState.copyWith(
       stories: action.stories,
@@ -43,13 +48,52 @@ StoryState _finishLoadingNextFeed(
   );
 }
 
+StoryState _startLoadingStoryDetail(
+    StoryState state, StartLoadingStoryDetailAction action) {
+  return state.copyWith(
+    storyDetailState: state.storyDetailState.copyWith(
+      story: action.story,
+      loadingStoryDetail: true,
+      loadingNextComments: false,
+    ),
+  );
+}
+
+StoryState _startLoadingNextStoryComments(
+    StoryState state, StartLoadingNextStoryCommentsAction action) {
+  return state.copyWith(
+    storyDetailState: state.storyDetailState.copyWith(
+      loadingStoryDetail: false,
+      loadingNextComments: true,
+    ),
+  );
+}
+
+StoryState _updateStoryComments(
+    StoryState state, UpdateStoryCommentsAction action) {
+  return state.copyWith(
+    storyDetailState: state.storyDetailState.copyWith(
+      comments: action.comments,
+      currentCommentsPage: action.page,
+      commentsReachedMax: action.reachedMax,
+      loadingStoryDetail: false,
+      loadingNextComments: false,
+      error: null,
+    ),
+  );
+}
+
 StoryState _updateStory(StoryState state, UpdateStoryAction action) {
   return state.copyWith(
     feedState: state.feedState.copyWith(
       stories: state.feedState.stories
-          .map((story) =>
-              story.storyID == action.story.storyID ? action.story : story)
+          .map((story) => story == action.story ? action.story : story)
           .toList(),
+    ),
+    storyDetailState: state.storyDetailState.copyWith(
+      story: state.storyDetailState.story == action.story
+          ? action.story
+          : state.storyDetailState.story,
     ),
   );
 }

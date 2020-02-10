@@ -18,7 +18,7 @@ ThunkAction<AppState> loadFriends() {
       final friends = await FriendRepository.fetchFriends(
         store.state.authState.user.userID,
       );
-      store.dispatch(FinishLoadingFriendsListAction(friends: friends));
+      store.dispatch(FinishLoadingFriendsListAction(friends));
     } catch (e) {
       print(e);
     }

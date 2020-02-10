@@ -32,8 +32,8 @@ class _ViewModel {
   final bool loadingNext;
   final bool reachedMax;
 
-  final Function onLoadNextStories;
-  final Function onReloadStories;
+  final Function() onLoadNextStories;
+  final Function() onReloadStories;
   final Function(Story) onToggleStoryLike;
 
   _ViewModel._({

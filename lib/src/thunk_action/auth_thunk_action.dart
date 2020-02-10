@@ -18,10 +18,7 @@ ThunkAction<AppState> authenticateUser(String email, String password) {
     try {
       final userHash = await AuthRepository.authenticate(email, password);
       final user = await UserRepository.fetchUserInfo(userHash);
-      store.dispatch(FinishAuthenticationAction(
-        userHash: userHash,
-        user: user,
-      ));
+      store.dispatch(FinishAuthenticationAction(userHash, user));
       store.dispatch(loadFriends());
       store.dispatch(reloadStories());
     } catch (e) {

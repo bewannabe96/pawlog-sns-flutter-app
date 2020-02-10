@@ -28,7 +28,7 @@ class LoginScreenContainer extends StatelessWidget {
 class _ViewModel {
   final bool authenticating;
 
-  final Function onSignIn;
+  final Function(String, String) onSignIn;
 
   _ViewModel._({
     this.authenticating,
