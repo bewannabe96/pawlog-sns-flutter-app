@@ -1,66 +1,54 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
-import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/presentation/widget/profile_family_list.dart';
 import 'package:pawlog/src/presentation/widget/profile_story_timeline.dart';
 import 'package:pawlog/src/presentation/widget/profile_title.dart';
+import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
+
+class ProfilePageProps {
+  final Profile profile;
+  final bool profileLoading;
+  final Family family;
+  final bool familyLoading;
+
+  const ProfilePageProps({
+    @required this.profile,
+    @required this.profileLoading,
+    @required this.family,
+    @required this.familyLoading,
+  });
+}
 
 class ProfilePage extends StatefulWidget {
-  final User user;
+  final ProfilePageProps props;
 
-  ProfilePage({Key key, @required this.user}) : super(key: key);
+  const ProfilePage({
+    Key key,
+    @required this.props,
+  }) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // TODO: needs replacement
-  Profile _profile;
-  Family _family;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadInitialProfile();
-  }
-
-  void _loadInitialProfile() async {
-    // TODO: needs implementation
-    var jsonstring =
-        await rootBundle.loadString('res/sample/user-profile.json');
-    final json = jsonDecode(jsonstring);
-
-    final entity = ProfileEntity.fromJson(json);
-    final profile = Profile.fromEntity(entity);
-
-    setState(() {
-      _profile = profile;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return _buildPage(context, _profile, []);
+    return widget.props.profileLoading
+        ? Center(child: LoadingIndicator())
+        : _buildPage([]);
   }
 
-  Widget _buildPage(
-    BuildContext context,
-    Profile profile,
-    List<Story> stories,
-  ) {
+  Widget _buildPage(List<Story> stories) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          ProfileTitle(profile: profile),
+          ProfileTitle(profile: widget.props.profile),
           Divider(),
           _buildFamilyList(),
           Divider(),
@@ -71,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildFamilyList() {
-    if (_family == null) {
+    if (widget.props.family == null) {
       return FlatButton(
         onPressed: () {},
         child: const Text(
@@ -82,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
         textColor: primaryColor,
       );
     } else {
-      return ProfileFamilyList(family: _family);
+      return ProfileFamilyList(family: widget.props.family);
     }
   }
 }

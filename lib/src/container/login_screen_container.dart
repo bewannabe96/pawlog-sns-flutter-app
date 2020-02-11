@@ -13,33 +13,17 @@ class LoginScreenContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel.create(store),
-      builder: (context, viewmodel) => LoginScreen(
-        props: LoginScreenProps(
-          authenticating: viewmodel.authenticating,
-          signIn: viewmodel.onSignIn,
-        ),
-      ),
+    return StoreConnector<AppState, LoginScreenProps>(
+      converter: (store) => _mapStateToProps(store),
+      builder: (context, props) => LoginScreen(props: props),
     );
   }
 }
 
-class _ViewModel {
-  final bool authenticating;
-
-  final Function(String, String) onSignIn;
-
-  _ViewModel._({
-    this.authenticating,
-    this.onSignIn,
-  });
-
-  factory _ViewModel.create(Store<AppState> store) {
-    return _ViewModel._(
-      authenticating: store.state.authState.processing,
-      onSignIn: (String email, String password) =>
-          store.dispatch(authenticateUser(email, password)),
-    );
-  }
+LoginScreenProps _mapStateToProps(Store<AppState> store) {
+  return LoginScreenProps(
+    authenticating: store.state.authState.processing,
+    signIn: (String email, String password) =>
+        store.dispatch(authenticateUser(email, password)),
+  );
 }

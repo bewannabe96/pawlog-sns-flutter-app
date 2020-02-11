@@ -8,7 +8,7 @@ import 'package:pawlog/src/presentation/screen/forgot_password_screen.dart';
 
 import 'package:pawlog/src/presentation/screen/settings_screen.dart';
 import 'package:pawlog/src/presentation/screen/edit_family_screen.dart';
-import 'package:pawlog/src/presentation/screen/create_family_screen.dart';
+import 'package:pawlog/src/container/create_family_screen_container.dart';
 import 'package:pawlog/src/presentation/screen/new_pet_screen.dart';
 
 import 'package:pawlog/src/container/story_detail_screen_container.dart';
@@ -45,8 +45,8 @@ class RouteGenerator {
       case EditFamilyScreen.routeName:
         builder = (_) => EditFamilyScreen();
         break;
-      case CreateFamilyScreen.routeName:
-        builder = (_) => CreateFamilyScreen();
+      case CreateFamilyScreenContainer.routeName:
+        builder = (_) => CreateFamilyScreenContainer();
         break;
       case NewPetScreen.routeName:
         builder = (_) => NewPetScreen();

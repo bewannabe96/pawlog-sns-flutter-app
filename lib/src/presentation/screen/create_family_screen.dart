@@ -3,10 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:pawlog/src/presentation/widget/page_submit_button.dart';
 import 'package:pawlog/src/presentation/widget/text_field.dart';
 
+class CreateFamilyScreenProps {
+  final Function(String) createFamily;
+
+  const CreateFamilyScreenProps({
+    @required this.createFamily,
+  });
+}
+
 class CreateFamilyScreen extends StatefulWidget {
   static const routeName = '/create-family';
 
-  CreateFamilyScreen({Key key}) : super(key: key);
+  final CreateFamilyScreenProps props;
+
+  const CreateFamilyScreen({
+    Key key,
+    @required this.props,
+  }) : super(key: key);
 
   @override
   _CreateFamilyScreenState createState() => _CreateFamilyScreenState();
@@ -29,7 +42,7 @@ class _CreateFamilyScreenState extends State<CreateFamilyScreen> {
   }
 
   void _createFamily() {
-    // TODO: implement createFamily
+    widget.props.createFamily(_nameController.text);
     Navigator.of(context).pop();
   }
 

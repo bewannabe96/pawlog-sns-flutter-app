@@ -6,10 +6,21 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/presentation/screen/user_profile_screen.dart';
 
-class FriendPage extends StatefulWidget {
+class FriendPageProps {
   final List<Friend> friends;
 
-  FriendPage({Key key, @required this.friends}) : super(key: key);
+  const FriendPageProps({
+    @required this.friends,
+  });
+}
+
+class FriendPage extends StatefulWidget {
+  final FriendPageProps props;
+
+  const FriendPage({
+    Key key,
+    @required this.props,
+  }) : super(key: key);
 
   @override
   _FriendPageState createState() => _FriendPageState();
@@ -22,12 +33,12 @@ class _FriendPageState extends State<FriendPage> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.friends.length > 0
+    return widget.props.friends.length > 0
         ? ListView.builder(
             padding: const EdgeInsets.only(bottom: 10),
-            itemCount: widget.friends.length,
+            itemCount: widget.props.friends.length,
             itemBuilder: (BuildContext context, int index) =>
-                _buildFriendBuild(context, widget.friends[index]),
+                _buildFriendBuild(context, widget.props.friends[index]),
           )
         : _buildEmptyList(context);
   }

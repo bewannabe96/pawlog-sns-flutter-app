@@ -8,6 +8,7 @@ import 'package:pawlog/src/action/auth_action.dart';
 import 'package:pawlog/src/repository/auth_repository.dart';
 import 'package:pawlog/src/repository/user_repository.dart';
 
+import 'package:pawlog/src/thunk_action/user_thunk_action.dart';
 import 'package:pawlog/src/thunk_action/friend_thunk_action.dart';
 import 'package:pawlog/src/thunk_action/story_thunk_action.dart';
 
@@ -19,6 +20,9 @@ ThunkAction<AppState> authenticateUser(String email, String password) {
       final userHash = await AuthRepository.authenticate(email, password);
       final user = await UserRepository.fetchUserInfo(userHash);
       store.dispatch(FinishAuthenticationAction(userHash, user));
+
+      store.dispatch(loadFamily());
+      store.dispatch(loadProfile());
       store.dispatch(loadFriends());
       store.dispatch(reloadStories());
     } catch (e) {

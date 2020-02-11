@@ -13,47 +13,21 @@ import 'package:pawlog/src/thunk_action/story_thunk_action.dart';
 class FeedPageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel.create(store),
-      builder: (context, viewmodel) => FeedPage(
-        stories: viewmodel.stories,
-        loadingNext: viewmodel.loadingNext,
-        reachedMax: viewmodel.reachedMax,
-        loadNextStories: viewmodel.onLoadNextStories,
-        reloadStories: viewmodel.onReloadStories,
-        toggleStoryLike: viewmodel.onToggleStoryLike,
-      ),
+    return StoreConnector<AppState, FeedPageProps>(
+      converter: (store) => _mapStateToProps(store),
+      builder: (context, props) => FeedPage(props: props),
     );
   }
 }
 
-class _ViewModel {
-  final List<Story> stories;
-  final bool loadingNext;
-  final bool reachedMax;
-
-  final Function() onLoadNextStories;
-  final Function() onReloadStories;
-  final Function(Story) onToggleStoryLike;
-
-  _ViewModel._({
-    this.stories,
-    this.loadingNext,
-    this.reachedMax,
-    this.onLoadNextStories,
-    this.onReloadStories,
-    this.onToggleStoryLike,
-  });
-
-  factory _ViewModel.create(Store<AppState> store) {
-    return _ViewModel._(
-      stories: store.state.storyState.feedState.stories,
-      loadingNext: store.state.storyState.feedState.loadingNext,
-      reachedMax: store.state.storyState.feedState.reachedMax,
-      onLoadNextStories: () => store.dispatch(loadNextStories()),
-      onReloadStories: () => store.dispatch(reloadStories()),
-      onToggleStoryLike: (Story story) =>
-          store.dispatch(toggleStoryLike(story)),
-    );
-  }
+FeedPageProps _mapStateToProps(Store<AppState> store) {
+  return FeedPageProps(
+    stories: store.state.storyState.feedState.stories,
+    reloading: store.state.storyState.feedState.reloading,
+    loadingNext: store.state.storyState.feedState.loadingNext,
+    reachedMax: store.state.storyState.feedState.reachedMax,
+    loadNextStories: () => store.dispatch(loadNextStories()),
+    reloadStories: () => store.dispatch(reloadStories()),
+    toggleStoryLike: (Story story) => store.dispatch(toggleStoryLike(story)),
+  );
 }

@@ -9,8 +9,9 @@ import 'package:pawlog/src/presentation/screen/story_detail_screen.dart';
 import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 import 'package:pawlog/src/presentation/widget/story_item.dart';
 
-class FeedPage extends StatefulWidget {
+class FeedPageProps {
   final List<Story> stories;
+  final bool reloading;
   final bool loadingNext;
   final bool reachedMax;
 
@@ -18,14 +19,23 @@ class FeedPage extends StatefulWidget {
   final Function() reloadStories;
   final Function(Story) toggleStoryLike;
 
-  FeedPage({
-    Key key,
+  const FeedPageProps({
     @required this.stories,
+    @required this.reloading,
     @required this.loadingNext,
     @required this.reachedMax,
     @required this.loadNextStories,
     @required this.reloadStories,
     @required this.toggleStoryLike,
+  });
+}
+
+class FeedPage extends StatefulWidget {
+  final FeedPageProps props;
+
+  const FeedPage({
+    Key key,
+    @required this.props,
   }) : super(key: key);
 
   @override
@@ -51,7 +61,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void _loadNextStories() {
-    if (!widget.loadingNext) widget.loadNextStories();
+    if (!widget.props.loadingNext) widget.props.loadNextStories();
   }
 
   void _navigateToStoryDetail(Story story) {
@@ -62,7 +72,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   Future<void> _refreshFeed() async {
-    widget.reloadStories();
+    widget.props.reloadStories();
   }
 
   @override
@@ -73,32 +83,36 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildPage(context);
+    return widget.props.stories.isEmpty
+        ? widget.props.reloading
+            ? Center(child: LoadingIndicator())
+            : _buildNoStory()
+        : _buildPage();
   }
 
-  Widget _buildPage(BuildContext context) {
-    if (widget.stories.isEmpty) {
-      return const Center(
-        child: const Text(
-          'No story exists.',
-          style: const TextStyle(color: darkSecondaryColor),
-        ),
-      );
-    }
+  Widget _buildNoStory() {
+    return const Center(
+      child: const Text(
+        'No story exists.',
+        style: const TextStyle(color: darkSecondaryColor),
+      ),
+    );
+  }
 
+  Widget _buildPage() {
     return RefreshIndicator(
       onRefresh: _refreshFeed,
       child: ListView.builder(
         controller: _scrollController,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return index < widget.stories.length
+          return index < widget.props.stories.length
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: StoryItem(
-                    story: widget.stories[index],
+                    story: widget.props.stories[index],
                     onCommentButtonPressed: _navigateToStoryDetail,
-                    onLikeButtonPressed: widget.toggleStoryLike,
+                    onLikeButtonPressed: widget.props.toggleStoryLike,
                   ),
                 )
               : Padding(
@@ -106,9 +120,9 @@ class _FeedPageState extends State<FeedPage> {
                   child: Center(child: LoadingIndicator()),
                 );
         },
-        itemCount: widget.reachedMax
-            ? widget.stories.length
-            : widget.stories.length + 1,
+        itemCount: widget.props.reachedMax
+            ? widget.props.stories.length
+            : widget.props.stories.length + 1,
       ),
     );
   }

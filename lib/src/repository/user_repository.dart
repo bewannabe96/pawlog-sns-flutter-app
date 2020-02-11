@@ -11,4 +11,28 @@ class UserRepository {
 
     return User.fromEntity(userEntity);
   }
+
+  static Future<Profile> fetchUserProfile(
+      int userID, int requestinUserID) async {
+    ProfileEntity profileEntity;
+
+    profileEntity =
+        await UserAPIClient.fetchUserProfile(userID, requestinUserID);
+
+    return Profile.fromEntity(profileEntity);
+  }
+
+  static Future<Family> fetchUserFamily(int userID) async {
+    FamilyEntity familyEntity;
+
+    familyEntity = await UserAPIClient.fetchFamily(userID);
+
+    return familyEntity == null ? null : Family.fromEntity(familyEntity);
+  }
+
+  static Future<Family> createFamily(int userID, String name) async {
+    final familyEntity = await UserAPIClient.createFamily(userID, name);
+
+    return Family.fromEntity(familyEntity);
+  }
 }
