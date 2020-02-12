@@ -19,7 +19,7 @@ class ProfileFamilyList extends StatelessWidget {
   Widget _noFamily(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(30),
         child: const Text(
           'No family exists.',
           style: TextStyle(color: darkSecondaryColor),
@@ -33,15 +33,15 @@ class ProfileFamilyList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 10.0, right: 20.0, left: 20.0),
+          padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
           child: Text(
             family.name,
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         family.pets.length > 0
             ? Padding(
-                padding: const EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(top: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: (family.pets
@@ -58,7 +58,7 @@ class ProfileFamilyList extends StatelessWidget {
     return InkWell(
       onTap: () => {},
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: PetItem(pet: pet),
       ),
     );
@@ -66,10 +66,10 @@ class ProfileFamilyList extends StatelessWidget {
 
   Widget _buildNoFamilyMember(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 25),
       child: Center(
         child: const Text(
-          'No family member exists.',
+          'No pet exists.',
           style: const TextStyle(color: darkSecondaryColor),
         ),
       ),

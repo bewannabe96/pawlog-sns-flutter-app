@@ -22,5 +22,6 @@ ProfilePageProps _mapStateToProps(Store<AppState> store) {
     profileLoading: store.state.userState.profileState.loading,
     family: store.state.userState.familyState.family,
     familyLoading: store.state.userState.familyState.loading,
+    stories: store.state.storyState.userStoriesState.stories,
   );
 }

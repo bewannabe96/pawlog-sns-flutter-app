@@ -8,6 +8,9 @@ final storyReducer = combineReducers<StoryState>([
   TypedReducer<StoryState, StartLoadingNextFeedAction>(_startLoadingNextFeed),
   TypedReducer<StoryState, StartReloadingFeedAction>(_startReloadingFeed),
   TypedReducer<StoryState, UpdateFeedStoriesAction>(_updateFeedStories),
+  TypedReducer<StoryState, StartLoadingUserStoriesAction>(
+      _startLoadingUserStories),
+  TypedReducer<StoryState, UpdateUserStoriesAction>(_updateUserStories),
   TypedReducer<StoryState, StartLoadingStoryDetailAction>(
       _startLoadingStoryDetail),
   TypedReducer<StoryState, StartLoadingNextStoryCommentsAction>(
@@ -43,6 +46,28 @@ StoryState _updateFeedStories(
       reachedMax: action.reachedMax,
       loadingNext: false,
       reloading: false,
+      error: null,
+    ),
+  );
+}
+
+StoryState _startLoadingUserStories(
+    StoryState state, StartLoadingUserStoriesAction action) {
+  return state.copyWith(
+    userStoriesState: state.userStoriesState.copyWith(
+      loading: true,
+    ),
+  );
+}
+
+StoryState _updateUserStories(
+    StoryState state, UpdateUserStoriesAction action) {
+  return state.copyWith(
+    userStoriesState: state.userStoriesState.copyWith(
+      stories: action.stories,
+      currentPage: action.page,
+      reachedMax: action.reachedMax,
+      loading: false,
       error: null,
     ),
   );

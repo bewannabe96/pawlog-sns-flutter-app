@@ -26,6 +26,27 @@ class UpdateFeedStoriesAction {
       'UpdateFeedStoriesAction {total: ${stories.length}, page: $page, max: $reachedMax}';
 }
 
+class StartLoadingUserStoriesAction {
+  @override
+  String toString() => 'StartLoadingUserStoriesAction';
+}
+
+class UpdateUserStoriesAction {
+  final List<Story> stories;
+  final int page;
+  final bool reachedMax;
+
+  UpdateUserStoriesAction(
+    this.stories,
+    this.page,
+    this.reachedMax,
+  );
+
+  @override
+  String toString() =>
+      'UpdateUserStoriesAction {total: ${stories.length}, page: $page, max: $reachedMax}';
+}
+
 class StartLoadingStoryDetailAction {
   final Story story;
 

@@ -6,6 +6,7 @@ import 'package:pawlog/src/state/app_state.dart';
 import 'package:pawlog/src/action/user_action.dart';
 
 import 'package:pawlog/src/repository/user_repository.dart';
+import 'package:pawlog/src/repository/story_repository.dart';
 
 ThunkAction<AppState> loadProfile() {
   return (Store<AppState> store) async {

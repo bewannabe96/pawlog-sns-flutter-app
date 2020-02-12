@@ -68,7 +68,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'New Member',
+          'New Pet',
           style: Theme.of(context).textTheme.title,
         ),
         backgroundColor: Colors.white,

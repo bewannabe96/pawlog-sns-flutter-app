@@ -84,6 +84,34 @@ ThunkAction<AppState> toggleStoryLike(Story story) {
   };
 }
 
+ThunkAction<AppState> loadNextUserStories() {
+  return (Store<AppState> store) async {
+    if (store.state.storyState.userStoriesState.loading ||
+        store.state.storyState.userStoriesState.reachedMax) return;
+    store.dispatch(StartLoadingUserStoriesAction());
+
+    try {
+      if (!store.state.authState.isAuthorized) {
+        throw ('NotAuthorized');
+      }
+      final stories = await StoryRepository.loadUserStories(
+        store.state.authState.user.userID,
+        store.state.storyState.userStoriesState.currentPage + 1,
+        store.state.authState.user.userID,
+      );
+
+      store.dispatch(UpdateUserStoriesAction(
+        List.from(store.state.storyState.userStoriesState.stories)
+          ..addAll(stories),
+        store.state.storyState.userStoriesState.currentPage + 1,
+        stories.length < 10,
+      ));
+    } catch (e) {
+      print(e);
+    }
+  };
+}
+
 ThunkAction<AppState> loadStoryDetail(Story story) {
   return (Store<AppState> store) async {
     store.dispatch(StartLoadingStoryDetailAction(story));

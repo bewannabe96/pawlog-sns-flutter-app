@@ -48,24 +48,6 @@ class UserRepository {
     return Profile.fromEntity(profileEntity);
   }
 
-  static Future<List<Story>> fetchUserStories(
-    int userID,
-    int requestingUserID,
-  ) async {
-    List<StoryEntity> storyEntities;
-    try {
-      storyEntities = await StoryAPIClient.loadUserStories(
-        userID,
-        requestingUserID,
-      );
-      // UserLocalStorage.writeUserInfo(userEntity);
-    } catch (_) {
-      // userEntity = await UserLocalStorage.readUserInfo();
-    }
-
-    return storyEntities.map((entity) => Story.fromEntity(entity)).toList();
-  }
-
   static Future<UserSearchResult> searchUserByEmail(String email) async {
     final entity = await UserAPIClient.searchUserByEmail(email);
 

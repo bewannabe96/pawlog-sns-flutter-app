@@ -25,6 +25,7 @@ ThunkAction<AppState> authenticateUser(String email, String password) {
       store.dispatch(loadProfile());
       store.dispatch(loadFriends());
       store.dispatch(reloadStories());
+      store.dispatch(loadNextUserStories());
     } catch (e) {
       print(e);
     }

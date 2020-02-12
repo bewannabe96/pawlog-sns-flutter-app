@@ -26,6 +26,10 @@ FamilyEntity _$FamilyEntityFromJson(Map<String, dynamic> json) {
   return FamilyEntity(
     familyid: json['familyid'] as int,
     name: json['name'] as String,
+    users: (json['users'] as List)
+        ?.map((e) =>
+            e == null ? null : FriendEntity.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     pets: (json['pets'] as List)
         ?.map((e) =>
             e == null ? null : PetEntity.fromJson(e as Map<String, dynamic>))
@@ -37,5 +41,6 @@ Map<String, dynamic> _$FamilyEntityToJson(FamilyEntity instance) =>
     <String, dynamic>{
       'familyid': instance.familyid,
       'name': instance.name,
+      'users': instance.users,
       'pets': instance.pets,
     };

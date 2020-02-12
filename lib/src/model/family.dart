@@ -1,4 +1,5 @@
 import 'package:pawlog/src/entity/entity.dart';
+import 'package:pawlog/src/model/model.dart';
 
 class Breed {
   final int breedID;
@@ -33,22 +34,20 @@ class Pet {
 class Family {
   final String name;
 
+  final List<Friend> friends;
   final List<Pet> pets;
 
   Family._({
     this.name,
+    this.friends,
     this.pets,
   });
 
   factory Family.fromEntity(FamilyEntity entity) {
     return Family._(
       name: entity.name,
+      friends: entity.users.map((value) => Friend.fromEntity(value)).toList(),
       pets: entity.pets.map((value) => Pet.fromEntity(value)).toList(),
     );
-  }
-
-  Family registerPet(Pet pet) {
-    pets.add(pet);
-    return this;
   }
 }

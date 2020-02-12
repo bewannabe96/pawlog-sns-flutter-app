@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pawlog/src/entity/entity.dart';
 
 part 'family.g.dart';
 
@@ -27,12 +28,14 @@ class FamilyEntity {
   final int familyid;
   final String name;
 
+  final List<FriendEntity> users;
   final List<PetEntity> pets;
 
   const FamilyEntity({
     this.familyid,
     this.name,
-    this.pets = const [],
+    this.users,
+    this.pets,
   });
 
   factory FamilyEntity.fromJson(Map<String, dynamic> json) =>

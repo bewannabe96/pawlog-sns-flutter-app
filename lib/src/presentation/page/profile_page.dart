@@ -14,12 +14,14 @@ class ProfilePageProps {
   final bool profileLoading;
   final Family family;
   final bool familyLoading;
+  final List<Story> stories;
 
   const ProfilePageProps({
     @required this.profile,
     @required this.profileLoading,
     @required this.family,
     @required this.familyLoading,
+    @required this.stories,
   });
 }
 
@@ -40,10 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return widget.props.profileLoading
         ? Center(child: LoadingIndicator())
-        : _buildPage([]);
+        : _buildPage();
   }
 
-  Widget _buildPage(List<Story> stories) {
+  Widget _buildPage() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +54,10 @@ class _ProfilePageState extends State<ProfilePage> {
           Divider(),
           _buildFamilyList(),
           Divider(),
-          ProfileStoryTimeline(stories: stories, hasReachedMax: false)
+          ProfileStoryTimeline(
+            stories: widget.props.stories,
+            hasReachedMax: false,
+          )
         ],
       ),
     );

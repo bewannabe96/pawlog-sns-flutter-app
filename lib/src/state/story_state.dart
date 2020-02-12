@@ -4,28 +4,33 @@ import 'package:pawlog/src/model/model.dart';
 
 class StoryState extends Equatable {
   final _FeedState feedState;
+  final _UserStoriesState userStoriesState;
   final _StoryDetailState storyDetailState;
 
   StoryState._({
     this.feedState,
+    this.userStoriesState,
     this.storyDetailState,
   });
 
   @override
-  List<Object> get props => [feedState, storyDetailState];
+  List<Object> get props => [feedState, userStoriesState, storyDetailState];
 
   StoryState copyWith({
     _FeedState feedState,
+    _UserStoriesState userStoriesState,
     _StoryDetailState storyDetailState,
   }) {
     return StoryState._(
       feedState: feedState ?? this.feedState,
+      userStoriesState: userStoriesState ?? this.userStoriesState,
       storyDetailState: storyDetailState ?? this.storyDetailState,
     );
   }
 
   factory StoryState.initialState() => StoryState._(
         feedState: _FeedState.initialState(),
+        userStoriesState: _UserStoriesState.initialState(),
         storyDetailState: _StoryDetailState.initialState(),
       );
 }
@@ -74,6 +79,49 @@ class _FeedState extends Equatable {
         reachedMax: false,
         loadingNext: false,
         reloading: false,
+        error: null,
+      );
+}
+
+class _UserStoriesState extends Equatable {
+  final List<Story> stories;
+  final int currentPage;
+  final bool reachedMax;
+  final bool loading;
+  final String error;
+
+  const _UserStoriesState._({
+    this.stories,
+    this.currentPage,
+    this.reachedMax,
+    this.loading,
+    this.error,
+  });
+
+  @override
+  List<Object> get props => [currentPage];
+
+  _UserStoriesState copyWith({
+    List<Story> stories,
+    int currentPage,
+    bool reachedMax,
+    bool loading,
+    String error,
+  }) {
+    return _UserStoriesState._(
+      stories: stories ?? this.stories,
+      currentPage: currentPage ?? this.currentPage,
+      reachedMax: reachedMax ?? this.reachedMax,
+      loading: loading ?? this.loading,
+      error: error ?? this.error,
+    );
+  }
+
+  factory _UserStoriesState.initialState() => _UserStoriesState._(
+        stories: const [],
+        currentPage: 0,
+        reachedMax: false,
+        loading: false,
         error: null,
       );
 }

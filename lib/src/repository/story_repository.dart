@@ -12,6 +12,16 @@ class StoryRepository {
     return storyEntities.map((entity) => Story.fromEntity(entity)).toList();
   }
 
+  static Future<List<Story>> loadUserStories(
+      int userID, int page, int requestingUserID) async {
+    List<StoryEntity> storyEntities;
+
+    storyEntities =
+        await StoryAPIClient.loadUserStories(userID, page, requestingUserID);
+
+    return storyEntities.map((entity) => Story.fromEntity(entity)).toList();
+  }
+
   static Future<List<Comment>> loadComments(int storyID, int page) async {
     List<CommentEntity> commentEntities;
 

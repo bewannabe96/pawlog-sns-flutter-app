@@ -65,8 +65,8 @@ class ActionModal extends ModalRoute {
   ) {
     return FlatButton(
       onPressed: () {
-        action();
         Navigator.of(context).pop();
+        action();
       },
       child: SizedBox(
         width: double.infinity,

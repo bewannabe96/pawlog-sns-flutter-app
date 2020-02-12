@@ -11,14 +11,14 @@ import 'package:pawlog/src/reducer/app_state_reducer.dart';
 import 'package:pawlog/src/route_generator.dart';
 
 class PawlogApp extends StatelessWidget {
+  final Store<AppState> _store = Store<AppState>(
+    appReducer,
+    initialState: AppState.initialState(),
+    middleware: [thunkMiddleware],
+  );
+
   @override
   Widget build(BuildContext context) {
-    final Store<AppState> _store = Store<AppState>(
-      appReducer,
-      initialState: AppState.initialState(),
-      middleware: [thunkMiddleware],
-    );
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,

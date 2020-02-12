@@ -15,6 +15,6 @@ class FamilyRepository {
     final petEntity =
         await UserAPIClient.registerPet(userID, name, breedID, null);
 
-    return family.registerPet(Pet.fromEntity(petEntity));
+    // return family.registerPet(Pet.fromEntity(petEntity));
   }
 }
