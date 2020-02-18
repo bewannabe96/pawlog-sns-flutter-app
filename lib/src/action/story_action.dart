@@ -1,21 +1,27 @@
 import 'package:pawlog/src/model/model.dart';
 
-class StartLoadingNextFeedAction {
+class StartLoadingFeedAction {
   @override
-  String toString() => 'StartLoadingNextFeedAction';
+  String toString() => 'StartLoadingFeedAction';
 }
 
-class StartReloadingFeedAction {
+class ThrowFeedErrorAction {
+  String error;
+
+  ThrowFeedErrorAction(
+    this.error,
+  );
+
   @override
-  String toString() => 'StartReloadingFeedAction';
+  String toString() => 'ThrowFeedErrorAction {$error}';
 }
 
-class UpdateFeedStoriesAction {
+class UpdateFeedAction {
   final List<Story> stories;
   final int page;
   final bool reachedMax;
 
-  UpdateFeedStoriesAction(
+  UpdateFeedAction(
     this.stories,
     this.page,
     this.reachedMax,
@@ -23,7 +29,7 @@ class UpdateFeedStoriesAction {
 
   @override
   String toString() =>
-      'UpdateFeedStoriesAction {total: ${stories.length}, page: $page, max: $reachedMax}';
+      'UpdateFeedAction {total: ${stories.length}, page: $page, max: $reachedMax}';
 }
 
 class StartLoadingUserStoriesAction {
@@ -56,11 +62,6 @@ class StartLoadingStoryDetailAction {
 
   @override
   String toString() => 'StartLoadingStoryDetailAction {story: ${story.storyID}';
-}
-
-class StartLoadingNextStoryCommentsAction {
-  @override
-  String toString() => 'StartLoadingNextStoryCommentsAction ';
 }
 
 class UpdateStoryCommentsAction {

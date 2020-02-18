@@ -20,8 +20,7 @@ class StoryDetailScreenArgs {
 class StoryDetailScreenProps {
   final Story story;
   final List<Comment> comments;
-  final bool loadingStoryDetail;
-  final bool loadingNextComments;
+  final bool loading;
 
   final Function() loadNextComments;
   final Function(String) writeComment;
@@ -29,8 +28,7 @@ class StoryDetailScreenProps {
   const StoryDetailScreenProps({
     @required this.story,
     @required this.comments,
-    @required this.loadingStoryDetail,
-    @required this.loadingNextComments,
+    @required this.loading,
     @required this.loadNextComments,
     @required this.writeComment,
   });
@@ -69,7 +67,7 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
   }
 
   void _loadNextComments() async {
-    if (!widget.props.loadingNextComments) widget.props.loadNextComments();
+    widget.props.loadNextComments();
   }
 
   @override
@@ -86,7 +84,7 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: widget.props.loadingStoryDetail
+      body: widget.props.loading
           ? Center(child: LoadingIndicator())
           : _buildContent(),
     );

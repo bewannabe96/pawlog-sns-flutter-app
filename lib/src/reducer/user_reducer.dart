@@ -16,7 +16,7 @@ UserState _startLoadingProfile(
     UserState state, StartLoadingProfileAction action) {
   return state.copyWith(
     profileState: state.profileState.copyWith(
-      loading: true,
+      processing: true,
     ),
   );
 }
@@ -26,7 +26,7 @@ UserState _finishLoadingProfile(
   return state.copyWith(
     profileState: state.profileState.copyWith(
       profile: action.profile,
-      loading: false,
+      processing: false,
       error: null,
     ),
   );
@@ -36,7 +36,7 @@ UserState _startLoadingFamily(
     UserState state, StartLoadingFamilyAction action) {
   return state.copyWith(
     familyState: state.familyState.copyWith(
-      loading: true,
+      processing: true,
     ),
   );
 }
@@ -46,7 +46,7 @@ UserState _finishLoadingFamily(
   return state.copyWith(
     familyState: state.familyState.copyWith(
       family: action.family,
-      loading: false,
+      processing: false,
       error: null,
     ),
   );

@@ -32,12 +32,12 @@ class UserState extends Equatable {
 
 class _ProfileState extends Equatable {
   final Profile profile;
-  final bool loading;
+  final bool processing;
   final String error;
 
   const _ProfileState._({
     this.profile,
-    this.loading,
+    this.processing,
     this.error,
   });
 
@@ -46,31 +46,31 @@ class _ProfileState extends Equatable {
 
   _ProfileState copyWith({
     Profile profile,
-    bool loading,
+    bool processing,
     String error,
   }) {
     return _ProfileState._(
       profile: profile ?? this.profile,
-      loading: loading ?? this.loading,
+      processing: processing ?? this.processing,
       error: error ?? this.error,
     );
   }
 
   factory _ProfileState.initialState() => _ProfileState._(
         profile: null,
-        loading: false,
+        processing: false,
         error: null,
       );
 }
 
 class _FamilyState extends Equatable {
   final Family family;
-  final bool loading;
+  final bool processing;
   final String error;
 
   const _FamilyState._({
     this.family,
-    this.loading,
+    this.processing,
     this.error,
   });
 
@@ -79,19 +79,19 @@ class _FamilyState extends Equatable {
 
   _FamilyState copyWith({
     Family family,
-    bool loading,
+    bool processing,
     String error,
   }) {
     return _FamilyState._(
       family: family ?? this.family,
-      loading: loading ?? this.loading,
+      processing: processing ?? this.processing,
       error: error ?? this.error,
     );
   }
 
   factory _FamilyState.initialState() => _FamilyState._(
         family: null,
-        loading: false,
+        processing: false,
         error: null,
       );
 }

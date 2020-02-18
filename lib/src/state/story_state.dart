@@ -39,16 +39,14 @@ class _FeedState extends Equatable {
   final List<Story> stories;
   final int currentPage;
   final bool reachedMax;
-  final bool loadingNext;
-  final bool reloading;
+  final bool loading;
   final String error;
 
   const _FeedState._({
     this.stories,
     this.currentPage,
     this.reachedMax,
-    this.loadingNext,
-    this.reloading,
+    this.loading,
     this.error,
   });
 
@@ -59,16 +57,14 @@ class _FeedState extends Equatable {
     List<Story> stories,
     int currentPage,
     bool reachedMax,
-    bool loadingNext,
-    bool reloading,
+    bool loading,
     String error,
   }) {
     return _FeedState._(
       stories: stories ?? this.stories,
       currentPage: currentPage ?? this.currentPage,
       reachedMax: reachedMax ?? this.reachedMax,
-      loadingNext: loadingNext ?? this.loadingNext,
-      reloading: reloading ?? this.reloading,
+      loading: loading ?? this.loading,
       error: error ?? this.error,
     );
   }
@@ -77,8 +73,7 @@ class _FeedState extends Equatable {
         stories: const [],
         currentPage: 0,
         reachedMax: false,
-        loadingNext: false,
-        reloading: false,
+        loading: false,
         error: null,
       );
 }
@@ -131,8 +126,7 @@ class _StoryDetailState extends Equatable {
   final List<Comment> comments;
   final int currentCommentsPage;
   final bool commentsReachedMax;
-  final bool loadingStoryDetail;
-  final bool loadingNextComments;
+  final bool loading;
   final String error;
 
   const _StoryDetailState._({
@@ -140,8 +134,7 @@ class _StoryDetailState extends Equatable {
     this.comments,
     this.currentCommentsPage,
     this.commentsReachedMax,
-    this.loadingStoryDetail,
-    this.loadingNextComments,
+    this.loading,
     this.error,
   });
 
@@ -153,8 +146,7 @@ class _StoryDetailState extends Equatable {
     List<Comment> comments,
     int currentCommentsPage,
     bool commentsReachedMax,
-    bool loadingStoryDetail,
-    bool loadingNextComments,
+    bool loading,
     String error,
   }) {
     return _StoryDetailState._(
@@ -162,8 +154,7 @@ class _StoryDetailState extends Equatable {
       comments: comments ?? this.comments,
       currentCommentsPage: currentCommentsPage ?? this.currentCommentsPage,
       commentsReachedMax: commentsReachedMax ?? this.commentsReachedMax,
-      loadingStoryDetail: loadingStoryDetail ?? this.loadingStoryDetail,
-      loadingNextComments: loadingNextComments ?? this.loadingNextComments,
+      loading: loading ?? this.loading,
       error: error ?? this.error,
     );
   }
@@ -173,8 +164,7 @@ class _StoryDetailState extends Equatable {
         comments: const [],
         currentCommentsPage: 0,
         commentsReachedMax: false,
-        loadingStoryDetail: false,
-        loadingNextComments: false,
+        loading: false,
         error: null,
       );
 }

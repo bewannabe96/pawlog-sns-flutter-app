@@ -5,47 +5,30 @@ import 'package:pawlog/src/state/story_state.dart';
 import 'package:pawlog/src/action/story_action.dart';
 
 final storyReducer = combineReducers<StoryState>([
-  TypedReducer<StoryState, StartLoadingNextFeedAction>(_startLoadingNextFeed),
-  TypedReducer<StoryState, StartReloadingFeedAction>(_startReloadingFeed),
-  TypedReducer<StoryState, UpdateFeedStoriesAction>(_updateFeedStories),
+  TypedReducer<StoryState, StartLoadingFeedAction>(_startLoadingFeed),
+  TypedReducer<StoryState, UpdateFeedAction>(_updateFeed),
   TypedReducer<StoryState, StartLoadingUserStoriesAction>(
       _startLoadingUserStories),
   TypedReducer<StoryState, UpdateUserStoriesAction>(_updateUserStories),
   TypedReducer<StoryState, StartLoadingStoryDetailAction>(
       _startLoadingStoryDetail),
-  TypedReducer<StoryState, StartLoadingNextStoryCommentsAction>(
-      _startLoadingNextStoryComments),
   TypedReducer<StoryState, UpdateStoryCommentsAction>(_updateStoryComments),
   TypedReducer<StoryState, UpdateStoryAction>(_updateStory),
 ]);
 
-StoryState _startLoadingNextFeed(
-    StoryState state, StartLoadingNextFeedAction action) {
+StoryState _startLoadingFeed(StoryState state, StartLoadingFeedAction action) {
   return state.copyWith(
-    feedState: state.feedState.copyWith(
-      loadingNext: true,
-    ),
+    feedState: state.feedState.copyWith(loading: true),
   );
 }
 
-StoryState _startReloadingFeed(
-    StoryState state, StartReloadingFeedAction action) {
-  return state.copyWith(
-    feedState: state.feedState.copyWith(
-      reloading: true,
-    ),
-  );
-}
-
-StoryState _updateFeedStories(
-    StoryState state, UpdateFeedStoriesAction action) {
+StoryState _updateFeed(StoryState state, UpdateFeedAction action) {
   return state.copyWith(
     feedState: state.feedState.copyWith(
       stories: action.stories,
       currentPage: action.page,
       reachedMax: action.reachedMax,
-      loadingNext: false,
-      reloading: false,
+      loading: false,
       error: null,
     ),
   );
@@ -54,9 +37,7 @@ StoryState _updateFeedStories(
 StoryState _startLoadingUserStories(
     StoryState state, StartLoadingUserStoriesAction action) {
   return state.copyWith(
-    userStoriesState: state.userStoriesState.copyWith(
-      loading: true,
-    ),
+    userStoriesState: state.userStoriesState.copyWith(loading: true),
   );
 }
 
@@ -78,18 +59,7 @@ StoryState _startLoadingStoryDetail(
   return state.copyWith(
     storyDetailState: state.storyDetailState.copyWith(
       story: action.story,
-      loadingStoryDetail: true,
-      loadingNextComments: false,
-    ),
-  );
-}
-
-StoryState _startLoadingNextStoryComments(
-    StoryState state, StartLoadingNextStoryCommentsAction action) {
-  return state.copyWith(
-    storyDetailState: state.storyDetailState.copyWith(
-      loadingStoryDetail: false,
-      loadingNextComments: true,
+      loading: true,
     ),
   );
 }
@@ -101,8 +71,7 @@ StoryState _updateStoryComments(
       comments: action.comments,
       currentCommentsPage: action.page,
       commentsReachedMax: action.reachedMax,
-      loadingStoryDetail: false,
-      loadingNextComments: false,
+      loading: false,
       error: null,
     ),
   );
@@ -111,6 +80,11 @@ StoryState _updateStoryComments(
 StoryState _updateStory(StoryState state, UpdateStoryAction action) {
   return state.copyWith(
     feedState: state.feedState.copyWith(
+      stories: state.feedState.stories
+          .map((story) => story == action.story ? action.story : story)
+          .toList(),
+    ),
+    userStoriesState: state.userStoriesState.copyWith(
       stories: state.feedState.stories
           .map((story) => story == action.story ? action.story : story)
           .toList(),

@@ -29,10 +29,7 @@ StoryDetailScreenProps _mapStateToProps(Store<AppState> store) {
   return StoryDetailScreenProps(
     story: store.state.storyState.storyDetailState.story,
     comments: store.state.storyState.storyDetailState.comments,
-    loadingStoryDetail:
-        store.state.storyState.storyDetailState.loadingStoryDetail,
-    loadingNextComments:
-        store.state.storyState.storyDetailState.loadingNextComments,
+    loading: store.state.storyState.storyDetailState.loading,
     loadNextComments: () => store.dispatch(loadNextStoryComments()),
     writeComment: (String content) => store.dispatch(writeComment(content)),
   );

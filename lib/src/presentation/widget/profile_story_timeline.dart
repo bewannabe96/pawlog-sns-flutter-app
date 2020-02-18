@@ -12,10 +12,13 @@ class ProfileStoryTimeline extends StatelessWidget {
   final List<Story> stories;
   final bool hasReachedMax;
 
+  final Function(Story) onLikeButtonPressed;
+
   const ProfileStoryTimeline({
     Key key,
     @required this.stories,
     @required this.hasReachedMax,
+    this.onLikeButtonPressed,
   }) : super(key: key);
 
   void _navigateToStoryDetail(BuildContext context, Story story) {
@@ -25,9 +28,8 @@ class ProfileStoryTimeline extends StatelessWidget {
     );
   }
 
-  void _likeStory(Story story) {
-    // TODO: needs implementation
-    print('like stories');
+  void _onLikePressed(Story story) {
+    if (onLikeButtonPressed != null) onLikeButtonPressed(story);
   }
 
   @override
@@ -49,7 +51,7 @@ class ProfileStoryTimeline extends StatelessWidget {
                     story: story,
                     onCommentButtonPressed: (story) =>
                         _navigateToStoryDetail(context, story),
-                    onLikeButtonPressed: _likeStory,
+                    onLikeButtonPressed: _onLikePressed,
                   ),
                 )
                 .toList(),

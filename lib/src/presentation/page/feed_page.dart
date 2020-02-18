@@ -12,20 +12,18 @@ import 'package:pawlog/src/presentation/widget/story_item.dart';
 class FeedPageProps {
   final List<Story> stories;
   final bool reloading;
-  final bool loadingNext;
   final bool reachedMax;
 
-  final Function() loadNextStories;
-  final Function() reloadStories;
+  final Function() loadNextFeedStories;
+  final Function() loadFeedStories;
   final Function(Story) toggleStoryLike;
 
   const FeedPageProps({
     @required this.stories,
     @required this.reloading,
-    @required this.loadingNext,
     @required this.reachedMax,
-    @required this.loadNextStories,
-    @required this.reloadStories,
+    @required this.loadNextFeedStories,
+    @required this.loadFeedStories,
     @required this.toggleStoryLike,
   });
 }
@@ -61,7 +59,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void _loadNextStories() {
-    if (!widget.props.loadingNext) widget.props.loadNextStories();
+    widget.props.loadNextFeedStories();
   }
 
   void _navigateToStoryDetail(Story story) {
@@ -72,7 +70,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   Future<void> _refreshFeed() async {
-    widget.props.reloadStories();
+    widget.props.loadFeedStories();
   }
 
   @override

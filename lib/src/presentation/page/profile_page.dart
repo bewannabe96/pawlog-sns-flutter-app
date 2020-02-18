@@ -11,17 +11,20 @@ import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 
 class ProfilePageProps {
   final Profile profile;
-  final bool profileLoading;
+  final bool profileProcessing;
   final Family family;
-  final bool familyLoading;
+  final bool familyProcessing;
   final List<Story> stories;
+
+  final Function(Story) toggleStoryLike;
 
   const ProfilePageProps({
     @required this.profile,
-    @required this.profileLoading,
+    @required this.profileProcessing,
     @required this.family,
-    @required this.familyLoading,
+    @required this.familyProcessing,
     @required this.stories,
+    @required this.toggleStoryLike,
   });
 }
 
@@ -40,7 +43,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return widget.props.profileLoading
+    return widget.props.profileProcessing
         ? Center(child: LoadingIndicator())
         : _buildPage();
   }
@@ -57,6 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ProfileStoryTimeline(
             stories: widget.props.stories,
             hasReachedMax: false,
+            onLikeButtonPressed: widget.props.toggleStoryLike,
           )
         ],
       ),
