@@ -27,9 +27,9 @@ class StoryDetailScreenContainer extends StatelessWidget {
 
 StoryDetailScreenProps _mapStateToProps(Store<AppState> store) {
   return StoryDetailScreenProps(
-    story: store.state.storyState.storyDetailState.story,
-    comments: store.state.storyState.storyDetailState.comments,
-    loading: store.state.storyState.storyDetailState.loading,
+    story: store.state.storyDetailState.story,
+    comments: store.state.storyDetailState.comments,
+    loading: store.state.storyDetailState.loading,
     loadNextComments: () => store.dispatch(loadNextStoryComments()),
     writeComment: (String content) => store.dispatch(writeComment(content)),
   );

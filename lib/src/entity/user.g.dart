@@ -24,22 +24,3 @@ Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
       'imageurl': instance.imageurl,
       'intro': instance.intro,
     };
-
-UserSearchResultEntity _$UserSearchResultEntityFromJson(
-    Map<String, dynamic> json) {
-  return UserSearchResultEntity(
-    userid: json['userid'] as int,
-    imageurl: json['imageurl'] as String,
-    name: json['name'] as String,
-    intro: json['intro'] as String,
-  );
-}
-
-Map<String, dynamic> _$UserSearchResultEntityToJson(
-        UserSearchResultEntity instance) =>
-    <String, dynamic>{
-      'userid': instance.userid,
-      'imageurl': instance.imageurl,
-      'name': instance.name,
-      'intro': instance.intro,
-    };

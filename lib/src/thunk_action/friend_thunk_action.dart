@@ -9,18 +9,20 @@ import 'package:pawlog/src/repository/friend_repository.dart';
 
 ThunkAction<AppState> loadFriends() {
   return (Store<AppState> store) async {
-    store.dispatch(StartLoadingFriendsListAction());
+    store.dispatch(StartLoadingFriendsAction());
 
     try {
       if (!store.state.authState.isAuthorized) {
         throw ('NotAuthorized');
       }
+
       final friends = await FriendRepository.fetchFriends(
         store.state.authState.user.userID,
       );
-      store.dispatch(FinishLoadingFriendsListAction(friends));
+
+      store.dispatch(UpdateFriendsAction(friends));
     } catch (e) {
-      print(e);
+      store.dispatch(ThrowFriendsErrorAction(e.toString()));
     }
   };
 }

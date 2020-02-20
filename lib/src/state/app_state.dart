@@ -1,30 +1,50 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:pawlog/src/state/auth_state.dart';
-import 'package:pawlog/src/state/user_state.dart';
-import 'package:pawlog/src/state/friend_state.dart';
-import 'package:pawlog/src/state/story_state.dart';
+
+import 'package:pawlog/src/state/friends_state.dart';
+import 'package:pawlog/src/state/family_state.dart';
+
+import 'package:pawlog/src/state/feed_state.dart';
+import 'package:pawlog/src/state/user_stories_state.dart';
+import 'package:pawlog/src/state/story_detail_state.dart';
 
 class AppState extends Equatable {
   final AuthState authState;
-  final UserState userState;
-  final FriendState friendState;
-  final StoryState storyState;
+
+  final FriendsState friendsState;
+  final FamilyState familyState;
+
+  // story
+  final FeedState feedState;
+  final UserStoriesState userStoriesState;
+  final StoryDetailState storyDetailState;
 
   const AppState({
     this.authState,
-    this.userState,
-    this.friendState,
-    this.storyState,
+    this.friendsState,
+    this.familyState,
+    this.feedState,
+    this.userStoriesState,
+    this.storyDetailState,
   });
 
   @override
-  List<Object> get props => [authState, friendState];
+  List<Object> get props => [
+        authState,
+        friendsState,
+        familyState,
+        feedState,
+        userStoriesState,
+        storyDetailState,
+      ];
 
   factory AppState.initialState() => AppState(
         authState: AuthState.initialState(),
-        userState: UserState.initialState(),
-        friendState: FriendState.initialState(),
-        storyState: StoryState.initialState(),
+        friendsState: FriendsState.initialState(),
+        familyState: FamilyState.initialState(),
+        feedState: FeedState.initialState(),
+        userStoriesState: UserStoriesState.initialState(),
+        storyDetailState: StoryDetailState.initialState(),
       );
 }

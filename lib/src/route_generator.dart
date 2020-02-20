@@ -14,7 +14,7 @@ import 'package:pawlog/src/presentation/screen/new_pet_screen.dart';
 import 'package:pawlog/src/container/story_detail_screen_container.dart';
 import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
 
-import 'package:pawlog/src/presentation/screen/user_profile_screen.dart';
+import 'package:pawlog/src/presentation/screen/profile_screen.dart';
 
 import 'package:pawlog/src/presentation/screen/chat_screen.dart';
 
@@ -59,8 +59,8 @@ class RouteGenerator {
         builder = (_) => NewStoryScreen();
         break;
 
-      case UserProfileScreen.routeName:
-        builder = (_) => UserProfileScreen();
+      case ProfileScreen.routeName:
+        builder = (_) => ProfileScreen();
         break;
 
       case ChatScreen.routeName:

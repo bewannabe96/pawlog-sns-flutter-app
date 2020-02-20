@@ -18,6 +18,6 @@ class FriendPageContainer extends StatelessWidget {
 
 FriendPageProps _mapStateToProps(Store<AppState> store) {
   return FriendPageProps(
-    friends: store.state.friendState.friendsState.friends,
+    friends: store.state.friendsState.friends,
   );
 }

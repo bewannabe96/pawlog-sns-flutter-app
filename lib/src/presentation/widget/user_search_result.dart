@@ -4,32 +4,26 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/screen/user_profile_screen.dart';
+import 'package:pawlog/src/presentation/screen/profile_screen.dart';
 
 class UserSearchResultArea extends StatelessWidget {
   const UserSearchResultArea({Key key}) : super(key: key);
 
   void _navigateToUserProfile(BuildContext context) {
-    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
+    Navigator.of(context).pushNamed(ProfileScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildResult(
-      context,
-      false,
-      'queryemail',
-      null,
-    );
+    return _buildResult(context, 'queryemail', null);
   }
 
   Widget _buildResult(
     BuildContext context,
-    bool found,
     String queryEmail,
-    UserSearchResult result,
+    User result,
   ) {
-    return found
+    return result != null
         ? Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -74,7 +68,7 @@ class UserSearchResultArea extends StatelessWidget {
         : Text(
             'User not found.',
             style: const TextStyle(
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
               color: Colors.white,
               fontSize: 18.0,
             ),

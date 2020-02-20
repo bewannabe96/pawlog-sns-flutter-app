@@ -5,4 +5,3 @@ export 'friend.dart';
 export 'story.dart';
 export 'chat.dart';
 export 'message.dart';
-export 'profile.dart';

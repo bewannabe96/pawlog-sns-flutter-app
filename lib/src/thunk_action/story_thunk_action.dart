@@ -5,9 +5,9 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/state/app_state.dart';
 
-import 'package:pawlog/src/action/story_action.dart';
-
 import 'package:pawlog/src/repository/story_repository.dart';
+
+import 'package:pawlog/src/action/story_action.dart';
 
 ThunkAction<AppState> loadFeedStories() {
   return (Store<AppState> store) async {
@@ -36,13 +36,13 @@ ThunkAction<AppState> loadNextFeedStories() {
       }
 
       final stories = await StoryRepository.loadStories(
-        store.state.storyState.feedState.currentPage + 1,
+        store.state.feedState.currentPage + 1,
         store.state.authState.user.userID,
       );
 
       store.dispatch(UpdateFeedAction(
-        List.from(store.state.storyState.feedState.stories)..addAll(stories),
-        store.state.storyState.feedState.currentPage + 1,
+        List.from(store.state.feedState.stories)..addAll(stories),
+        store.state.feedState.currentPage + 1,
         stories.length < 10,
       ));
     } catch (e) {
@@ -61,18 +61,17 @@ ThunkAction<AppState> loadNextUserStories() {
       }
       final stories = await StoryRepository.loadUserStories(
         store.state.authState.user.userID,
-        store.state.storyState.userStoriesState.currentPage + 1,
+        store.state.userStoriesState.currentPage + 1,
         store.state.authState.user.userID,
       );
 
       store.dispatch(UpdateUserStoriesAction(
-        List.from(store.state.storyState.userStoriesState.stories)
-          ..addAll(stories),
-        store.state.storyState.userStoriesState.currentPage + 1,
+        List.from(store.state.userStoriesState.stories)..addAll(stories),
+        store.state.userStoriesState.currentPage + 1,
         stories.length < 10,
       ));
     } catch (e) {
-      print(e);
+      store.dispatch(ThrowUserStoriesErrorAction(e.toString()));
     }
   };
 }
@@ -94,7 +93,7 @@ ThunkAction<AppState> loadStoryDetail(Story story) {
 
 ThunkAction<AppState> loadNextStoryComments() {
   return (Store<AppState> store) async {
-    final currentStoryDetailState = store.state.storyState.storyDetailState;
+    final currentStoryDetailState = store.state.storyDetailState;
 
     try {
       final comments = await StoryRepository.loadComments(
@@ -115,7 +114,7 @@ ThunkAction<AppState> loadNextStoryComments() {
 
 ThunkAction<AppState> writeComment(String content) {
   return (Store<AppState> store) async {
-    final currentStory = store.state.storyState.storyDetailState.story;
+    final currentStory = store.state.storyDetailState.story;
 
     try {
       final comment = await StoryRepository.writeStoryComment(
@@ -125,10 +124,9 @@ ThunkAction<AppState> writeComment(String content) {
       );
 
       store.dispatch(UpdateStoryCommentsAction(
-        List.from(store.state.storyState.storyDetailState.comments)
-          ..add(comment),
-        store.state.storyState.storyDetailState.currentCommentsPage,
-        store.state.storyState.storyDetailState.commentsReachedMax,
+        List.from(store.state.storyDetailState.comments)..add(comment),
+        store.state.storyDetailState.currentCommentsPage,
+        store.state.storyDetailState.commentsReachedMax,
       ));
 
       store.dispatch(UpdateStoryAction(

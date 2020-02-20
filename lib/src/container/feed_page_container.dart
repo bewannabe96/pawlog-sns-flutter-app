@@ -22,9 +22,9 @@ class FeedPageContainer extends StatelessWidget {
 
 FeedPageProps _mapStateToProps(Store<AppState> store) {
   return FeedPageProps(
-    stories: store.state.storyState.feedState.stories,
-    reloading: store.state.storyState.feedState.loading,
-    reachedMax: store.state.storyState.feedState.reachedMax,
+    stories: store.state.feedState.stories,
+    reloading: store.state.feedState.loading,
+    reachedMax: store.state.feedState.reachedMax,
     loadNextFeedStories: () => store.dispatch(loadNextFeedStories()),
     loadFeedStories: () => store.dispatch(loadFeedStories()),
     toggleStoryLike: (Story story) => store.dispatch(toggleStoryLike(story)),

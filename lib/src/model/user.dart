@@ -27,26 +27,3 @@ class User {
     );
   }
 }
-
-class UserSearchResult {
-  final int userID;
-  final String name;
-  final String imageURL;
-  final String intro;
-
-  UserSearchResult._({
-    @required this.userID,
-    @required this.name,
-    @required this.imageURL,
-    @required this.intro,
-  });
-
-  factory UserSearchResult.fromEntity(UserSearchResultEntity entity) {
-    return UserSearchResult._(
-      userID: entity.userid,
-      name: entity.name,
-      imageURL: entity.imageurl,
-      intro: entity.intro,
-    );
-  }
-}

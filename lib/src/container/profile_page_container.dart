@@ -22,11 +22,10 @@ class ProfilePageContainer extends StatelessWidget {
 
 ProfilePageProps _mapStateToProps(Store<AppState> store) {
   return ProfilePageProps(
-    profile: store.state.userState.profileState.profile,
-    profileProcessing: store.state.userState.profileState.processing,
-    family: store.state.userState.familyState.family,
-    familyProcessing: store.state.userState.familyState.processing,
-    stories: store.state.storyState.userStoriesState.stories,
+    user: store.state.authState.user,
+    family: store.state.familyState.family,
+    familyProcessing: store.state.familyState.processing,
+    stories: store.state.userStoriesState.stories,
     toggleStoryLike: (Story story) => store.dispatch(toggleStoryLike(story)),
   );
 }

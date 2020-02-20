@@ -5,11 +5,17 @@ import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/style.dart';
 
 class ProfileTitle extends StatelessWidget {
-  final Profile profile;
+  final User user;
+  final int stories;
+  final int followers;
+  final int followings;
 
   const ProfileTitle({
     Key key,
-    @required this.profile,
+    @required this.user,
+    @required this.stories,
+    @required this.followers,
+    @required this.followings,
   }) : super(key: key);
 
   @override
@@ -25,9 +31,9 @@ class ProfileTitle extends StatelessWidget {
                 flex: 1,
                 child: Row(
                   children: <Widget>[
-                    _SummaryItem('Story', profile.stories),
-                    _SummaryItem('Follower', profile.followers),
-                    _SummaryItem('Following', profile.followings),
+                    _SummaryItem('Story', stories),
+                    _SummaryItem('Follower', followers),
+                    _SummaryItem('Following', followings),
                   ],
                 ),
               ),
@@ -35,19 +41,19 @@ class ProfileTitle extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20),
                 child: CircleAvatar(
                   radius: 42.0,
-                  backgroundImage: profile.imageURL == null
+                  backgroundImage: user.imageURL == null
                       ? const AssetImage('res/asset/user_avatar.png')
-                      : NetworkImage(profile.imageURL),
+                      : NetworkImage(user.imageURL),
                 ),
               ),
             ],
           ),
-          profile.intro == null
+          user.intro == null
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: Text(
-                    profile.intro,
+                    user.intro,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),

@@ -23,23 +23,3 @@ class UserEntity {
 
   Map<String, dynamic> toJson() => _$UserEntityToJson(this);
 }
-
-@JsonSerializable()
-class UserSearchResultEntity {
-  final int userid;
-  final String imageurl;
-  final String name;
-  final String intro;
-
-  const UserSearchResultEntity({
-    this.userid,
-    this.imageurl,
-    this.name,
-    this.intro,
-  });
-
-  factory UserSearchResultEntity.fromJson(Map<String, dynamic> json) =>
-      _$UserSearchResultEntityFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserSearchResultEntityToJson(this);
-}

@@ -7,11 +7,9 @@ import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/presentation/widget/profile_family_list.dart';
 import 'package:pawlog/src/presentation/widget/profile_story_timeline.dart';
 import 'package:pawlog/src/presentation/widget/profile_title.dart';
-import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
 
 class ProfilePageProps {
-  final Profile profile;
-  final bool profileProcessing;
+  final User user;
   final Family family;
   final bool familyProcessing;
   final List<Story> stories;
@@ -19,8 +17,7 @@ class ProfilePageProps {
   final Function(Story) toggleStoryLike;
 
   const ProfilePageProps({
-    @required this.profile,
-    @required this.profileProcessing,
+    @required this.user,
     @required this.family,
     @required this.familyProcessing,
     @required this.stories,
@@ -43,9 +40,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return widget.props.profileProcessing
-        ? Center(child: LoadingIndicator())
-        : _buildPage();
+    return _buildPage();
   }
 
   Widget _buildPage() {
@@ -53,7 +48,12 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          ProfileTitle(profile: widget.props.profile),
+          ProfileTitle(
+            user: widget.props.user,
+            stories: widget.props.stories.length,
+            followers: 0,
+            followings: 0,
+          ),
           Divider(),
           _buildFamilyList(),
           Divider(),

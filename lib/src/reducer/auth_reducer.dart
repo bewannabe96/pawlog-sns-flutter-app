@@ -7,6 +7,8 @@ import 'package:pawlog/src/action/auth_action.dart';
 final authReducer = combineReducers<AuthState>([
   TypedReducer<AuthState, StartAuthenticationAction>(_startAuthentication),
   TypedReducer<AuthState, FinishAuthenticationAction>(_finishAuthentication),
+  TypedReducer<AuthState, ThrowAuthenticationErrorAction>(
+      _throwAuthenticationError),
 ]);
 
 AuthState _startAuthentication(
@@ -21,5 +23,13 @@ AuthState _finishAuthentication(
     user: action.user,
     processing: false,
     error: null,
+  );
+}
+
+AuthState _throwAuthenticationError(
+    AuthState state, ThrowAuthenticationErrorAction action) {
+  return state.copyWith(
+    processing: false,
+    error: action.error,
   );
 }

@@ -1,18 +1,24 @@
 import 'package:pawlog/src/model/model.dart';
 
-class StartLoadingFriendsListAction {
+class StartLoadingFriendsAction {
   @override
-  String toString() => 'StartLoadingFriendsListAction';
+  String toString() => 'StartLoadingFriendsAction';
 }
 
-class FinishLoadingFriendsListAction {
+class UpdateFriendsAction {
   final List<Friend> friends;
 
-  FinishLoadingFriendsListAction(
-    this.friends,
-  );
+  UpdateFriendsAction(this.friends);
 
   @override
-  String toString() =>
-      'FinishLoadingFriendsListAction {total: ${friends.length}}';
+  String toString() => 'UpdateFriendsAction {total: ${friends.length}}';
+}
+
+class ThrowFriendsErrorAction {
+  String error;
+
+  ThrowFriendsErrorAction(this.error);
+
+  @override
+  String toString() => 'ThrowFriendsErrorAction {$error}';
 }

@@ -1,28 +1,23 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:pawlog/src/model/model.dart';
-import 'package:pawlog/src/entity/entity.dart';
 
 import 'package:pawlog/src/presentation/widget/profile_story_timeline.dart';
 import 'package:pawlog/src/presentation/widget/profile_title.dart';
-import 'package:pawlog/src/presentation/widget/follow_status.dart';
 import 'package:pawlog/src/presentation/widget/profile_family_list.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   static const routeName = '/user-profile';
 
-  const UserProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key key}) : super(key: key);
 
   @override
-  _UserProfileScreenState createState() => _UserProfileScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   // TODO: needs replacement
-  Profile _profile;
+  User _user;
   Family _family;
 
   @override
@@ -33,16 +28,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   void _loadInitialProfile() async {
     // TODO: needs implementation
-    var jsonstring =
-        await rootBundle.loadString('res/sample/user-profile.json');
-    final json = jsonDecode(jsonstring);
-
-    final entity = ProfileEntity.fromJson(json);
-    final profile = Profile.fromEntity(entity);
-
-    setState(() {
-      _profile = profile;
-    });
   }
 
   @override
@@ -50,7 +35,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _profile.name,
+          _user.name,
           style: Theme.of(context).textTheme.title,
         ),
         backgroundColor: Colors.white,
@@ -62,12 +47,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              ProfileTitle(profile: _profile),
-              _profile.isFollowing != null
-                  ? FollowStatus(
-                      isFollowing: _profile.isFollowing,
-                    )
-                  : Container(),
+              ProfileTitle(user: null, stories: 0, followers: 0, followings: 0),
+              // TODO: needs implementation
+              // _user.isFollowing != null
+              //     ? FollowStatus(
+              //         isFollowing: _user.isFollowing,
+              //       )
+              //     : Container(),
               Divider(),
               ProfileFamilyList(family: _family),
               Divider(),

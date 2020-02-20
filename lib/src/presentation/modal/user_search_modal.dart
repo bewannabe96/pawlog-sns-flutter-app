@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pawlog/src/presentation/widget/user_search_box.dart';
 import 'package:pawlog/src/presentation/widget/user_search_result.dart';
 
-class UserSearchModal extends ModalRoute<int> {
+class UserSearchModal extends ModalRoute<void> {
   @override
   Duration get transitionDuration => Duration(milliseconds: 350);
 

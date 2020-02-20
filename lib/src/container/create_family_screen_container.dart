@@ -6,7 +6,7 @@ import 'package:pawlog/src/presentation/screen/create_family_screen.dart';
 
 import 'package:pawlog/src/state/app_state.dart';
 
-import 'package:pawlog/src/thunk_action/user_thunk_action.dart';
+import 'package:pawlog/src/thunk_action/family_thunk_action.dart';
 
 class CreateFamilyScreenContainer extends StatelessWidget {
   static const routeName = CreateFamilyScreen.routeName;

@@ -17,3 +17,12 @@ class FinishAuthenticationAction {
   @override
   String toString() => 'FinishAuthenticationAction {hash: $userHash}';
 }
+
+class ThrowAuthenticationErrorAction {
+  String error;
+
+  ThrowAuthenticationErrorAction(this.error);
+
+  @override
+  String toString() => 'ThrowAuthenticationErrorAction {$error}';
+}

@@ -30,30 +30,6 @@ class UserRepository {
         .toList();
   }
 
-  static Future<Profile> fetchUserProfile(
-    int userID,
-    int requestinUserID,
-  ) async {
-    ProfileEntity profileEntity;
-    try {
-      profileEntity = await UserAPIClient.fetchUserProfile(
-        userID,
-        requestinUserID,
-      );
-      // UserLocalStorage.writeUserInfo(userEntity);
-    } catch (_) {
-      // userEntity = await UserLocalStorage.readUserInfo();
-    }
-
-    return Profile.fromEntity(profileEntity);
-  }
-
-  static Future<UserSearchResult> searchUserByEmail(String email) async {
-    final entity = await UserAPIClient.searchUserByEmail(email);
-
-    return entity == null ? null : UserSearchResult.fromEntity(entity);
-  }
-
   static Future<Friend> followUser(
     int actionUserID,
     int targetUserID,

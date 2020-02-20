@@ -20,6 +20,6 @@ class EditFamilyScreenContainer extends StatelessWidget {
 
 EditFamilyScreenProps _mapStateToProps(Store<AppState> store) {
   return EditFamilyScreenProps(
-    family: store.state.userState.familyState.family,
+    family: store.state.familyState.family,
   );
 }

@@ -6,14 +6,46 @@ import 'package:pawlog/src/util/api/api.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
 class UserAPIClient {
-  static Future<UserEntity> fetchUserInfo(String userHash) async {
-    final path = PawlogAPIClient.apiServerHost + '/user?userHash=$userHash';
+  static Future<UserEntity> fetchUser(int userID) async {
+    final path = PawlogAPIClient.apiServerHost + '/user/$userID';
 
     final response = await PawlogAPIClient.client.get(path);
 
     switch (response.statusCode) {
       case HttpStatus.ok:
         return UserEntity.fromJson(jsonDecode(response.body));
+      case HttpStatus.notFound:
+        throw ('User not found');
+      default:
+        throw ('Unexpected Status Code');
+    }
+  }
+
+  static Future<UserEntity> fetchUserByHash(String userHash) async {
+    final path = PawlogAPIClient.apiServerHost + '/user?hash=$userHash';
+
+    final response = await PawlogAPIClient.client.get(path);
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return UserEntity.fromJson(jsonDecode(response.body));
+      case HttpStatus.notFound:
+        throw ('User not found');
+      default:
+        throw ('Unexpected Status Code');
+    }
+  }
+
+  static Future<UserEntity> fetchUserByEmail(String email) async {
+    final path = PawlogAPIClient.apiServerHost + '/user/?email=$email';
+
+    final response = await PawlogAPIClient.client.get(path);
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return UserEntity.fromJson(jsonDecode(response.body));
+      case HttpStatus.notFound:
+        throw ('User not found');
       default:
         throw ('Unexpected Status Code');
     }
@@ -106,39 +138,6 @@ class UserAPIClient {
         return (json['chatheaders'] as List)
             .map((j) => ChatHeaderEntity.fromJson(j))
             .toList();
-      default:
-        throw ('Unexpected Status Code');
-    }
-  }
-
-  static Future<ProfileEntity> fetchUserProfile(
-    int userID,
-    int requestingUserID,
-  ) async {
-    final path = PawlogAPIClient.apiServerHost +
-        '/user/$userID/profile?requestingUserID=$requestingUserID';
-
-    final response = await PawlogAPIClient.client.get(path);
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return ProfileEntity.fromJson(jsonDecode(response.body));
-      default:
-        throw ('Unexpected Status Code');
-    }
-  }
-
-  static Future<UserSearchResultEntity> searchUserByEmail(String email) async {
-    final path = PawlogAPIClient.apiServerHost + '/user/search?email=$email';
-
-    final response = await PawlogAPIClient.client.get(path);
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        var json = jsonDecode(response.body);
-        return UserSearchResultEntity.fromJson(json);
-      case HttpStatus.notFound:
-        return null;
       default:
         throw ('Unexpected Status Code');
     }

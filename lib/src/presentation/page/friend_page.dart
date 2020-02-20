@@ -4,7 +4,7 @@ import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/screen/user_profile_screen.dart';
+import 'package:pawlog/src/presentation/screen/profile_screen.dart';
 
 class FriendPageProps {
   final List<Friend> friends;
@@ -28,7 +28,7 @@ class FriendPage extends StatefulWidget {
 
 class _FriendPageState extends State<FriendPage> {
   void _navigateToUserProfile() {
-    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
+    Navigator.of(context).pushNamed(ProfileScreen.routeName);
   }
 
   @override

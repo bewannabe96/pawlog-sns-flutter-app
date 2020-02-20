@@ -4,22 +4,20 @@ import 'package:pawlog/src/entity/entity.dart';
 import 'package:pawlog/src/model/model.dart';
 
 class UserRepository {
-  static Future<User> fetchUserInfo(String userHash) async {
+  static Future<User> fetchUser(int userID) async {
     UserEntity userEntity;
 
-    userEntity = await UserAPIClient.fetchUserInfo(userHash);
+    userEntity = await UserAPIClient.fetchUser(userID);
 
     return User.fromEntity(userEntity);
   }
 
-  static Future<Profile> fetchUserProfile(
-      int userID, int requestinUserID) async {
-    ProfileEntity profileEntity;
+  static Future<User> fetchUserByHash(String userHash) async {
+    UserEntity userEntity;
 
-    profileEntity =
-        await UserAPIClient.fetchUserProfile(userID, requestinUserID);
+    userEntity = await UserAPIClient.fetchUserByHash(userHash);
 
-    return Profile.fromEntity(profileEntity);
+    return User.fromEntity(userEntity);
   }
 
   static Future<Family> fetchUserFamily(int userID) async {
