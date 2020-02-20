@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/screen/edit_family_screen.dart';
+import 'package:pawlog/src/view/screen/edit_family_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';

@@ -7,9 +7,9 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/modal/action_modal.dart';
+import 'package:pawlog/src/view/modal/action_modal.dart';
 
-import 'package:pawlog/src/presentation/widget/page_submit_button.dart';
+import 'package:pawlog/src/view/widget/page_submit_button.dart';
 
 class NewStoryScreen extends StatefulWidget {
   static const routeName = '/new-story';

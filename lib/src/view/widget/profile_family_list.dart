@@ -4,7 +4,7 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/widget/pet_item.dart';
+import 'package:pawlog/src/view/widget/pet_item.dart';
 
 class ProfileFamilyList extends StatelessWidget {
   final Family family;

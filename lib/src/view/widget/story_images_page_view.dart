@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:pawlog/src/presentation/widget/page_indicator.dart';
+import 'package:pawlog/src/view/widget/page_indicator.dart';
 
 class ImagesPageView extends StatefulWidget {
   final List<String> imageUrls;

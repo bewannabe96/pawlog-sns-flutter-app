@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/auth_switch.dart';
 
-import 'package:pawlog/src/presentation/screen/register_screen.dart';
-import 'package:pawlog/src/presentation/screen/register_confirm_screen.dart';
-import 'package:pawlog/src/presentation/screen/forgot_password_screen.dart';
+import 'package:pawlog/src/view/screen/register_screen.dart';
+import 'package:pawlog/src/view/screen/register_confirm_screen.dart';
+import 'package:pawlog/src/view/screen/forgot_password_screen.dart';
 
-import 'package:pawlog/src/presentation/screen/settings_screen.dart';
+import 'package:pawlog/src/view/screen/settings_screen.dart';
 import 'package:pawlog/src/container/edit_family_screen_container.dart';
 import 'package:pawlog/src/container/create_family_screen_container.dart';
-import 'package:pawlog/src/presentation/screen/new_pet_screen.dart';
+import 'package:pawlog/src/view/screen/new_pet_screen.dart';
 
 import 'package:pawlog/src/container/story_detail_screen_container.dart';
-import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
+import 'package:pawlog/src/view/screen/new_story_screen.dart';
 
-import 'package:pawlog/src/presentation/screen/profile_screen.dart';
+import 'package:pawlog/src/view/screen/profile_screen.dart';
 
-import 'package:pawlog/src/presentation/screen/chat_screen.dart';
+import 'package:pawlog/src/view/screen/chat_screen.dart';
 
 class RouteGenerator {
   static const initialRoute = AuthSwitch.routeName;

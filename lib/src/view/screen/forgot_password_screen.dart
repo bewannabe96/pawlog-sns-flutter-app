@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/src/presentation/widget/auth_text_field.dart';
-import 'package:pawlog/src/presentation/widget/auth_title.dart';
-import 'package:pawlog/src/presentation/widget/filled_button.dart';
+import 'package:pawlog/src/view/widget/auth_text_field.dart';
+import 'package:pawlog/src/view/widget/auth_title.dart';
+import 'package:pawlog/src/view/widget/filled_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static const routeName = '/forgot-password';

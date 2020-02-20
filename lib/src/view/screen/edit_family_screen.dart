@@ -5,13 +5,13 @@ import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/screen/create_family_screen.dart';
-import 'package:pawlog/src/presentation/screen/new_pet_screen.dart';
+import 'package:pawlog/src/view/screen/create_family_screen.dart';
+import 'package:pawlog/src/view/screen/new_pet_screen.dart';
 
-import 'package:pawlog/src/presentation/modal/action_modal.dart';
+import 'package:pawlog/src/view/modal/action_modal.dart';
 
-import 'package:pawlog/src/presentation/widget/filled_button.dart';
-import 'package:pawlog/src/presentation/widget/pet_item.dart';
+import 'package:pawlog/src/view/widget/filled_button.dart';
+import 'package:pawlog/src/view/widget/pet_item.dart';
 
 class EditFamilyScreenProps {
   final Family family;

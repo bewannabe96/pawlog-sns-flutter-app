@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
-import 'package:pawlog/src/presentation/widget/auth_text_field.dart';
-import 'package:pawlog/src/presentation/widget/auth_title.dart';
-import 'package:pawlog/src/presentation/widget/bottom_nav_button.dart';
-import 'package:pawlog/src/presentation/widget/filled_button.dart';
-import 'package:pawlog/src/presentation/widget/outlined_button.dart';
-import 'package:pawlog/src/presentation/widget/page_indicator.dart';
+import 'package:pawlog/src/view/widget/auth_text_field.dart';
+import 'package:pawlog/src/view/widget/auth_title.dart';
+import 'package:pawlog/src/view/widget/bottom_nav_button.dart';
+import 'package:pawlog/src/view/widget/filled_button.dart';
+import 'package:pawlog/src/view/widget/outlined_button.dart';
+import 'package:pawlog/src/view/widget/page_indicator.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/register';

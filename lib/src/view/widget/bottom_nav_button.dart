@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pawlog/src/presentation/widget/outlined_button.dart';
+import 'package:pawlog/src/view/widget/outlined_button.dart';
 
 class BottomNavButton extends StatelessWidget {
   final VoidCallback onPrev;

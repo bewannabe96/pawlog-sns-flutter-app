@@ -5,7 +5,7 @@ import 'package:pawlog/src/model/model.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/widget/chat_input_form.dart';
+import 'package:pawlog/src/view/widget/chat_input_form.dart';
 
 final chatMessages = [
   Message(

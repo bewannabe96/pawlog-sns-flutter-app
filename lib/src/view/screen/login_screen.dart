@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
-import 'package:pawlog/src/presentation/screen/register_confirm_screen.dart';
-import 'package:pawlog/src/presentation/screen/register_screen.dart';
-import 'package:pawlog/src/presentation/screen/forgot_password_screen.dart';
+import 'package:pawlog/src/view/screen/register_confirm_screen.dart';
+import 'package:pawlog/src/view/screen/register_screen.dart';
+import 'package:pawlog/src/view/screen/forgot_password_screen.dart';
 
-import 'package:pawlog/src/presentation/widget/auth_text_field.dart';
-import 'package:pawlog/src/presentation/widget/auth_text_button.dart';
-import 'package:pawlog/src/presentation/widget/filled_button.dart';
-import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
+import 'package:pawlog/src/view/widget/auth_text_field.dart';
+import 'package:pawlog/src/view/widget/auth_text_button.dart';
+import 'package:pawlog/src/view/widget/filled_button.dart';
+import 'package:pawlog/src/view/widget/loading_indicator.dart';
 
 class LoginScreenProps {
   final bool authenticating;

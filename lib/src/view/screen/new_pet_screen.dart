@@ -8,8 +8,8 @@ import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/widget/page_submit_button.dart';
-import 'package:pawlog/src/presentation/widget/text_field.dart';
+import 'package:pawlog/src/view/widget/page_submit_button.dart';
+import 'package:pawlog/src/view/widget/text_field.dart';
 
 class NewPetScreen extends StatefulWidget {
   static const routeName = '/new-pet';

@@ -2,7 +2,6 @@ import 'package:meta/meta.dart';
 
 import 'package:pawlog/src/util/api/api.dart';
 
-import 'package:pawlog/src/entity/entity.dart';
 import 'package:pawlog/src/model/model.dart';
 
 class FamilyRepository {

@@ -12,13 +12,13 @@ import 'package:pawlog/src/container/feed_page_container.dart';
 import 'package:pawlog/src/container/friend_page_container.dart';
 import 'package:pawlog/src/container/profile_page_container.dart';
 
-import 'package:pawlog/src/presentation/screen/home_screen.dart';
-import 'package:pawlog/src/presentation/screen/settings_screen.dart';
-import 'package:pawlog/src/presentation/screen/new_story_screen.dart';
+import 'package:pawlog/src/view/screen/home_screen.dart';
+import 'package:pawlog/src/view/screen/settings_screen.dart';
+import 'package:pawlog/src/view/screen/new_story_screen.dart';
 
-import 'package:pawlog/src/presentation/modal/user_search_modal.dart';
+import 'package:pawlog/src/view/modal/user_search_modal.dart';
 
-import 'package:pawlog/src/presentation/page/chat_page.dart';
+import 'package:pawlog/src/view/page/chat_page.dart';
 
 class AuthSwitch extends StatelessWidget {
   static const routeName = '/';

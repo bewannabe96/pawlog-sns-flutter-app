@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/style.dart';
 
-import 'package:pawlog/src/presentation/modal/action_modal.dart';
+import 'package:pawlog/src/view/modal/action_modal.dart';
 
-import 'package:pawlog/src/presentation/screen/chat_screen.dart';
+import 'package:pawlog/src/view/screen/chat_screen.dart';
 
 class FollowStatus extends StatelessWidget {
   final int isFollowing;

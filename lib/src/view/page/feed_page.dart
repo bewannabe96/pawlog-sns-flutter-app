@@ -4,10 +4,10 @@ import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/screen/story_detail_screen.dart';
+import 'package:pawlog/src/view/screen/story_detail_screen.dart';
 
-import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
-import 'package:pawlog/src/presentation/widget/story_item.dart';
+import 'package:pawlog/src/view/widget/loading_indicator.dart';
+import 'package:pawlog/src/view/widget/story_item.dart';
 
 class FeedPageProps {
   final List<Story> stories;

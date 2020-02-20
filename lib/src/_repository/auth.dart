@@ -1,38 +1,8 @@
-import 'package:amazon_cognito_identity_dart/cognito.dart';
-
 import 'package:pawlog/src/util/cognito_client.dart';
-
-import 'package:pawlog/src/entity/entity.dart';
 
 class AuthRepository {
   static Future<String> checkAuthentication() async {
     final cognitoUserEntity = await CognitoClient.authenticateFromStorage();
-
-    return cognitoUserEntity?.hash ?? null;
-  }
-
-  static Future<String> authenticate(String email, String password) async {
-    CognitoUserEntity cognitoUserEntity;
-    try {
-      cognitoUserEntity = await CognitoClient.authenticate(email, password);
-    } on CognitoClientException catch (e) {
-      switch (e.code) {
-        case 'UserNotFoundException':
-          throw ('UserNotFoundException');
-          break;
-        case 'NotAuthorizedException':
-          throw ('NotAuthorizedException');
-          break;
-        case 'UserNotConfirmedException':
-          throw ('UserNotConfirmedException');
-          break;
-        case 'NetworkError':
-          throw ('NetworkException');
-          break;
-        default:
-          throw ('UnknownException');
-      }
-    }
 
     return cognitoUserEntity?.hash ?? null;
   }

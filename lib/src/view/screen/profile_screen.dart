@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/widget/profile_story_timeline.dart';
-import 'package:pawlog/src/presentation/widget/profile_title.dart';
-import 'package:pawlog/src/presentation/widget/profile_family_list.dart';
+import 'package:pawlog/src/view/widget/profile_story_timeline.dart';
+import 'package:pawlog/src/view/widget/profile_title.dart';
+import 'package:pawlog/src/view/widget/profile_family_list.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/user-profile';

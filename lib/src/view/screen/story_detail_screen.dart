@@ -5,9 +5,9 @@ import 'package:pawlog/src/style.dart';
 
 import 'package:pawlog/src/model/model.dart';
 
-import 'package:pawlog/src/presentation/widget/story_item.dart';
-import 'package:pawlog/src/presentation/widget/chat_input_form.dart';
-import 'package:pawlog/src/presentation/widget/loading_indicator.dart';
+import 'package:pawlog/src/view/widget/story_item.dart';
+import 'package:pawlog/src/view/widget/chat_input_form.dart';
+import 'package:pawlog/src/view/widget/loading_indicator.dart';
 
 class StoryDetailScreenArgs {
   final Story story;

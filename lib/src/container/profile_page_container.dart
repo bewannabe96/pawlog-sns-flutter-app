@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pawlog/src/presentation/page/profile_page.dart';
+import 'package:pawlog/src/view/page/profile_page.dart';
 
 import 'package:pawlog/src/model/model.dart';
 

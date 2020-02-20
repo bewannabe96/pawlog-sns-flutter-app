@@ -8,7 +8,7 @@ import 'package:pawlog/src/style.dart';
 import 'package:pawlog/src/model/model.dart';
 import 'package:pawlog/src/entity/entity.dart';
 
-import 'package:pawlog/src/presentation/screen/chat_screen.dart';
+import 'package:pawlog/src/view/screen/chat_screen.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);

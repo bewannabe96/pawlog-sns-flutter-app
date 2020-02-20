@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:pawlog/src/presentation/screen/login_screen.dart';
+import 'package:pawlog/src/view/screen/login_screen.dart';
 
 import 'package:pawlog/src/state/app_state.dart';
 
